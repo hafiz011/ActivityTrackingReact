@@ -1,3 +1,4 @@
+/** @type {import('next').NextConfig} */
 const nextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
@@ -8,14 +9,6 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
-  async rewrites() {
-    return [
-      {
-        source: "/api/:path*",                    // Anything under /api
-        destination: "http://localhost:5000/api/:path*", // Forward to your .NET backend
-      },
-    ];
-  },
-};
+}
 
-export default nextConfig;
+export default nextConfig
