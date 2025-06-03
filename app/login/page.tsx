@@ -1,43 +1,65 @@
-// app/login/page.tsx
 "use client";
-import { useState } from "react";
-import { login } from "@/services/authService";
-import { useRouter } from "next/navigation";
 
-export default function LoginPage() {
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/context/AuthContext";
+import { loginUser } from "@/lib/auth";
+
+const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { login } = useAuth();
   const router = useRouter();
 
-const handleLogin = async () => {
-  try {
-    const res = await fetch("https://localhost:5011/api/auth/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({ email, password }),
-    });
+  const [loading, setLoading] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
 
-    const data = await res.json();
-    if (!res.ok) throw new Error(data.message || "Login failed");
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setErrorMsg("");
+    if (!email || !password) {
+      setErrorMsg("Email and password are required.");
+      return;
+    }
 
-    localStorage.setItem("token", data.Token);
-    router.push("/dashboard");
-  } catch (error) {
-    console.error("Fetch Error:", error);
-    alert("Login failed");
-  }
-};
-
-
+    setLoading(true);
+    try {
+      const token = await loginUser(email, password);
+      login(token);
+      router.push("/dashboard");
+    } catch {
+      setErrorMsg("Login failed. Please check your credentials.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
-    <div className="p-6 max-w-sm mx-auto">
-      <h1 className="text-xl font-bold mb-4">Login</h1>
-      <input type="email" placeholder="Email" className="input mb-2" value={email} onChange={(e) => setEmail(e.target.value)} />
-      <input type="password" placeholder="Password" className="input mb-2" value={password} onChange={(e) => setPassword(e.target.value)} />
-      <button onClick={handleLogin} className="btn btn-primary w-full">Login</button>
-    </div>
+    <form onSubmit={handleLogin} className="p-4 max-w-sm mx-auto">
+      <h2 className="text-xl mb-4 font-bold">Login</h2>
+      <input
+        placeholder="Email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        className="block w-full p-2 mb-2 border rounded"
+      />
+      <input
+        type="password"
+        placeholder="Password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+        className="block w-full p-2 mb-2 border rounded"
+      />
+      {errorMsg && <p className="text-red-500 mb-2">{errorMsg}</p>}
+      <button
+        type="submit"
+        disabled={loading}
+        className="w-full bg-blue-600 text-white p-2 rounded"
+      >
+        {loading ? "Logging in..." : "Login"}
+      </button>
+    </form>
   );
-}
+};
+
+export default LoginPage;
