@@ -1,24 +1,30 @@
-// services/authService.ts
+import axios from "axios";
 
-import axios from "@/lib/axios";
-import { LoginResponse, RegisterResponse, LogoutResponse, AccountDetails } from "@/services/auth";
+const API_BASE_URL = "https://localhost:5011";
 
-export const login = async (email: string, password: string): Promise<LoginResponse> => {
-  const response = await axios.post<LoginResponse>("/auth/login", { email, password });
-  return response.data;
+type User = {
+  id: string;
+  email: string;
+  fullName: string;
 };
 
-export const register = async (data: any): Promise<RegisterResponse> => {
-  const response = await axios.post<RegisterResponse>("/auth/register", data);
-  return response.data;
+type LoginResponse = {
+  Token?: string;
+  token?: string;
+  User?: User;
+  user?: User;
 };
 
-export const logout = async (): Promise<LogoutResponse> => {
-  const response = await axios.post<LogoutResponse>("/auth/logout");
-  return response.data;
+export const login = async (email: string, password: string) => {
+  const response = await axios.post<LoginResponse>(`${API_BASE_URL}/api/auth/login`, {
+    email,
+    password,
+  });
+  const data = response.data;
+
+  return {
+    token: data.Token || data.token,
+    user: data.User || data.user,
+  };
 };
 
-export const getAccountDetails = async (): Promise<AccountDetails> => {
-  const response = await axios.get<AccountDetails>("/auth/account");
-  return response.data;
-};
