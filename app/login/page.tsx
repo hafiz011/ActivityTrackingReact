@@ -1,13 +1,11 @@
 "use client"
 
 import type React from "react"
-
 import { useState } from "react"
 import { login as loginApi } from "../../services/authService"
 import { Eye, EyeOff, Mail, Lock, Loader2 } from "lucide-react"
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
-
 
 export default function Login() {
   const [email, setEmail] = useState("")
