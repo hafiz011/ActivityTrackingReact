@@ -34,22 +34,24 @@ type ConfirmEmailRequest = {
 
 // --------- API Calls ---------
 
-// Login
-export const loginApi = async (email: string, password: string): Promise<{ token: string; user: User }> => {
+export const loginApi = async (
+  email: string,
+  password: string
+): Promise<{ token: string; user: User }> => {
   const response = await axios.post<LoginResponse>("/auth/login", { email, password });
 
-  // Ensure correct structure
   const data = response.data;
 
-  if (!data.Token || !data.User) {
+  const token = data.Token || data.token;
+  const user = data.User || data.user;
+
+  if (!token || !user) {
     throw new Error("Login response is missing token or user information.");
   }
 
-  return {
-    token: data.Token,
-    user: data.User,
-  };
+  return { token, user };
 };
+
 
 // Register
 export const register = async (model: RegisterModel): Promise<any> => {

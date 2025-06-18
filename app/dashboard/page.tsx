@@ -1,5 +1,6 @@
 "use client"
-
+import { useAuth } from "@/context/AuthContext";
+import { useRouter } from "next/navigation";
 import { useState, useEffect, useCallback } from "react"
 import type { DateRange } from "react-day-picker"
 import { addDays } from "date-fns"
@@ -400,6 +401,8 @@ const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042", "#8884D8"]
 
 export default function ActivityTrackingDashboard() {
   // State for filters
+
+
   const [timeRange, setTimeRange] = useState("7d")
   const [suspiciousOnly, setSuspiciousOnly] = useState(false)
   const [selectedCountry, setSelectedCountry] = useState("all")

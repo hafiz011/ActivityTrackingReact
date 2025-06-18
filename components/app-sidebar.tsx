@@ -32,6 +32,11 @@ import {
 } from "@/components/ui/sidebar"
 import { Badge } from "@/components/ui/badge"
 import { Collapsible, CollapsibleContent } from "@/components/ui/collapsible"
+import { useAuth } from "@/context/AuthContext"
+import { useRouter } from "next/navigation"
+import { useEffect } from "react"
+
+
 
 // Company/Workspace data
 const workspaces = [
@@ -462,6 +467,22 @@ const supportItems = [
 
 export function AppSidebar({ ...props }) {
   const [selectedWorkspace, setSelectedWorkspace] = React.useState(workspaces[0])
+  
+  const { token, user, logout } = useAuth();
+  const router = useRouter();
+   useEffect(() => {
+    if (!token || !user) {
+      router.push("/login");
+    }
+  }, [token, user, router]);
+
+  if (!token || !user) return null; // Optional: Blank while redirecting
+
+    const handleLogout = () => {
+    logout();            // Clear localStorage & context
+    router.push("/login"); // Redirect to login
+  };
+
 
   return (
     <Sidebar collapsible="icon" {...props}>
@@ -777,8 +798,8 @@ export function AppSidebar({ ...props }) {
                     <AvatarFallback className="rounded-lg">AD</AvatarFallback>
                   </Avatar>
                   <div className="grid flex-1 text-left text-sm leading-tight">
-                    <span className="truncate font-semibold">Admin User</span>
-                    <span className="truncate text-xs text-sidebar-foreground/70">admin@company.com</span>
+                    <span className="truncate font-semibold">{user.fullName}</span>
+                    <span className="truncate text-xs text-sidebar-foreground/70">{user.email}</span>
                   </div>
                   <ChevronUp className="ml-auto size-4 transition-transform duration-200 data-[state=open]:rotate-180" />
                 </SidebarMenuButton>
@@ -830,6 +851,7 @@ export function AppSidebar({ ...props }) {
                 <DropdownMenuItem className="text-red-600">
                   <LogOut className="mr-2 h-4 w-4" />
                   Log out
+                  onClick={handleLogout} variant="destructive"
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>

@@ -6,14 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { CheckCircle, XCircle, Loader2 } from "lucide-react"
-
-const API_BASE_URL = "https://localhost:5011"
-
-type ConfirmEmailResponse = {
-  Message?: string
-  message?: string
-  success?: boolean
-}
+import { confirmEmail as confirmEmailApi } from "@/services/authService"
 
 export default function ConfirmEmail() {
   const [message, setMessage] = useState("Confirming your email...")
@@ -23,7 +16,7 @@ export default function ConfirmEmail() {
   const router = useRouter()
 
   useEffect(() => {
-    const confirmEmail = async () => {
+    const handleConfirmEmail = async () => {
       const userId = searchParams.get("userId")
       const token = searchParams.get("token")
 
@@ -35,31 +28,22 @@ export default function ConfirmEmail() {
       }
 
       try {
-        const response = await fetch(`${API_BASE_URL}/api/auth/confirm-email`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            UserId: userId,
-            Token: token,
-          }),
-        })
+        const response = await confirmEmailApi({ UserId: userId, Token: token })
 
-        const data: ConfirmEmailResponse = await response.json()
+        const successMessage =
+          response.Message ||
+          response.message ||
+          "Your email has been successfully confirmed! You can now log in to your account."
 
-        if (response.ok) {
-          setMessage(
-            data.Message ||
-              data.message ||
-              "Your email has been successfully confirmed! You can now log in to your account.",
-          )
-          setIsSuccess(true)
-        } else {
-          throw new Error(data.Message || data.message || "Email confirmation failed")
-        }
+        setMessage(successMessage)
+        setIsSuccess(true)
       } catch (err: any) {
-        const errorMessage = err?.message || "Email confirmation failed. The link may be invalid or expired."
+        const errorMessage =
+          err?.response?.data?.Message ||
+          err?.response?.data?.message ||
+          err?.message ||
+          "Email confirmation failed. The link may be invalid or expired."
+
         setMessage(errorMessage)
         setIsSuccess(false)
       } finally {
@@ -67,17 +51,11 @@ export default function ConfirmEmail() {
       }
     }
 
-    confirmEmail()
+    handleConfirmEmail()
   }, [searchParams])
 
-  const handleGoToLogin = () => {
-    router.push("/login")
-  }
-
-  const handleResendEmail = () => {
-    // You can implement resend email functionality here
-    router.push("/register")
-  }
+  const handleGoToLogin = () => router.push("/login")
+  const handleResendEmail = () => router.push("/register")
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-background px-4 py-8">
