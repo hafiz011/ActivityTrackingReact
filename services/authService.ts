@@ -1,7 +1,6 @@
-import axios from "axios";
+import axios from "@/lib/axios"; // কাস্টম axios instance
 
-const API_BASE_URL = "https://localhost:5011";
-
+// --------- Type Definitions ---------
 type User = {
   id: string;
   email: string;
@@ -9,22 +8,57 @@ type User = {
 };
 
 type LoginResponse = {
-  Token?: string;
-  token?: string;
-  User?: User;
-  user?: User;
+  Token: string;
+  User: User;
 };
 
-export const login = async (email: string, password: string) => {
-  const response = await axios.post<LoginResponse>(`${API_BASE_URL}/api/auth/login`, {
-    email,
-    password,
-  });
+type Address = {
+  address: string;
+  City: string;
+  Country: string;
+};
+
+type RegisterModel = {
+  FirstName: string;
+  LastName: string;
+  Email: string;
+  Phone: string;
+  Address: Address;
+  Password: string;
+};
+
+type ConfirmEmailRequest = {
+  UserId: string;
+  Token: string;
+};
+
+// --------- API Calls ---------
+
+// Login
+export const loginApi = async (email: string, password: string): Promise<{ token: string; user: User }> => {
+  const response = await axios.post<LoginResponse>("/auth/login", { email, password });
+
+  // Ensure correct structure
   const data = response.data;
 
+  if (!data.Token || !data.User) {
+    throw new Error("Login response is missing token or user information.");
+  }
+
   return {
-    token: data.Token || data.token,
-    user: data.User || data.user,
+    token: data.Token,
+    user: data.User,
   };
 };
 
+// Register
+export const register = async (model: RegisterModel): Promise<any> => {
+  const response = await axios.post("/auth/register", model);
+  return response.data;
+};
+
+// Confirm Email
+export const confirmEmail = async (request: ConfirmEmailRequest): Promise<any> => {
+  const response = await axios.post("/auth/confirm-email", request);
+  return response.data;
+};

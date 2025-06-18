@@ -1,8 +1,14 @@
-"use client";
+"use client"
 
-import React, { useState } from "react";
-import { register } from "../../services/authService";
-import { useRouter } from "next/navigation";
+import type React from "react"
+import { useState } from "react"
+import { register } from "../../services/authService"
+import { useRouter } from "next/navigation"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Alert, AlertDescription } from "@/components/ui/alert"
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 
 export default function Register() {
   const [form, setForm] = useState({
@@ -16,163 +22,141 @@ export default function Register() {
       Country: "",
     },
     Password: "",
-  });
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [error, setError] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const [showSuccess, setShowSuccess] = useState(false);
-  const router = useRouter();
+  })
+  const [confirmPassword, setConfirmPassword] = useState("")
+  const [error, setError] = useState<string | null>(null)
+  const [isLoading, setIsLoading] = useState(false)
+  const [showSuccess, setShowSuccess] = useState(false)
+  const router = useRouter()
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
+    const { name, value } = e.target
     if (name in form.Address) {
       setForm((prev) => ({
         ...prev,
         Address: { ...prev.Address, [name]: value },
-      }));
+      }))
     } else if (name === "ConfirmPassword") {
-      setConfirmPassword(value);
+      setConfirmPassword(value)
     } else {
-      setForm((prev) => ({ ...prev, [name]: value }));
+      setForm((prev) => ({ ...prev, [name]: value }))
     }
-  };
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setError(null);
+    e.preventDefault()
+    setError(null)
 
     if (form.Password !== confirmPassword) {
-      setError("Passwords do not match.");
-      return;
+      setError("Passwords do not match.")
+      return
     }
 
-    setIsLoading(true);
+    setIsLoading(true)
     try {
-      await register(form);
-      setShowSuccess(true); // Show popup
+      await register(form)
+      setShowSuccess(true)
     } catch (err: any) {
       const apiMessage =
         err?.response?.data?.Message ||
         err?.response?.data?.message ||
-        "Registration failed. Please check your details.";
-      setError(apiMessage);
+        "Registration failed. Please check your details."
+      setError(apiMessage)
     } finally {
-      setIsLoading(false);
+      setIsLoading(false)
     }
-  };
+  }
 
   const handleClosePopup = () => {
-    setShowSuccess(false);
-    router.push("/login");
-  };
+    setShowSuccess(false)
+    router.push("/login")
+  }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 via-white to-slate-100 px-4">
-      <form
-        onSubmit={handleSubmit}
-        className="bg-white/80 p-8 rounded-3xl shadow-2xl border w-full max-w-md space-y-4"
-      >
-        <h2 className="text-2xl font-bold mb-4">Register</h2>
-        {error && <div className="text-red-500">{error}</div>}
-        <input
-          name="FirstName"
-          placeholder="First Name"
-          value={form.FirstName}
-          onChange={handleChange}
-          className="w-full p-2 border rounded"
-          required
-        />
-        <input
-          name="LastName"
-          placeholder="Last Name"
-          value={form.LastName}
-          onChange={handleChange}
-          className="w-full p-2 border rounded"
-          required
-        />
-        <input
-          name="Email"
-          type="email"
-          placeholder="Email"
-          value={form.Email}
-          onChange={handleChange}
-          className="w-full p-2 border rounded"
-          required
-        />
-        <input
-          name="Phone"
-          placeholder="Phone"
-          value={form.Phone}
-          onChange={handleChange}
-          className="w-full p-2 border rounded"
-          required
-        />
-        <input
-          name="address"
-          placeholder="Street Address"
-          value={form.Address.address}
-          onChange={handleChange}
-          className="w-full p-2 border rounded"
-          required
-        />
-        <input
-          name="City"
-          placeholder="City"
-          value={form.Address.City}
-          onChange={handleChange}
-          className="w-full p-2 border rounded"
-          required
-        />
-        <input
-          name="Country"
-          placeholder="Country"
-          value={form.Address.Country}
-          onChange={handleChange}
-          className="w-full p-2 border rounded"
-          required
-        />
-        <input
-          name="Password"
-          type="password"
-          placeholder="Password"
-          value={form.Password}
-          onChange={handleChange}
-          className="w-full p-2 border rounded"
-          required
-        />
-        <input
-          name="ConfirmPassword"
-          type="password"
-          placeholder="Confirm Password"
-          value={confirmPassword}
-          onChange={handleChange}
-          className="w-full p-2 border rounded"
-          required
-        />
-        <button
-          type="submit"
-          className="w-full bg-blue-600 text-white p-2 rounded font-semibold"
-          disabled={isLoading}
-        >
-          {isLoading ? "Registering..." : "Register"}
-        </button>
-      </form>
+    <div className="min-h-screen flex items-center justify-center bg-background px-4 py-8">
+      <Card className="w-full max-w-md">
+        <CardHeader>
+          <CardTitle className="text-2xl font-bold text-center">Register</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          {error && (
+            <Alert variant="destructive">
+              <AlertDescription>{error}</AlertDescription>
+            </Alert>
+          )}
 
-      {/* Popup Modal */}
-      {showSuccess && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40 z-50">
-          <div className="bg-white rounded-xl shadow-lg p-8 max-w-sm w-full text-center">
-            <h3 className="text-xl font-bold mb-4">Registration Successful!</h3>
-            <p className="mb-6">Please check your email and confirm your account.</p>
-            <button
-              onClick={handleClosePopup}
-              className="bg-blue-600 text-white px-4 py-2 rounded font-semibold"
-            >
-              OK
-            </button>
-          </div>
-        </div>
-      )}
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div className="grid grid-cols-2 gap-4">
+              <Input
+                name="FirstName"
+                placeholder="First Name"
+                value={form.FirstName}
+                onChange={handleChange}
+                required
+              />
+              <Input name="LastName" placeholder="Last Name" value={form.LastName} onChange={handleChange} required />
+            </div>
+
+            <Input name="Email" type="email" placeholder="Email" value={form.Email} onChange={handleChange} required />
+
+            <Input name="Phone" placeholder="Phone" value={form.Phone} onChange={handleChange} required />
+
+            <Input
+              name="address"
+              placeholder="Street Address"
+              value={form.Address.address}
+              onChange={handleChange}
+              required
+            />
+
+            <div className="grid grid-cols-2 gap-4">
+              <Input name="City" placeholder="City" value={form.Address.City} onChange={handleChange} required />
+              <Input
+                name="Country"
+                placeholder="Country"
+                value={form.Address.Country}
+                onChange={handleChange}
+                required
+              />
+            </div>
+
+            <Input
+              name="Password"
+              type="password"
+              placeholder="Password"
+              value={form.Password}
+              onChange={handleChange}
+              required
+            />
+
+            <Input
+              name="ConfirmPassword"
+              type="password"
+              placeholder="Confirm Password"
+              value={confirmPassword}
+              onChange={handleChange}
+              required
+            />
+
+            <Button type="submit" className="w-full" disabled={isLoading}>
+              {isLoading ? "Registering..." : "Register"}
+            </Button>
+          </form>
+        </CardContent>
+      </Card>
+
+      {/* Success Dialog */}
+      <Dialog open={showSuccess} onOpenChange={setShowSuccess}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Registration Successful!</DialogTitle>
+            <DialogDescription>Please check your email and confirm your account.</DialogDescription>
+          </DialogHeader>
+          <Button onClick={handleClosePopup} className="w-full">
+            OK
+          </Button>
+        </DialogContent>
+      </Dialog>
     </div>
-  );
+  )
 }
