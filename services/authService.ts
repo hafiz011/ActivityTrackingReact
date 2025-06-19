@@ -58,6 +58,10 @@ export type ChangePasswordRequest = {
   newPassword: string
 }
 
+export  type forgotPasswordRequest = {
+  email: string
+}
+
 // --------- API Calls ---------
 
 export const loginApi = async (
@@ -132,3 +136,6 @@ export const changePassword = async (request: ChangePasswordRequest): Promise<vo
   await axios.post("/auth/change-password", request)
 }
 
+export const forgotPassword = async (request: forgotPasswordRequest): Promise<void> => {
+  await axios.post("/auth/forgot-password", { request });
+}
