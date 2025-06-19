@@ -470,6 +470,7 @@ export function AppSidebar({ ...props }) {
   
   const { token, user, logout } = useAuth();
   const router = useRouter();
+
    useEffect(() => {
     if (!token || !user) {
       router.push("/login");
@@ -477,7 +478,6 @@ export function AppSidebar({ ...props }) {
   }, [token, user, router]);
 
   if (!token || !user) return null; // Optional: Blank while redirecting
-
     const handleLogout = () => {
     logout();            // Clear localStorage & context
     router.push("/login"); // Redirect to login
@@ -816,8 +816,8 @@ export function AppSidebar({ ...props }) {
                       <AvatarFallback className="rounded-lg">AD</AvatarFallback>
                     </Avatar>
                     <div className="grid flex-1 text-left text-sm leading-tight">
-                      <span className="truncate font-semibold">Admin User</span>
-                      <span className="truncate text-xs text-muted-foreground">admin@company.com</span>
+                      <span className="truncate font-semibold">{user.fullName}</span>
+                      <span className="truncate text-xs text-muted-foreground">{user.email}</span>
                     </div>
                   </div>
                 </DropdownMenuLabel>
@@ -848,11 +848,10 @@ export function AppSidebar({ ...props }) {
                   Send Feedback
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem className="text-red-600">
-                  <LogOut className="mr-2 h-4 w-4" />
-                  Log out
-                  onClick={handleLogout} variant="destructive"
-                </DropdownMenuItem>
+                  <DropdownMenuItem onClick={handleLogout} className="text-red-600">
+                    <LogOut className="mr-2 h-4 w-4" />
+                      Log out
+                  </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           </SidebarMenuItem>

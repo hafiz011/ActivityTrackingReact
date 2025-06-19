@@ -401,6 +401,17 @@ const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042", "#8884D8"]
 
 export default function ActivityTrackingDashboard() {
   // State for filters
+    const { isAuthenticated, isLoading: authLoading } = useAuth()
+    const router = useRouter()
+
+  // Redirect if not authenticated
+  useEffect(() => {
+    if (!authLoading && !isAuthenticated) {
+      router.push("/login")
+      return
+    }
+
+  }, [isAuthenticated, authLoading, router])
 
 
   const [timeRange, setTimeRange] = useState("7d")
