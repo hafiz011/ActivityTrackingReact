@@ -21,13 +21,30 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Separator } from "@/components/ui/separator"
 import { Badge } from "@/components/ui/badge"
-import { User, Mail, Phone, MapPin, Lock, Camera, Save, Loader2, Eye, EyeOff, Shield, Bell, Trash2 } from "lucide-react"
+import {
+  User,
+  Mail,
+  Phone,
+  MapPin,
+  Lock,
+  Camera,
+  Save,
+  Loader2,
+  Eye,
+  EyeOff,
+  Shield,
+  Bell,
+  Trash2,
+  Upload,
+} from "lucide-react"
 
 export default function ProfileSettings() {
   const { user, isAuthenticated, isLoading: authLoading, logout } = useAuth()
   const router = useRouter()
 
   const [profile, setProfile] = useState<UserProfile | null>(null)
+  const [selectedImageFile, setSelectedImageFile] = useState<File | null>(null)
+  const [imagePreview, setImagePreview] = useState<string | null>(null)
   const [passwords, setPasswords] = useState({
     currentPassword: "",
     newPassword: "",
@@ -96,14 +113,21 @@ export default function ProfileSettings() {
       const updateData: UpdateProfileRequest = {
         firstName: profile.firstName,
         lastName: profile.lastName,
-        email: profile.email,
         phoneNumber: profile.phoneNumber,
         address: profile.address,
+        imageFile: selectedImageFile || undefined,
       }
 
-      const updatedProfile = await updateProfile(updateData)
-      setProfile(updatedProfile)
-      setSuccess("Profile updated successfully!")
+      const result = await updateProfile(updateData)
+
+      // Update the profile with new image path if provided
+      if (result.imagePath) {
+        setProfile((prev) => (prev ? { ...prev, imagePath: result.imagePath } : null))
+      }
+
+      setSuccess(result.message || "Profile updated successfully!")
+      setSelectedImageFile(null)
+      setImagePreview(null)
     } catch (err: any) {
       const errorMessage =
         err?.response?.data?.Message || err?.response?.data?.message || err?.message || "Failed to update profile"
@@ -149,10 +173,25 @@ export default function ProfileSettings() {
 
   const handleAvatarUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
-    if (file && profile) {
+    if (file) {
+      // Validate file type
+      if (!file.type.startsWith("image/")) {
+        setError("Please select a valid image file")
+        return
+      }
+
+      // Validate file size (5MB limit)
+      if (file.size > 5 * 1024 * 1024) {
+        setError("Image file size must be less than 5MB")
+        return
+      }
+
+      setSelectedImageFile(file)
+
+      // Create preview
       const reader = new FileReader()
       reader.onload = (e) => {
-        setProfile((prev) => (prev ? { ...prev, imagePath: e.target?.result as string } : null))
+        setImagePreview(e.target?.result as string)
       }
       reader.readAsDataURL(file)
     }
@@ -168,6 +207,7 @@ export default function ProfileSettings() {
   }
 
   const getAvatarUrl = (imagePath?: string) => {
+    if (imagePreview) return imagePreview // Show preview if available
     if (!imagePath) return undefined
     // If it's a full URL (base64 or external), return as is
     if (imagePath.startsWith("data:") || imagePath.startsWith("http")) {
@@ -281,7 +321,7 @@ export default function ProfileSettings() {
                       <input type="file" accept="image/*" onChange={handleAvatarUpload} className="hidden" />
                     </label>
                   </div>
-                  <div>
+                  <div className="flex-1">
                     <h3 className="text-lg font-semibold">
                       {profile.firstName} {profile.lastName}
                     </h3>
@@ -297,6 +337,14 @@ export default function ProfileSettings() {
                         {profile.phoneNumberConfirmed ? "Phone Verified" : "Phone Unverified"}
                       </Badge>
                     </div>
+                    {selectedImageFile && (
+                      <div className="mt-2">
+                        <Badge variant="outline" className="text-xs">
+                          <Upload className="w-3 h-3 mr-1" />
+                          New image selected: {selectedImageFile.name}
+                        </Badge>
+                      </div>
+                    )}
                   </div>
                 </div>
 
@@ -342,10 +390,11 @@ export default function ProfileSettings() {
                         type="email"
                         className="pl-10"
                         value={profile.email}
-                        onChange={(e) => setProfile((prev) => (prev ? { ...prev, email: e.target.value } : null))}
-                        required
+                        disabled
+                        title="Email cannot be changed from this form"
                       />
                     </div>
+                    <p className="text-xs text-muted-foreground">Email address cannot be changed from this form</p>
                   </div>
 
                   <div className="space-y-2">

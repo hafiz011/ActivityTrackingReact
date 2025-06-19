@@ -822,21 +822,9 @@ export function AppSidebar({ ...props }) {
                   </div>
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem>
-                  <User2 className="mr-2 h-4 w-4" />
-                  Profile Settings
-                </DropdownMenuItem>
-                <DropdownMenuItem>
+                <DropdownMenuItem onClick={() => router.push("/profile")}>
                   <Settings className="mr-2 h-4 w-4" />
                   Account Settings
-                </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <Bell className="mr-2 h-4 w-4" />
-                  Notification Preferences
-                </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <Key className="mr-2 h-4 w-4" />
-                  Security Settings
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem>

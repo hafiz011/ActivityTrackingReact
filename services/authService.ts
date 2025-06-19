@@ -32,6 +32,7 @@ type ConfirmEmailRequest = {
   Token: string;
 };
 
+
 // Profile types
 export type UserProfile = {
   firstName: string
@@ -47,16 +48,15 @@ export type UserProfile = {
 export type UpdateProfileRequest = {
   firstName: string
   lastName: string
-  email: string
   phoneNumber: string
   address: Address
+  imageFile?: File // For file upload
 }
 
 export type ChangePasswordRequest = {
   currentPassword: string
   newPassword: string
 }
-
 
 // --------- API Calls ---------
 
@@ -97,30 +97,38 @@ export const getAccountDetails = async (): Promise<UserProfile> => {
   return response.data
 }
 
-export const updateProfile = async (profile: UpdateProfileRequest): Promise<UserProfile> => {
-  const response = await axios.put<UserProfile>("/auth/account", profile)
+export const updateProfile = async (
+  profile: UpdateProfileRequest,
+): Promise<{ message: string; imagePath?: string }> => {
+  const formData = new FormData()
+
+  // Add text fields
+  formData.append("FirstName", profile.firstName)
+  formData.append("LastName", profile.lastName)
+  formData.append("Phone", profile.phoneNumber || "")
+
+  // Add address fields
+  if (profile.address) {
+    formData.append("Address.address", profile.address.address || "")
+    formData.append("Address.City", profile.address.City || "")
+    formData.append("Address.Country", profile.address.Country || "")
+  }
+
+  // Add image file if provided
+  if (profile.imageFile) {
+    formData.append("ImagePath", profile.imageFile)
+  }
+
+  const response = await axios.put<{ message: string; imagePath?: string }>("/auth/account", formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  })
+
   return response.data
 }
 
 export const changePassword = async (request: ChangePasswordRequest): Promise<void> => {
   await axios.post("/auth/change-password", request)
-}
-
-// Additional utility functions
-export const logout = () => {
-  if (typeof window !== "undefined") {
-    localStorage.removeItem("authToken")
-  }
-}
-
-export const getStoredToken = (): string | null => {
-  if (typeof window !== "undefined") {
-    return localStorage.getItem("authToken")
-  }
-  return null
-}
-
-export const isAuthenticated = (): boolean => {
-  return !!getStoredToken()
 }
 
