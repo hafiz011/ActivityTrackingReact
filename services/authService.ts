@@ -1,4 +1,4 @@
-import axios from "@/lib/axios"; // কাস্টম axios instance
+import axios from "@/lib/axios";
 
 // --------- Type Definitions ---------
 type User = {
@@ -58,9 +58,16 @@ export type ChangePasswordRequest = {
   newPassword: string
 }
 
-export  type forgotPasswordRequest = {
-  email: string
-}
+export type forgotPasswordRequest = {
+  email: string;
+};
+
+export type ResetPasswordRequest = {
+  email: string;
+  token: string;
+  newPassword: string;
+  confirmPassword: string;
+};
 
 // --------- API Calls ---------
 
@@ -137,5 +144,20 @@ export const changePassword = async (request: ChangePasswordRequest): Promise<vo
 }
 
 export const forgotPassword = async (request: forgotPasswordRequest): Promise<void> => {
-  await axios.post("/auth/forgot-password", { request });
-}
+  await axios.post("/auth/forgot-password", request);
+};
+
+export const ResetPassword = async (
+  request: ResetPasswordRequest
+): Promise<{ Message: string }> => {
+  const response = await axios.post<{ Message: string }>(
+    "/auth/reset-password",
+    {
+      email: request.email,
+      token: request.token,
+      newPassword: request.newPassword,
+      confirmPassword: request.confirmPassword,
+    }
+  );
+  return response.data;
+};
