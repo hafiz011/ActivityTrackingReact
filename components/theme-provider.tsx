@@ -73,6 +73,12 @@ export function ThemeProvider({
       }
 
       // Remove previous theme classes
+      root.classList.remove("dark")
+
+      // Add dark class if new theme is dark
+      if (newTheme === "dark") {
+        root.classList.add("dark")
+      }
       root.classList.remove("light-theme", "dark-theme")
 
       // Add new theme class
