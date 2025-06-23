@@ -744,9 +744,9 @@ export default function ActivityTrackingDashboard() {
       {/* Background particle effect */}
       {/* <canvas ref={canvasRef} className="absolute inset-0 w-full h-full opacity-30" /> */}
       <AppSidebar />
-      <SidebarInset>
+      <SidebarInset className="p-2">
         {/* Header */}
-        <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12 border-b border-slate-700/50 mb-6">
+        <Card className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12">
           <div className="flex items-center gap-2 px-4">
             <SidebarTrigger className="-ml-1" />
             <Separator orientation="vertical" className="mr-2 h-4" />
@@ -785,10 +785,9 @@ export default function ActivityTrackingDashboard() {
               Refresh
             </Button>
           </div>
-        </header>
+        </Card>
 
-        <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
-
+        <Card className="flex flex-1 flex-col gap-4 p-5 pt-3">
           <FiltersCard
             dateRange={dateRange}
             setDateRange={setDateRange}
@@ -1616,7 +1615,7 @@ export default function ActivityTrackingDashboard() {
               </Card>
             </TabsContent>
           </Tabs>
-        </div>
+        </Card>
       </SidebarInset>
     </SidebarProvider>
   )

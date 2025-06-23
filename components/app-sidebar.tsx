@@ -489,58 +489,23 @@ export function AppSidebar({ ...props }) {
         {/* Workspace Selector */}
         <SidebarMenu>
           <SidebarMenuItem>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <SidebarMenuButton
-                  size="lg"
-                  className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
-                >
-                  <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
-                    <selectedWorkspace.logo className="size-4" />
-                  </div>
-                  <div className="grid flex-1 text-left text-sm leading-tight">
-                    <span className="truncate font-semibold">{selectedWorkspace.name}</span>
-                    <span className="truncate text-xs text-sidebar-foreground/70">{selectedWorkspace.plan}</span>
-                  </div>
-                  <ChevronDown className="ml-auto size-4 transition-transform duration-200 data-[state=open]:rotate-180" />
-                </SidebarMenuButton>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent
-                className="w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-lg"
-                align="start"
-                side="bottom"
-                sideOffset={4}
+            <SidebarMenuButton
+              size="lg"
+              className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
               >
-                <DropdownMenuLabel className="text-xs text-muted-foreground">Workspaces</DropdownMenuLabel>
-                {workspaces.map((workspace, index) => (
-                  <DropdownMenuItem
-                    key={workspace.name}
-                    onClick={() => setSelectedWorkspace(workspace)}
-                    className="gap-2 p-2"
-                  >
-                    <div className="flex size-6 items-center justify-center rounded-sm border">
-                      <workspace.logo className="size-4 shrink-0" />
-                    </div>
-                    <div className="flex flex-col">
-                      <span className="font-medium">{workspace.name}</span>
-                      <span className="text-xs text-muted-foreground">{workspace.plan}</span>
-                    </div>
-                  </DropdownMenuItem>
-                ))}
-                <DropdownMenuSeparator />
-                <DropdownMenuItem className="gap-2 p-2">
-                  <div className="flex size-6 items-center justify-center rounded-md border border-dashed">
-                    <Plus className="size-4" />
-                  </div>
-                  <div className="font-medium text-muted-foreground">Add workspace</div>
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+              <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
+                <selectedWorkspace.logo className="size-4" />
+              </div>
+              <div className="grid flex-1 text-left text-sm leading-tight">
+                <span className="truncate font-semibold">{selectedWorkspace.name}</span>
+                <span className="truncate text-xs text-sidebar-foreground/70">{selectedWorkspace.plan}</span>
+              </div>
+            </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
 
       {/* Search */}
-      <div className="hidden md:flex items-center space-x-1 bg-slate-800/50 rounded-full px-3 py-1.5 border border-slate-700/50 backdrop-blur-sm">
+      <div className="hidden md:flex items-center space-x-1 rounded-full px-3 py-1.5 border border-slate-700/50 backdrop-blur-sm">
         <Search className="h-4 w-4 text-slate-400" />
         <input
         type="text"
@@ -549,7 +514,6 @@ export function AppSidebar({ ...props }) {
         />
       </div>
       </SidebarHeader>
-
       <SidebarContent>
         {/* Main Navigation */}
         <SidebarGroup>
