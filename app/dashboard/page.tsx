@@ -8,6 +8,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { AppSidebar } from "@/components/app-sidebar"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { FiltersCard } from "@/components/FiltersCard"
 import { Progress } from "@/components/ui/progress"
 import { Slider } from "@/components/ui/slider"
 
@@ -787,106 +788,19 @@ export default function ActivityTrackingDashboard() {
         </header>
 
         <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
-          <Card>
-            {/* Page Title */}
-            <div className="flex items-center justify-between">
-              <div>
-                <h1 className="text-2xl font-bold tracking-tight">Analytics Dashboard</h1>
-                {/* <p className="text-muted-foreground">
-                  Monitor user behavior and track activities across your applications
-                </p> */}
-              </div>
-              {/* Filters Section */}
-              <Collapsible>
-                <Card>
-                  <CardHeader className="pb-3">
-                    <div className="flex items-center justify-between">
-                      <CardTitle className="flex items-center gap-2">
-                        <Filter className="h-5 w-5" />
-                        Filters & Controls
-                      </CardTitle>
-                      <CollapsibleTrigger asChild>
-                        <Button variant="ghost" size="sm">
-                          <ChevronDown className="h-4 w-4" />
-                        </Button>
-                      </CollapsibleTrigger>
-                    </div>
-                  </CardHeader>
-                  <CollapsibleContent>
-                    <CardContent>
-                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
-                        <div className="space-y-2">
-                          <Label>Date Range</Label>
-                          <DatePickerWithRange date={dateRange} setDate={setDateRange} />
-                        </div>
 
-                        <div className="space-y-2">
-                          <Label>Country</Label>
-                          <Select value={selectedCountry} onValueChange={setSelectedCountry}>
-                            <SelectTrigger>
-                              <SelectValue />
-                            </SelectTrigger>
-                            <SelectContent>
-                              <SelectItem value="all">All Countries</SelectItem>
-                              <SelectItem value="us">United States</SelectItem>
-                              <SelectItem value="uk">United Kingdom</SelectItem>
-                              <SelectItem value="ca">Canada</SelectItem>
-                              <SelectItem value="au">Australia</SelectItem>
-                              <SelectItem value="de">Germany</SelectItem>
-                            </SelectContent>
-                          </Select>
-                        </div>
-
-                        <div className="space-y-2">
-                          <Label>Device Type</Label>
-                          <Select value={selectedDevice} onValueChange={setSelectedDevice}>
-                            <SelectTrigger>
-                              <SelectValue />
-                            </SelectTrigger>
-                            <SelectContent>
-                              <SelectItem value="all">All Devices</SelectItem>
-                              <SelectItem value="desktop">Desktop</SelectItem>
-                              <SelectItem value="mobile">Mobile</SelectItem>
-                              <SelectItem value="tablet">Tablet</SelectItem>
-                            </SelectContent>
-                          </Select>
-                        </div>
-
-                        <div className="space-y-2">
-                          <Label>Suspicious Only</Label>
-                          <div className="flex items-center space-x-2 pt-2">
-                            <Switch id="suspicious-only" checked={suspiciousOnly} onCheckedChange={setSuspiciousOnly} />
-                            <Label htmlFor="suspicious-only">Show</Label>
-                          </div>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </CollapsibleContent>
-                </Card>
-              </Collapsible>
-              <div className="flex items-center gap-2">
-                <Button
-                  variant={timeRange === "24h" ? "default" : "outline"}
-                  size="sm"
-                  onClick={() => setTimeRange("24h")}
-                >
-                  24h
-                </Button>
-                <Button variant={timeRange === "7d" ? "default" : "outline"} size="sm" onClick={() => setTimeRange("7d")}>
-                  7d
-                </Button>
-                <Button
-                  variant={timeRange === "30d" ? "default" : "outline"}
-                  size="sm"
-                  onClick={() => setTimeRange("30d")}
-                >
-                  30d
-                </Button>
-              </div>
-            </div>
-          </Card>
-
-          
+          <FiltersCard
+            dateRange={dateRange}
+            setDateRange={setDateRange}
+            selectedCountry={selectedCountry}
+            setSelectedCountry={setSelectedCountry}
+            selectedDevice={selectedDevice}
+            setSelectedDevice={setSelectedDevice}
+            suspiciousOnly={suspiciousOnly}
+            setSuspiciousOnly={setSuspiciousOnly}
+            timeRange={timeRange}
+            setTimeRange={setTimeRange}
+          />
 
           {/* Real-time Metrics */}
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-5">

@@ -85,7 +85,7 @@ export function FiltersCard({
 
         {/* Advanced Filters */}
         <Collapsible>
-          <Card className="border-2 hover:border-primary/50 transition-colors">
+          <Card className="hover:border-primary/50 transition-colors">
             <CardHeader className="pb-3">
               <div className="flex items-center justify-between">
                 <CardTitle className="flex items-center gap-2 text-lg">
@@ -102,11 +102,12 @@ export function FiltersCard({
             <CollapsibleContent>
               <CardContent>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                  <div className="space-y-2">
-                    <Label className="text-sm font-medium">Date Range</Label>
-                    <DatePickerWithRange date={dateRange} setDate={setDateRange} />
-                  </div>
-
+                    <div>
+                        <div className="space-y-2">
+                            <Label className="text-sm font-medium">Date Range</Label>
+                            <DatePickerWithRange date={dateRange} setDate={setDateRange} />
+                        </div>
+                    </div>
                   <div className="space-y-2">
                     <Label className="text-sm font-medium">Country</Label>
                     <Select value={selectedCountry} onValueChange={setSelectedCountry}>
