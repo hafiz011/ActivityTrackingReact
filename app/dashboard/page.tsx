@@ -745,7 +745,7 @@ export default function ActivityTrackingDashboard() {
       <AppSidebar />
       <SidebarInset>
         {/* Header */}
-        <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12">
+        <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12 border-b border-slate-700/50 mb-6">
           <div className="flex items-center gap-2 px-4">
             <SidebarTrigger className="-ml-1" />
             <Separator orientation="vertical" className="mr-2 h-4" />
@@ -787,116 +787,106 @@ export default function ActivityTrackingDashboard() {
         </header>
 
         <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
-          {/* Page Title */}
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-2xl font-bold tracking-tight">Analytics Dashboard</h1>
-              <p className="text-muted-foreground">
-                Monitor user behavior and track activities across your applications
-              </p>
-            </div>
-            <div className="flex items-center gap-2">
-              <Button
-                variant={timeRange === "24h" ? "default" : "outline"}
-                size="sm"
-                onClick={() => setTimeRange("24h")}
-              >
-                24h
-              </Button>
-              <Button variant={timeRange === "7d" ? "default" : "outline"} size="sm" onClick={() => setTimeRange("7d")}>
-                7d
-              </Button>
-              <Button
-                variant={timeRange === "30d" ? "default" : "outline"}
-                size="sm"
-                onClick={() => setTimeRange("30d")}
-              >
-                30d
-              </Button>
-            </div>
-          </div>
-
-          {/* Filters Section */}
-          <Collapsible>
-            <Card>
-              <CardHeader className="pb-3">
-                <div className="flex items-center justify-between">
-                  <CardTitle className="flex items-center gap-2">
-                    <Filter className="h-5 w-5" />
-                    Filters & Controls
-                  </CardTitle>
-                  <CollapsibleTrigger asChild>
-                    <Button variant="ghost" size="sm">
-                      <ChevronDown className="h-4 w-4" />
-                    </Button>
-                  </CollapsibleTrigger>
-                </div>
-              </CardHeader>
-              <CollapsibleContent>
-                <CardContent>
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
-                    <div className="space-y-2">
-                      <Label>Date Range</Label>
-                      <DatePickerWithRange date={dateRange} setDate={setDateRange} />
+          <Card>
+            {/* Page Title */}
+            <div className="flex items-center justify-between">
+              <div>
+                <h1 className="text-2xl font-bold tracking-tight">Analytics Dashboard</h1>
+                {/* <p className="text-muted-foreground">
+                  Monitor user behavior and track activities across your applications
+                </p> */}
+              </div>
+              {/* Filters Section */}
+              <Collapsible>
+                <Card>
+                  <CardHeader className="pb-3">
+                    <div className="flex items-center justify-between">
+                      <CardTitle className="flex items-center gap-2">
+                        <Filter className="h-5 w-5" />
+                        Filters & Controls
+                      </CardTitle>
+                      <CollapsibleTrigger asChild>
+                        <Button variant="ghost" size="sm">
+                          <ChevronDown className="h-4 w-4" />
+                        </Button>
+                      </CollapsibleTrigger>
                     </div>
+                  </CardHeader>
+                  <CollapsibleContent>
+                    <CardContent>
+                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
+                        <div className="space-y-2">
+                          <Label>Date Range</Label>
+                          <DatePickerWithRange date={dateRange} setDate={setDateRange} />
+                        </div>
 
-                    <div className="space-y-2">
-                      <Label>Country</Label>
-                      <Select value={selectedCountry} onValueChange={setSelectedCountry}>
-                        <SelectTrigger>
-                          <SelectValue />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="all">All Countries</SelectItem>
-                          <SelectItem value="us">United States</SelectItem>
-                          <SelectItem value="uk">United Kingdom</SelectItem>
-                          <SelectItem value="ca">Canada</SelectItem>
-                          <SelectItem value="au">Australia</SelectItem>
-                          <SelectItem value="de">Germany</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
+                        <div className="space-y-2">
+                          <Label>Country</Label>
+                          <Select value={selectedCountry} onValueChange={setSelectedCountry}>
+                            <SelectTrigger>
+                              <SelectValue />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="all">All Countries</SelectItem>
+                              <SelectItem value="us">United States</SelectItem>
+                              <SelectItem value="uk">United Kingdom</SelectItem>
+                              <SelectItem value="ca">Canada</SelectItem>
+                              <SelectItem value="au">Australia</SelectItem>
+                              <SelectItem value="de">Germany</SelectItem>
+                            </SelectContent>
+                          </Select>
+                        </div>
 
-                    <div className="space-y-2">
-                      <Label>Device Type</Label>
-                      <Select value={selectedDevice} onValueChange={setSelectedDevice}>
-                        <SelectTrigger>
-                          <SelectValue />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="all">All Devices</SelectItem>
-                          <SelectItem value="desktop">Desktop</SelectItem>
-                          <SelectItem value="mobile">Mobile</SelectItem>
-                          <SelectItem value="tablet">Tablet</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
+                        <div className="space-y-2">
+                          <Label>Device Type</Label>
+                          <Select value={selectedDevice} onValueChange={setSelectedDevice}>
+                            <SelectTrigger>
+                              <SelectValue />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="all">All Devices</SelectItem>
+                              <SelectItem value="desktop">Desktop</SelectItem>
+                              <SelectItem value="mobile">Mobile</SelectItem>
+                              <SelectItem value="tablet">Tablet</SelectItem>
+                            </SelectContent>
+                          </Select>
+                        </div>
 
-                    <div className="space-y-2">
-                      <Label>View Mode</Label>
-                      <Select value={viewMode} onValueChange={setViewMode}>
-                        <SelectTrigger>
-                          <SelectValue />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="table">Table View</SelectItem>
-                          <SelectItem value="map">Map View</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-
-                    <div className="space-y-2">
-                      <Label>Suspicious Only</Label>
-                      <div className="flex items-center space-x-2 pt-2">
-                        <Switch id="suspicious-only" checked={suspiciousOnly} onCheckedChange={setSuspiciousOnly} />
-                        <Label htmlFor="suspicious-only">Show only suspicious</Label>
+                        <div className="space-y-2">
+                          <Label>Suspicious Only</Label>
+                          <div className="flex items-center space-x-2 pt-2">
+                            <Switch id="suspicious-only" checked={suspiciousOnly} onCheckedChange={setSuspiciousOnly} />
+                            <Label htmlFor="suspicious-only">Show</Label>
+                          </div>
+                        </div>
                       </div>
-                    </div>
-                  </div>
-                </CardContent>
-              </CollapsibleContent>
-            </Card>
-          </Collapsible>
+                    </CardContent>
+                  </CollapsibleContent>
+                </Card>
+              </Collapsible>
+              <div className="flex items-center gap-2">
+                <Button
+                  variant={timeRange === "24h" ? "default" : "outline"}
+                  size="sm"
+                  onClick={() => setTimeRange("24h")}
+                >
+                  24h
+                </Button>
+                <Button variant={timeRange === "7d" ? "default" : "outline"} size="sm" onClick={() => setTimeRange("7d")}>
+                  7d
+                </Button>
+                <Button
+                  variant={timeRange === "30d" ? "default" : "outline"}
+                  size="sm"
+                  onClick={() => setTimeRange("30d")}
+                >
+                  30d
+                </Button>
+              </div>
+            </div>
+          </Card>
+
+          
 
           {/* Real-time Metrics */}
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-5">
