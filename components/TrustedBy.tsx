@@ -14,7 +14,7 @@ export const TrustedBy: React.FC = () => {
       <section className="py-16 px-4">
         <div className="max-w-6xl mx-auto text-center">
           <p className="text-muted-foreground mb-12 text-lg">
-            Trusted by forward-thinking teams worldwide
+            Trusted by forward-thinking teams around the globe
           </p>
           <div className="flex flex-wrap justify-center items-center gap-12 opacity-60">
             {brands.map((brand) => (

@@ -43,12 +43,9 @@ export const HeaderSection: React.FC = () => {
           <Link href="/login" className="text-sm font-medium hover:text-blue-600 transition-colors">
             Login
           </Link>
-
-          {/* CTA Button */}
-          <Button asChild className="ml-2 text-sm px-4 py-2">
-            <Link href="/start-free-trial">Start Free Trial</Link>
-          </Button>
-
+          <Link href="/register" className="text-sm font-medium hover:text-blue-600 transition-colors">
+            Register
+          </Link>
           <ThemeToggle />
         </nav>
       </div>
