@@ -5,8 +5,8 @@ import { Card, CardContent } from "@/components/ui/card";
 const ProblemSolution: React.FC = () => {
   return (
     <section className="py-20 px-4">
-      <div className="max-w-4xl mx-auto text-center">
-        <h2 className="text-4xl md:text-5xl font-bold mb-8 text-balance">
+      <div className="max-w-6xl mx-auto text-center">
+        <h2 className="text-4xl md:text-4xl font-bold mb-8 text-balance">
           Are You Losing Users <span className="text-red-500">Without Knowing Why?</span>
         </h2>
 
@@ -16,8 +16,8 @@ const ProblemSolution: React.FC = () => {
           No alerts. No context. Just noise.
         </p>
 
-        <Card className="max-w-3xl mx-auto bg-gradient-to-br from-blue-50/50 to-emerald-50/30 dark:from-blue-950/20 dark:to-emerald-950/10 border-blue-200/50 dark:border-blue-800/50 shadow-xl backdrop-blur-sm">
-          <CardContent className="p-12">
+        <Card>
+          <CardContent className="p-8">
             <div className="flex items-center justify-center w-16 h-16 mx-auto mb-6 rounded-full bg-gradient-to-br from-blue-500 to-emerald-500 text-white">
               <Shield className="w-8 h-8" />
             </div>
