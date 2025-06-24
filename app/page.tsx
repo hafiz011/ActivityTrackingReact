@@ -8,7 +8,6 @@ import FeaturesSection from "@/components/FeaturesSection"
 import AIAnalytics from "@/components/AIAnalytics"
 import PricingPlans from "@/components/PricingPlans";
 import Testimonials from "@/components/Testimonials";
-import FinalCTA from "@/components/FinalCTA";
 import FAQ from "@/components/FAQ";
 import Footer from "@/components/Footer";
 
@@ -25,7 +24,6 @@ export default function Home() {
       <AIAnalytics />
       <PricingPlans />
       <Testimonials />
-      <FinalCTA />
       <FAQ />
       <Footer />
     </>

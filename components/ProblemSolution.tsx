@@ -6,7 +6,7 @@ const ProblemSolution: React.FC = () => {
   return (
     <section className="py-20 px-4">
       <div className="max-w-6xl mx-auto text-center">
-        <h2 className="text-4xl md:text-4xl font-bold mb-8 text-balance">
+        <h2 className="text-5xl md:text-5xl font-bold mb-8 text-balance">
           Are You Losing Users <span className="text-red-500">Without Knowing Why?</span>
         </h2>
 

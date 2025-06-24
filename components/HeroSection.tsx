@@ -327,7 +327,7 @@ export const HeroSection: React.FC = () => {
 
           {/* Cyberpunk Headline */}
           <div className={`transition-all duration-1000 delay-200 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
-            <h3 className="text-4xl sm:text-6xl lg:text-4xl font-bold mb-8 leading-tight">
+            <h3 className="text-5xl sm:text-6xl lg:text-5xl font-bold mb-8 leading-tight">
               <span className="block mb-4 text-white animate-glitch-text">TRACK EVERY
                 <span className="bg-gradient-to-r from-cyan-300 via-blue-300 to-purple-400 bg-clip-text text-transparent animate-neon-glow text-shadow-neon"> DIGITAL PULSE
                 </span>
