@@ -1,4 +1,6 @@
-import React from 'react';
+"use client";
+import React, { useState, useEffect, useRef } from "react";
+
 import {
   Zap,
   Activity,
@@ -77,6 +79,15 @@ const features: Feature[] = [
 ];
 
 const FeaturesSection: React.FC = () => {
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    setIsVisible(true);
+    return () => {
+      // Cleanup logic (if needed) goes here
+    };
+  }, []);
+
   return (
     <section id="features" className="py-24 px-4 bg-gradient-to-b from-transparent to-accent/20">
       <div className="max-w-7xl mx-auto">
@@ -92,13 +103,16 @@ const FeaturesSection: React.FC = () => {
           </p>
         </div>
 
+          
+        <div className={`transition-all duration-1000 delay-800 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {features.map((feature) => {
             const Icon = feature.icon;
             return (
               <Card
                 key={feature.name}
-                className="group hover:shadow-2xl transition-all duration-500 hover:scale-105 border-0 bg-card/50 backdrop-blur-sm"
+                className="group border-0 bg-black/60 backdrop-blur-md rounded-2xl shadow-2xl shadow-cyan-500/10 transition-all duration-300 border border-cyan-500/30 hover:border-cyan-400/60 animate-hologram-card hover:shadow-cyan-500/20 relative overflow-hidden"
               >
                 <CardContent className="p-8">
                   <div
@@ -116,6 +130,7 @@ const FeaturesSection: React.FC = () => {
               </Card>
             );
           })}
+        </div>
         </div>
       </div>
     </section>

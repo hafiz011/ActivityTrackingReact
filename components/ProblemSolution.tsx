@@ -16,7 +16,7 @@ const ProblemSolution: React.FC = () => {
           No alerts. No context. Just noise.
         </p>
 
-        <Card>
+        <Card className="bg-gradient-to-br from-purple-50/50 to-pink-50/30 dark:from-purple-950/20 dark:to-pink-950/10 border-purple-200/50 dark:border-purple-800/50">
           <CardContent className="p-8">
             <div className="flex items-center justify-center w-16 h-16 mx-auto mb-6 rounded-full bg-gradient-to-br from-blue-500 to-emerald-500 text-white">
               <Shield className="w-8 h-8" />
