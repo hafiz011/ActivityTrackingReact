@@ -10,12 +10,14 @@ import PricingPlans from "@/components/PricingPlans";
 import Testimonials from "@/components/Testimonials";
 import FAQ from "@/components/FAQ";
 import Footer from "@/components/Footer";
+import { LandingTheme } from "@/components/LandingTheme";
 
 
 
 export default function Home() {
   return (
     <>
+      <LandingTheme>
       <HeaderSection />
       <HeroSection />
       <TrustedBy />
@@ -26,6 +28,7 @@ export default function Home() {
       <Testimonials />
       <FAQ />
       <Footer />
+      </LandingTheme>
     </>
   );
 }

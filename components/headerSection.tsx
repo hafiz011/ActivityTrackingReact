@@ -4,13 +4,12 @@ import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
-import { ThemeToggle } from "@/components/theme-toggle";
 
 export const HeaderSection: React.FC = () => {
   const router = useRouter();
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background backdrop-blur-md supports-[backdrop-filter]:bg-background/60">
+    <header className="sticky top-0 z-50 w-full backdrop-blur-md supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center justify-between px-4 mx-auto max-w-7xl">
         {/* Logo & Branding */}
         <div className="flex items-center gap-3">
@@ -46,7 +45,7 @@ export const HeaderSection: React.FC = () => {
           <Link href="/register" className="text-sm font-medium hover:text-blue-600 transition-colors">
             Register
           </Link>
-          <ThemeToggle />
+
         </nav>
       </div>
     </header>
