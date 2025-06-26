@@ -58,26 +58,26 @@ const PricingPlans: React.FC = () => {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 md:gap-8">
           {pricing.map((plan) => (
-            <Card
+            <div
               key={plan.plan}
-              className={`relative group transition-all duration-300 overflow-hidden
+              className={`relative group transition-all duration-300 overflow-hidden rounded-2xl
                 ${plan.popular
-                  ? "ring-2 ring-blue-500 shadow-2xl scale-105 bg-gradient-to-b from-blue-500/60 to-blue-900/40 border-blue-400/60"
+                  ? "ring-2 shadow-2xl scale-105 bg-gradient-to-b from-red-400/10 via-transparent to-orange-500/10 border-blue-400/60 hover:shadow-cyan-500/20"
                   : "bg-black/60 border border-cyan-500/30 hover:border-cyan-400/60 shadow-xl hover:shadow-cyan-500/20"
                 }
               `}
             >
               {plan.popular && (
-                <Badge className="absolute left-1/2 transform -translate-x-1/2 bg-black/60  bg-gradient-to-r from-blue-600 to-blue-700 text-white z-10">
+                <Badge className="absolute left-1/2 transform -translate-x-1/2 bg-black/60  bg-gradient-to-r from-blue-900 to-blue-900 text-white z-10">
                   Most Popular
                 </Badge>
               )}
               {/* Holographic shimmer effect */}
               <div className={`absolute inset-0 pointer-events-none rounded-2xl ${plan.popular
-                ? "bg-gradient-to-br from-blue-400/10 via-transparent to-cyan-500/10 animate-tech-shimmer"
-                : "bg-gradient-to-br from-cyan-400/10 via-transparent to-purple-500/10 animate-tech-shimmer"
+                ? "bg-gradient-to-br from-blue-400/10 via-transparent to-cyan-500/10 rounded-2xl"
+                : "bg-gradient-to-br from-cyan-400/10 via-transparent to-purple-500/10 rounded-2xl"
               }`} />
-              <CardContent className="p-6 sm:p-8 text-white relative z-10 flex flex-col h-full">
+              <div className="p-6 sm:p-8 text-white relative z-10 flex flex-col h-full">
                 <div className="text-center mb-8">
                   <h3 className="text-2xl font-bold mb-2">{plan.plan}</h3>
                   <div className="mb-4">
@@ -95,13 +95,13 @@ const PricingPlans: React.FC = () => {
                   ))}
                 </ul>
                 <Button
-                  className={`w-full mt-auto ${plan.popular ? 'bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800' : ''}`}
+                  className={`w-full mt-auto ${plan.popular ? 'bg-gradient-to-r from-blue-800 to-blue-700 hover:from-blue-600' : 'bg-gradient-to-r from-blue-800 to-blue-700 hover:from-blue-700 hover:to-blue-600'}`}
                   variant={plan.popular ? 'default' : 'outline'}
                 >
                   {plan.price === 'Custom' ? 'Contact Sales' : 'Get Started'}
                 </Button>
-              </CardContent>
-            </Card>
+              </div>
+            </div>
           ))}
         </div>
       </div>
