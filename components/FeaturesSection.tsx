@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 
 import {
   Zap,
@@ -83,16 +83,13 @@ const FeaturesSection: React.FC = () => {
 
   useEffect(() => {
     setIsVisible(true);
-    return () => {
-      // Cleanup logic (if needed) goes here
-    };
   }, []);
 
   return (
-    <section id="features" className="py-24 px-4 bg-gradient-to-b from-transparent to-accent/20">
+    <section id="features" className="min-h-screen flex items-center justify-center">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-20">
-          <h2 className="text-5xl md:text-5xl font-bold mb-6">
+          <h2 className="text-5xl md:text-5xl font-bold mb-6 text-white">
             Core Features That{" "}
             <span className="bg-gradient-to-r from-blue-600 to-emerald-600 bg-clip-text text-transparent">
               Power Your Success
@@ -103,34 +100,48 @@ const FeaturesSection: React.FC = () => {
           </p>
         </div>
 
-          
         <div className={`transition-all duration-1000 delay-800 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
-
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {features.map((feature) => {
-            const Icon = feature.icon;
-            return (
-              <Card
-                key={feature.name}
-                className="group border-0 bg-black/60 backdrop-blur-md rounded-2xl shadow-2xl shadow-cyan-500/10 transition-all duration-300 border border-cyan-500/30 hover:border-cyan-400/60 animate-hologram-card hover:shadow-cyan-500/20 relative overflow-hidden"
-              >
-                <CardContent className="p-8">
-                  <div
-                    className={`inline-flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-br from-current/10 to-current/20 ${feature.color} mb-6 group-hover:scale-110 transition-transform duration-300`}
-                  >
-                    <Icon className="w-6 h-6" />
-                  </div>
-                  <h3 className="text-xl font-bold mb-4 group-hover:text-blue-600 transition-colors">
-                    {feature.name}
-                  </h3>
-                  <p className="text-muted-foreground leading-relaxed">
-                    {feature.desc}
-                  </p>
-                </CardContent>
-              </Card>
-            );
-          })}
-        </div>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {features.map((feature) => {
+              const Icon = feature.icon;
+              return (
+                <Card
+                  key={feature.name}
+                  className="group bg-black/60 backdrop-blur-md rounded-2xl shadow-2xl shadow-cyan-500/10 border border-cyan-500/30 hover:border-cyan-400/60 animate-hologram-card hover:shadow-cyan-500/20 transition-all duration-300 relative overflow-hidden"
+                >
+                  {/* Holographic shimmer effect */}
+                  <div className="absolute inset-0 pointer-events-none bg-gradient-to-br from-cyan-400/10 via-transparent to-purple-500/10 animate-tech-shimmer rounded-2xl" />
+                  <CardContent className="p-8 relative z-10">
+                    <div
+                      className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-br from-current/10 to-current/20 mb-6 group-hover:scale-110 transition-transform duration-300"
+                    >
+                      <Icon
+                        className={`
+                          w-6 h-6 font-bold
+                          transition-colors duration-300
+                          ${feature.color}
+                          group-hover:text-blue-500
+                        `}
+                      />
+                    </div>
+                    <h3
+                      className={`
+                        text-xl font-bold mb-4
+                        transition-colors duration-300
+                        ${feature.color}
+                        group-hover:text-blue-500
+                      `}
+                    >
+                      {feature.name}
+                    </h3>
+                    <p className="text-cyan-100/80 leading-relaxed">
+                      {feature.desc}
+                    </p>
+                  </CardContent>
+                </Card>
+              );
+            })}
+          </div>
         </div>
       </div>
     </section>

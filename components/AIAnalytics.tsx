@@ -6,7 +6,7 @@ const AIAnalytics: React.FC = () => {
   return (
     <section className="py-24 px-4">
       <div className="max-w-5xl mx-auto text-center">
-        <h2 className="text-4xl md:text-5xl font-bold mb-6">
+        <h2 className="text-4xl md:text-5xl font-bold mb-6 text-white">
           Track Smarter —{" "}
           <span className="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
             Let AI Guide Your Growth
@@ -19,8 +19,10 @@ const AIAnalytics: React.FC = () => {
 
         <div className="grid md:grid-cols-2 gap-8 mb-12">
           {/* Predictive Insights Card */}
-          <Card className="text-left bg-gradient-to-br from-purple-50/50 to-pink-50/30 dark:from-purple-950/20 dark:to-pink-950/10 border-purple-200/50 dark:border-purple-800/50">
-            <CardContent className="p-8">
+          <Card className="group bg-black/60 backdrop-blur-md rounded-2xl shadow-2xl shadow-purple-500/10 border border-purple-400/30 hover:border-pink-400/60 animate-hologram-card hover:shadow-pink-500/20 transition-all duration-300 relative overflow-hidden">
+            {/* Holographic shimmer effect */}
+            <div className="absolute inset-0 pointer-events-none bg-gradient-to-br from-purple-400/10 via-transparent to-pink-500/10 rounded-2xl" />
+            <CardContent className="p-8 text-white">
               <h3 className="text-xl font-bold mb-6 flex items-center gap-3">
                 <TrendingUp className="w-6 h-6 text-purple-500" />
                 Predictive Insights
@@ -43,8 +45,10 @@ const AIAnalytics: React.FC = () => {
           </Card>
 
           {/* Threat Detection Card */}
-          <Card className="text-left bg-gradient-to-br from-red-50/50 to-orange-50/30 dark:from-red-950/20 dark:to-orange-950/10 border-red-200/50 dark:border-red-800/50">
-            <CardContent className="p-8">
+          <Card className="group text-left bg-black/60 backdrop-blur-md rounded-2xl shadow-2xl shadow-red-500/10 border border-red-400/30 hover:border-orange-400/60 animate-hologram-card hover:shadow-orange-500/20 transition-all duration-300 relative overflow-hidden">
+            {/* Holographic shimmer effect */}
+            <div className="absolute inset-0 pointer-events-none bg-gradient-to-br from-red-400/10 via-transparent to-orange-500/10 rounded-2xl" />
+            <CardContent className="p-8 text-white">
               <h3 className="text-xl font-bold mb-6 flex items-center gap-3">
                 <AlertTriangle className="w-6 h-6 text-red-500" />
                 Real-Time Threat Detection
