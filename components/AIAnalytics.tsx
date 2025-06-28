@@ -4,7 +4,7 @@ import { TrendingUp, AlertTriangle, Check } from "lucide-react";
 
 const AIAnalytics: React.FC = () => {
   return (
-    <section className="py-24 px-4">
+    <section className="py-20 px-4 min-h-screemin-h-screen flex items-center justify-center">
       <div className="max-w-5xl mx-auto text-center">
         <h2 className="text-4xl md:text-5xl font-bold mb-6 text-white">
           Track Smarter —{" "}
