@@ -17,46 +17,38 @@ export default function ConfirmEmailClient() {
   const router = useRouter()
 
   useEffect(() => {
-    const handleConfirmEmail = async () => {
-      const userId = searchParams.get("userId")
-      const token = searchParams.get("token")
+    const userId = searchParams.get("userId")
+    const token = searchParams.get("token")
 
-      if (!userId || !token) {
-        setMessage("Invalid confirmation link. Please check your email for the correct link.")
-        setIsSuccess(false)
-        setIsLoading(false)
-        return
-      }
+    if (!userId || !token) {
+      setMessage("Invalid confirmation link. Please check your email for the correct link.")
+      setIsSuccess(false)
+      setIsLoading(false)
+      return
+    }
 
-      try {
-        const response = await confirmEmailApi({ UserId: userId, Token: token })
-
+    confirmEmailApi({ UserId: userId, Token: token })
+      .then((response) => {
         const successMessage =
-          response.Message ||
-          response.message ||
-          "Your email has been successfully confirmed! You can now log in to your account."
-
+          response?.Message ||
+          response?.message ||
+          "Your email has been successfully confirmed!"
         setMessage(successMessage)
         setIsSuccess(true)
-      } catch (err: any) {
+      })
+      .catch((err) => {
         const errorMessage =
           err?.response?.data?.Message ||
           err?.response?.data?.message ||
           err?.message ||
           "Email confirmation failed. The link may be invalid or expired."
-
         setMessage(errorMessage)
         setIsSuccess(false)
-      } finally {
+      })
+      .finally(() => {
         setIsLoading(false)
-      }
-    }
-
-    handleConfirmEmail()
+      })
   }, [searchParams])
-
-  const handleGoToLogin = () => router.push("/login")
-  const handleResendEmail = () => router.push("/register")
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-background px-4 py-8">
@@ -80,17 +72,16 @@ export default function ConfirmEmailClient() {
 
           <div className="flex flex-col gap-2">
             {isSuccess && (
-              <Button onClick={handleGoToLogin} className="w-full">
+              <Button onClick={() => router.push("/login")} className="w-full">
                 Go to Login
               </Button>
             )}
-
             {isSuccess === false && (
               <>
-                <Button onClick={handleResendEmail} variant="outline" className="w-full">
+                <Button onClick={() => router.push("/register")} variant="outline" className="w-full">
                   Back to Register
                 </Button>
-                <Button onClick={handleGoToLogin} variant="ghost" className="w-full">
+                <Button onClick={() => router.push("/login")} variant="ghost" className="w-full">
                   Try Login Instead
                 </Button>
               </>
