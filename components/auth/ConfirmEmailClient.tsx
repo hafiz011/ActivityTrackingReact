@@ -1,13 +1,11 @@
-"use client"
-export const dynamic = "force-dynamic"
-
-import { useEffect, useState } from "react"
-import { useSearchParams, useRouter } from "next/navigation"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Alert, AlertDescription } from "@/components/ui/alert"
-import { CheckCircle, XCircle, Loader2 } from "lucide-react"
-import { confirmEmail as confirmEmailApi } from "@/services/authService"
+"use client";
+import { useEffect, useState } from "react";
+import { useSearchParams, useRouter } from "next/navigation";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { CheckCircle, XCircle, Loader2 } from "lucide-react";
+import { confirmEmail as confirmEmailApi } from "@/services/authService";
 
 export default function ConfirmEmailClient() {
   const [message, setMessage] = useState("Confirming your email...")
