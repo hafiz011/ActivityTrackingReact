@@ -10,12 +10,7 @@ export const HeaderSection: React.FC = () => {
 
   return (
     <header
-      className="sticky top-0 z-50 w-full supports-[backdrop-filter]:bg-background/60 via-transparent"
-      style={{
-        background:
-          "linear-gradient(90deg, rgba(30, 72, 100, 0.95) 0%, rgba(21, 67, 75, 0.64) 50%, rgba(19, 45, 66, 0.64) 100%)",
-        boxShadow: "0 2px 24px 0 rgba(6,182,212,0.08)",
-      }}
+      className="sticky top-0 z-50 w-full bg-black/50 via-transparent dark:bg-black/50"
     >
       <div className="container flex h-16 items-center justify-between px-4 mx-auto max-w-7xl text-white">
         {/* Logo & Branding */}

@@ -20,12 +20,12 @@ export default function Home() {
       <LandingTheme>
       <HeaderSection />
       <HeroSection />
-      <TrustedBy />
       <ProblemSolution />
       <FeaturesSection />
       <AIAnalytics />
       <PricingPlans />
       <Testimonials />
+      <TrustedBy />
       <FAQ />
       <Footer />
       </LandingTheme>

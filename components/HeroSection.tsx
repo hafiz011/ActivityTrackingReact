@@ -7,10 +7,7 @@ import {
   Play, 
   Shield, 
   Zap, 
-  Activity, 
   TrendingUp, 
-  Users, 
-  Star,
   Globe,
   Sparkles,
   Lock,
@@ -21,11 +18,6 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 
-const statsData = [
-  { value: "2.5M+", label: "Events Tracked Daily", icon: Activity },
-  { value: "99.9%", label: "Uptime Guarantee", icon: Shield },
-  { value: "500+", label: "Companies Trust Us", icon: TrendingUp },
-];
 
 const trustBadges = [
   { text: "Protect your app", icon: Shield },
@@ -149,55 +141,7 @@ export const HeroSection: React.FC = () => {
             </div>
           </div>
 
-          {/* Holographic Stats */}
-          <div className={`transition-all duration-1000 delay-800 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 mb-16">
-              {statsData.map((stat, index) => (
-                <div key={index} className="group">
-                  <div className="bg-black/60 backdrop-blur-md rounded-2xl p-6 shadow-2xl shadow-cyan-500/10 transition-all duration-300 border border-cyan-500/30 hover:border-cyan-400/60 animate-hologram-card hover:shadow-cyan-500/20 relative overflow-hidden">
-                    <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/5 to-blue-500/5 animate-tech-shimmer" />
-                    <div className="relative z-10">
-                      <div className="flex items-center justify-center mb-3">
-                        <stat.icon className="w-8 h-8 text-cyan-400 animate-tech-icon" />
-                      </div>
-                      <div className="text-3xl font-bold text-white mb-2 animate-counter-glow font-mono">
-                        {stat.value}
-                      </div>
-                      <div className="text-sm text-gray-400 font-mono">
-                        {stat.label}
-                      </div>
-                    </div>
-                    <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-cyan-400 to-transparent animate-scan-line" />
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Cyberpunk Social Proof */}
-          <div className={`transition-all duration-1000 delay-1200 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
-            <div className="mt-16 pt-8 border-t border-cyan-500/20">
-              <div className="flex flex-col sm:flex-row items-center justify-center gap-8 text-base text-cyan-200 font-mono">
-                <div className="flex items-center gap-2 animate-tech-social">
-                  <Users className="w-5 h-5 text-cyan-400 animate-tech-pulse" />
-                  <span className="font-semibold">500+</span>
-                  <span className="text-cyan-300">SYSTEMS SECURED</span>
-                </div>
-                <div className="hidden sm:block w-2 h-2 bg-cyan-400 rounded-full animate-pulse" />
-                <div className="flex items-center gap-2 animate-tech-social">
-                  <Star className="w-5 h-5 fill-cyan-400 text-cyan-400 animate-tech-twinkle" />
-                  <span className="font-semibold">4.9/5</span>
-                  <span className="text-blue-300">THREAT DETECTION SCORE</span>
-                </div>
-                <div className="hidden sm:block w-2 h-2 bg-cyan-400 rounded-full animate-pulse" />
-                <div className="flex items-center gap-2 animate-tech-social">
-                  <TrendingUp className="w-5 h-5 text-purple-400 animate-tech-trend" />
-                  <span className="font-semibold">200%</span>
-                  <span className="text-purple-300">EFFICIENCY BOOST</span>
-                </div>
-              </div>
-            </div>
-          </div>
+        
         </div>
       </div>
     </section>

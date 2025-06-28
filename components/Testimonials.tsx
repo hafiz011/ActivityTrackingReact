@@ -1,5 +1,6 @@
-import React from 'react';
-import { Star, Quote } from 'lucide-react';
+"use client";
+import React, { useState, useEffect } from "react";
+import { Star, Quote, Users, Activity, Shield, TrendingUp } from 'lucide-react';
 
 interface Testimonial {
   quote: string;
@@ -106,20 +107,26 @@ const TestimonialCard: React.FC<{ testimonial: Testimonial; index: number }> = (
   );
 };
 
+
 const Testimonials: React.FC = () => {
+    const [isVisible, setIsVisible] = useState(false);
+    useEffect(() => {
+      setIsVisible(true);
+    }, []);
+
   return (
-    <div className="min-h-screemin-h-screen flex items-center justify-center">
-      <section className="py-20 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen flex items-center justify-center">
+      <section className="py-10 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           {/* Header */}
           <div className="text-center mb-20">
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight text-white">
+            <h2 className="text-5xl md:text-5xl lg:text-5xl font-bold mb-6 leading-tight text-gray-200">
               What Our{" "}
               <span className="bg-gradient-to-r from-orange-600 to-red-600 bg-clip-text text-transparent">
                 Customers Say
               </span>
             </h2>
-            <p className="text-xl text-gray-400 max-w-2xl mx-auto leading-relaxed">
+            <p className="text-xl text-gray-300 max-w-2xl mx-auto leading-relaxed">
               Real results from real businesses using our platform to drive growth and success
             </p>
           </div>
@@ -134,9 +141,31 @@ const Testimonials: React.FC = () => {
               />
             ))}
           </div>
-          
 
-
+          {/* Cyberpunk Social Proof */}
+          <div className={`transition-all duration-1000 delay-1200 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+            <div className="mt-16 pt-8 border-t border-cyan-500/20">
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-8 text-base text-cyan-200 font-mono">
+                <div className="flex items-center gap-2 animate-tech-social">
+                  <Users className="w-5 h-5 text-cyan-400 animate-tech-pulse" />
+                  <span className="font-semibold">500+</span>
+                  <span className="text-cyan-300">SYSTEMS SECURED</span>
+                </div>
+                <div className="hidden sm:block w-2 h-2 bg-cyan-400 rounded-full animate-pulse" />
+                <div className="flex items-center gap-2 animate-tech-social">
+                  <Star className="w-5 h-5 fill-cyan-400 text-cyan-400 animate-tech-twinkle" />
+                  <span className="font-semibold">4.9/5</span>
+                  <span className="text-blue-300">THREAT DETECTION SCORE</span>
+                </div>
+                <div className="hidden sm:block w-2 h-2 bg-cyan-400 rounded-full animate-pulse" />
+                <div className="flex items-center gap-2 animate-tech-social">
+                  <TrendingUp className="w-5 h-5 text-purple-400 animate-tech-trend" />
+                  <span className="font-semibold">200%</span>
+                  <span className="text-purple-300">EFFICIENCY BOOST</span>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
     </div>

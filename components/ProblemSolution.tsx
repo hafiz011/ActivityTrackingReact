@@ -21,13 +21,13 @@ const features = [
 
 const ProblemSolution: React.FC = () => {
   return (
-    <section className="py-20 px-4">
+    <section className="py-10 px-4 min-h-screemin-h-screen flex items-center justify-center">
       <div className="max-w-6xl mx-auto text-center">
-        <h3 className="text-5xl md:text-5xl font-bold mb-8 text-balance text-white">
+        <h3 className="text-5xl md:text-5xl font-bold mb-8 text-balance text-gray-200">
           Are You Losing Users <span className="text-red-500">Without Knowing Why?</span>
         </h3>
 
-        <p className="text-lg md:text-xl text-muted-foreground mb-12 leading-relaxed text-balance">
+        <p className="text-lg md:text-xl text-gray-300 mb-12 leading-relaxed text-balance">
           Most analytics platforms give you charts and numbers — but no real answers.
           They miss the <em>why</em> behind user drop-offs, product hesitation, and suspicious activity.
           No alerts. No context. Just noise.

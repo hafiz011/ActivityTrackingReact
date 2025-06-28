@@ -4,16 +4,16 @@ import { TrendingUp, AlertTriangle, Check } from "lucide-react";
 
 const AIAnalytics: React.FC = () => {
   return (
-    <section className="py-20 px-4 min-h-screemin-h-screen flex items-center justify-center">
+    <section className="py-10 px-4 min-h-screemin-h-screen flex items-center justify-center">
       <div className="max-w-5xl mx-auto text-center">
-        <h2 className="text-4xl md:text-5xl font-bold mb-6 text-white">
+        <h2 className="text-4xl md:text-5xl font-bold mb-6 text-gray-200">
           Track Smarter —{" "}
           <span className="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
             Let AI Guide Your Growth
           </span>
         </h2>
 
-        <p className="text-xl text-muted-foreground mb-14 leading-relaxed max-w-3xl mx-auto">
+        <p className="text-xl text-gray-300 mb-14 leading-relaxed max-w-3xl mx-auto">
           Trackly’s AI doesn’t just analyze — it anticipates. Predict churn, detect fraud, and uncover hidden opportunities — all without lifting a finger.
         </p>
 
