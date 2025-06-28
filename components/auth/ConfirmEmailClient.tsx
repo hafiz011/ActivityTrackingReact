@@ -1,6 +1,5 @@
 "use client"
-
-export const dynamic = 'force-dynamic' // 👈 এটিই তোমার মূল সমস্যার সমাধান
+export const dynamic = "force-dynamic"
 
 import { useEffect, useState } from "react"
 import { useSearchParams, useRouter } from "next/navigation"
@@ -10,7 +9,7 @@ import { Alert, AlertDescription } from "@/components/ui/alert"
 import { CheckCircle, XCircle, Loader2 } from "lucide-react"
 import { confirmEmail as confirmEmailApi } from "@/services/authService"
 
-export default function ConfirmEmail() {
+export default function ConfirmEmailClient() {
   const [message, setMessage] = useState("Confirming your email...")
   const [isLoading, setIsLoading] = useState(true)
   const [isSuccess, setIsSuccess] = useState<boolean | null>(null)

@@ -1,10 +1,10 @@
 import { Suspense } from "react"
-import ConfirmEmail from "@/components/auth/ConfirmEmail"
+import ConfirmEmailClient from "@/components/auth/ConfirmEmailClient"
 
 export default function ConfirmEmailPage() {
   return (
     <Suspense fallback={<div className="min-h-screen flex items-center justify-center">Loading...</div>}>
-      <ConfirmEmail />
+      <ConfirmEmailClient />
     </Suspense>
   )
 }
