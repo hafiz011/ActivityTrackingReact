@@ -1,10 +1,15 @@
 "use client";
 
 import React, { useState } from "react";
+import { Card } from "@/components/ui/card";
 import Header from "@/components/dashboard/Header";
 import { FiltersCard } from "@/components/dashboard/Filtter";
-import { SidebarProvider } from "@/components/ui/sidebar";
 import type { SuspiciousActivity } from "@/components/dashboard/Header";
+import {
+  SidebarProvider,
+  SidebarInset,
+} from "@/components/ui/sidebar";
+import { AppSidebar } from "@/components/app-sidebar";
 import { DateRange } from "react-day-picker";
 
 const Dashboard: React.FC = () => {
@@ -21,7 +26,6 @@ const Dashboard: React.FC = () => {
   const handleRefresh = () => {
     setLoading({ suspicious: true });
 
-    // Simulate data refresh
     setTimeout(() => {
       setSuspiciousActivities([
         {
@@ -41,30 +45,39 @@ const Dashboard: React.FC = () => {
 
   return (
     <SidebarProvider>
-      <div className="space-y-4 px-4 pb-8">
-        {/* Header with alerts */}
-        <Header
-          suspiciousActivities={suspiciousActivities}
-          loading={loading}
-          handleRefresh={handleRefresh}
-        />
+      <div className="flex min-h-screen">
+        {/* Sidebar */}
+        <AppSidebar />
 
-        {/* Filters */}
-        <FiltersCard
-          dateRange={dateRange}
-          setDateRange={setDateRange}
-          selectedCountry={selectedCountry}
-          setSelectedCountry={setSelectedCountry}
-          selectedDevice={selectedDevice}
-          setSelectedDevice={setSelectedDevice}
-          suspiciousOnly={suspiciousOnly}
-          setSuspiciousOnly={setSuspiciousOnly}
-          timeRange={timeRange}
-          setTimeRange={setTimeRange}
-        />
+        {/* Main Content */}
+        <SidebarInset className="p-4">
+        <Card className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12">
+          <div className="flex items-center gap-2 px-4">
 
-        {/* TODO: Dashboard Cards, Charts, Tables, etc */}
-        {/* Pass filter states to API-based components */}
+            {/* Header */}
+            <Header
+              suspiciousActivities={suspiciousActivities}
+              loading={loading}
+              handleRefresh={handleRefresh}
+            />
+          </div>
+          </Card>
+            {/* Main Content */}
+            {/* Filters */}
+            <FiltersCard
+              dateRange={dateRange}
+              setDateRange={setDateRange}
+              selectedCountry={selectedCountry}
+              setSelectedCountry={setSelectedCountry}
+              selectedDevice={selectedDevice}
+              setSelectedDevice={setSelectedDevice}
+              suspiciousOnly={suspiciousOnly}
+              setSuspiciousOnly={setSuspiciousOnly}
+              timeRange={timeRange}
+              setTimeRange={setTimeRange}
+            />
+          
+        </SidebarInset>
       </div>
     </SidebarProvider>
   );

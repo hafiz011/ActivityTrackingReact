@@ -54,7 +54,7 @@ export function FiltersCard({
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+    <div className="flex items-center justify-between gap-4">
       <div>
         <h1 className="text-3xl font-bold tracking-tight bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
           Analytics Dashboard
@@ -64,9 +64,9 @@ export function FiltersCard({
         </p>
       </div>
 
-      <div className="flex flex-col lg:flex-row items-center gap-4 w-full lg:w-auto">
+      <div className="flex items-center gap-4">
         {/* Quick Time Range Buttons */}
-        <div className="flex items-center gap-2 p-1 bg-muted rounded-lg w-full lg:w-auto">
+        <div className="flex items-center gap-2 p-1 bg-muted rounded-lg">
           {["24h", "7d", "30d"].map((range) => (
             <Button
               key={range}
@@ -82,7 +82,7 @@ export function FiltersCard({
 
         {/* Advanced Filters */}
         <Collapsible open={open} onOpenChange={setOpen}>
-          <Card className="hover:border-primary/50 transition-colors w-full lg:w-auto">
+          <Card className="hover:border-primary/50 transition-colors">
             <CardHeader className="pb-3">
               <div className="flex items-center justify-between">
                 <CardTitle className="flex items-center gap-2 text-lg">
@@ -106,22 +106,21 @@ export function FiltersCard({
             </CardHeader>
             <CollapsibleContent>
               <CardContent>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                   {/* Date Range Picker */}
-                  <div className="space-y-2">
-                    <Label className="text-sm font-medium">Date Range</Label>
-                    <DatePickerWithRange date={dateRange} setDate={setDateRange} />
-                  </div>
+                    <div>
+                        <div className="space-y-2">
+                            <Label className="text-sm font-medium">Date Range</Label>
+                            <DatePickerWithRange date={dateRange} setDate={setDateRange} />
+                        </div>
+                    </div>
 
                   {/* Country Selector */}
                   <div className="space-y-2">
                     <Label className="text-sm font-medium">Country</Label>
-                    <Select
-                      value={selectedCountry}
-                      onValueChange={setSelectedCountry}
-                    >
+                    <Select value={selectedCountry} onValueChange={setSelectedCountry}>
                       <SelectTrigger className="hover:border-primary/50 transition-colors">
-                        <SelectValue placeholder="Select country" />
+                        <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
                         <SelectItem value="all">🌍 All Countries</SelectItem>
@@ -137,12 +136,9 @@ export function FiltersCard({
                   {/* Device Selector */}
                   <div className="space-y-2">
                     <Label className="text-sm font-medium">Device Type</Label>
-                    <Select
-                      value={selectedDevice}
-                      onValueChange={setSelectedDevice}
-                    >
+                    <Select value={selectedDevice} onValueChange={setSelectedDevice}>
                       <SelectTrigger className="hover:border-primary/50 transition-colors">
-                        <SelectValue placeholder="Select device" />
+                        <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
                         <SelectItem value="all">💻 All Devices</SelectItem>
@@ -157,14 +153,14 @@ export function FiltersCard({
                   <div className="space-y-2">
                     <Label className="text-sm font-medium">Security Focus</Label>
                     <div className="flex items-center space-x-3 pt-2">
-                      <Switch
-                        id="suspicious-only"
-                        checked={suspiciousOnly}
+                      <Switch 
+                        id="suspicious-only" 
+                        checked={suspiciousOnly} 
                         onCheckedChange={setSuspiciousOnly}
                         className="data-[state=checked]:bg-red-600"
                       />
                       <Label htmlFor="suspicious-only" className="text-sm">
-                        Suspicious Only
+                        Suspicious Activity Only
                       </Label>
                     </div>
                   </div>
