@@ -8,7 +8,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { AppSidebar } from "@/components/app-sidebar"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { FiltersCard } from "@/components/FiltersCard"
+import { FiltersCard } from "@/components/dashboard/FiltersCard"
 import { Progress } from "@/components/ui/progress"
 import { Slider } from "@/components/ui/slider"
 
