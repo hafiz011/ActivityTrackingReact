@@ -42,21 +42,21 @@ const pricing: PricingPlan[] = [
 
 const PricingPlans: React.FC = () => {
   return (
-    <section id="pricing" className="py-10 px-2 sm:px-4">
+    <section id="pricing" className="mt-20 px-2 sm:px-4">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-20">
-          <h2 className="text-4xl text-gray-200 md:text-5xl font-bold mb-6">
+          <h2 className="text-5xl xs:text-5xl md:text-5xl font-bold mb-6 text-gray-200">
             Pricing That{" "}
             <span className="bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text text-transparent">
               Grows With You
             </span>
           </h2>
-          <p className="text-xl text-gray-300">
+          <p className="text-base xs:text-lg md:text-xl text-gray-300">
             Start free, scale seamlessly, cancel anytime
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 md:gap-8">
+        <div className="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 gap-6 md:gap-8">
           {pricing.map((plan) => (
             <div
               key={plan.plan}
@@ -68,7 +68,7 @@ const PricingPlans: React.FC = () => {
               `}
             >
               {plan.popular && (
-                <Badge className="absolute left-1/2 transform -translate-x-1/2 bg-black/60  bg-gradient-to-r from-blue-900 to-blue-900 text-white z-10">
+                <Badge className="absolute left-1/2 transform -translate-x-1/2 bg-black/60 bg-gradient-to-r from-blue-900 to-blue-900 text-white z-10 text-xs xs:text-sm px-3 py-1">
                   Most Popular
                 </Badge>
               )}
@@ -77,14 +77,14 @@ const PricingPlans: React.FC = () => {
                 ? "bg-gradient-to-br from-blue-400/10 via-transparent to-cyan-500/10 rounded-2xl"
                 : "bg-gradient-to-br from-cyan-400/10 via-transparent to-purple-500/10 rounded-2xl"
               }`} />
-              <div className="p-6 sm:p-8 text-white relative z-10 flex flex-col h-full">
+              <div className="p-4 xs:p-6 sm:p-8 text-white relative z-10 flex flex-col h-full">
                 <div className="text-center mb-8">
-                  <h3 className="text-2xl font-bold mb-2">{plan.plan}</h3>
+                  <h3 className="text-xl xs:text-2xl font-bold mb-2">{plan.plan}</h3>
                   <div className="mb-4">
-                    <span className="text-4xl font-bold">{plan.price}</span>
-                    <span className="text-muted-foreground ml-1">/{plan.priceDetail}</span>
+                    <span className="text-3xl xs:text-4xl font-bold">{plan.price}</span>
+                    <span className="text-muted-foreground ml-1 text-sm xs:text-base">/{plan.priceDetail}</span>
                   </div>
-                  <p className="text-sm text-muted-foreground">{plan.sessions}</p>
+                  <p className="text-xs xs:text-sm text-muted-foreground">{plan.sessions}</p>
                 </div>
                 <ul className="space-y-4 mb-8 flex-1">
                   {plan.features.map((feature, i) => (

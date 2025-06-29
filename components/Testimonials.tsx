@@ -61,13 +61,13 @@ const TestimonialCard: React.FC<{ testimonial: Testimonial; index: number }> = (
 }) => {
   return (
     <div
-      className="group relative bg-black/60 rounded-2xl p-8 shadow-sm border border-cyan-500/30 hover:border-cyan-400/60 shadow-xl hover:shadow-cyan-500/20 transition-all duration-500 transform"
+      className="group relative bg-black/60 rounded-2xl p-5 xs:p-6 sm:p-8 shadow-sm border border-cyan-500/30 hover:border-cyan-400/60 shadow-xl hover:shadow-cyan-500/20 transition-all duration-500 transform"
       style={{
         animationDelay: `${index * 50}ms`,
       }}
     >
       {/* Quote Icon */}
-      <div className="absolute -top-4 left-8">
+      <div className="absolute -top-4 left-6 xs:left-8">
         <div className="w-8 h-8 bg-gradient-to-br from-orange-500 to-red-500 rounded-full flex items-center justify-center shadow-lg">
           <Quote className="w-4 h-4 text-white" />
         </div>
@@ -79,7 +79,7 @@ const TestimonialCard: React.FC<{ testimonial: Testimonial; index: number }> = (
       </div>
       
       {/* Quote */}
-      <blockquote className="text-gray-200 text-lg leading-relaxed mb-8 font-medium">
+      <blockquote className="text-gray-200 text-base xs:text-lg leading-relaxed mb-8 font-medium">
         "{testimonial.quote}"
       </blockquote>
       
@@ -115,24 +115,24 @@ const Testimonials: React.FC = () => {
     }, []);
 
   return (
-    <div className="min-h-screen flex items-center justify-center">
-      <section className="py-10 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen flex items-center justify-center mt-20 sm:mt-24 lg:mt-32">
+      <section className="px-2 xs:px-4 sm:px-6 lg:px-8 w-full">
         <div className="max-w-7xl mx-auto">
           {/* Header */}
-          <div className="text-center mb-20">
-            <h2 className="text-5xl md:text-5xl lg:text-5xl font-bold mb-6 leading-tight text-gray-200">
+          <div className="text-center mb-12 sm:mb-20">
+            <h2 className="text-5xl xs:text-5xl md:text-5xl font-bold mb-6 leading-tight text-gray-200">
               What Our{" "}
               <span className="bg-gradient-to-r from-orange-600 to-red-600 bg-clip-text text-transparent">
                 Customers Say
               </span>
             </h2>
-            <p className="text-xl text-gray-300 max-w-2xl mx-auto leading-relaxed">
+            <p className="text-base xs:text-lg md:text-xl text-gray-300 max-w-2xl mx-auto leading-relaxed">
               Real results from real businesses using our platform to drive growth and success
             </p>
           </div>
           
           {/* Testimonials Grid */}
-          <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-8 mb-16">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mb-12 sm:mb-16">
             {testimonials.map((testimonial, index) => (
               <TestimonialCard
                 key={index}
@@ -144,8 +144,8 @@ const Testimonials: React.FC = () => {
 
           {/* Cyberpunk Social Proof */}
           <div className={`transition-all duration-1000 delay-1200 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
-            <div className="mt-16 pt-8 border-t border-cyan-500/20">
-              <div className="flex flex-col sm:flex-row items-center justify-center gap-8 text-base text-cyan-200 font-mono">
+            <div className="mt-10 sm:mt-16 pt-8 border-t border-cyan-500/20">
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-6 sm:gap-8 lg:gap-12 text-sm xs:text-base text-cyan-200 font-mono">
                 <div className="flex items-center gap-2 animate-tech-social">
                   <Users className="w-5 h-5 text-cyan-400 animate-tech-pulse" />
                   <span className="font-semibold">500+</span>

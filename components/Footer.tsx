@@ -6,8 +6,8 @@ import { Shield, Activity} from "lucide-react";
 
 const Footer: React.FC = () => {
     return (
-      <footer className="py-16 px-4 bg-black/50 via-transparent dark:bg-black/50 border-t border-gray-800">
-        <div className="max-w-6xl mx-auto">
+      <footer className="mt-20 px-4 bg-black/50 via-transparent dark:bg-black/50 border-t border-gray-800">
+        <div className="max-w-6xl mx-auto mt-10">
           <div className="grid md:grid-cols-4 gap-12 mb-12">
             <div className="md:col-span-2">
               <div className="flex items-center gap-3 mb-6">
@@ -34,20 +34,20 @@ const Footer: React.FC = () => {
             <div>
               <h4 className="font-semibold mb-4 text-gray-200">Product</h4>
               <ul className="space-y-3 text-sm text-gray-400">
-                <li><Link href="#" className="hover:text-foreground transition-colors">Features</Link></li>
-                <li><Link href="#" className="hover:text-foreground transition-colors">Pricing</Link></li>
-                <li><Link href="#" className="hover:text-foreground transition-colors">Documentation</Link></li>
-                <li><Link href="#" className="hover:text-foreground transition-colors">API Reference</Link></li>
+                <li><Link href="/Features" className="hover:text-gray-400 transition-colors">Features</Link></li>
+                <li><Link href="/Pricing" className="hover:text-gray-400 transition-colors">Pricing</Link></li>
+                <li><Link href="/Documentation" className="hover:text-gray-400 transition-colors">Documentation</Link></li>
+                <li><Link href="/API-Reference" className="hover:text-gray-400 transition-colors">API Reference</Link></li>
               </ul>
             </div>
             
             <div>
               <h4 className="font-semibold mb-4 text-gray-200">Company</h4>
               <ul className="space-y-3 text-sm text-gray-400">
-                <li><Link href="#" className="hover:text-foreground transition-colors">About</Link></li>
-                <li><Link href="#" className="hover:text-foreground transition-colors">Blog</Link></li>
-                <li><Link href="#" className="hover:text-foreground transition-colors">Careers</Link></li>
-                <li><Link href="#" className="hover:text-foreground transition-colors">Contact</Link></li>
+                <li><Link href="/About" className="hover:text-gray-400 transition-colors">About</Link></li>
+                <li><Link href="/Blog" className="hover:text-gray-400 transition-colors">Blog</Link></li>
+                <li><Link href="/Careers" className="hover:text-gray-400 transition-colors">Careers</Link></li>
+                <li><Link href="/Contact" className="hover:text-gray-400 transition-colors">Contact</Link></li>
               </ul>
             </div>
           </div>
@@ -57,9 +57,9 @@ const Footer: React.FC = () => {
               © {new Date().getFullYear()} Tracly. All rights reserved.
             </div>
             <div className="flex items-center gap-6 text-sm text-gray-400">
-              <Link href="#" className="hover:text-foreground transition-colors">Privacy Policy</Link>
-              <Link href="#" className="hover:text-foreground transition-colors">Terms of Service</Link>
-              <Link href="#" className="hover:text-foreground transition-colors">Cookie Policy</Link>
+              <Link href="/Privacy-Policy" className="hover:text-gray-400 transition-colors">Privacy Policy</Link>
+              <Link href="/Terms-of-Service" className="hover:text-gray-400 transition-colors">Terms of Service</Link>
+              <Link href="/Cookie-Policy" className="hover:text-gray-400 transition-colors">Cookie Policy</Link>
             </div>
           </div>
         </div>

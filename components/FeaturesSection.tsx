@@ -86,22 +86,22 @@ const FeaturesSection: React.FC = () => {
   }, []);
 
   return (
-    <section id="features" className="py-10 px-4 min-h-screemin-h-screen flex items-center justify-center">
-      <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-20">
-          <h2 className="text-5xl md:text-5xl font-bold mb-6 text-gray-200">
+    <section id="features" className="mt-20 px-2 sm:px-4 min-h-screen flex items-center justify-center">
+      <div className="max-w-7xl mx-auto w-full">
+        <div className="text-center mb-12 sm:mb-20">
+          <h2 className="text-5xl xs:text-5xl md:text-5xl font-bold mb-6 text-gray-200">
             Core Features That{" "}
             <span className="bg-gradient-to-r from-blue-600 to-emerald-600 bg-clip-text text-transparent">
               Power Your Success
             </span>
           </h2>
-          <p className="text-xl text-gray-300 max-w-2xl mx-auto">
+          <p className="text-base xs:text-lg md:text-xl text-gray-300 max-w-2xl mx-auto">
             Comprehensive analytics and security features designed for modern businesses
           </p>
         </div>
 
         <div className={`transition-all duration-1000 delay-800 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
             {features.map((feature) => {
               const Icon = feature.icon;
               return (
@@ -111,7 +111,7 @@ const FeaturesSection: React.FC = () => {
                 >
                   {/* Holographic shimmer effect */}
                   <div className="absolute inset-0 pointer-events-none bg-gradient-to-br from-cyan-400/10 via-transparent to-purple-500/10 animate-tech-shimmer rounded-2xl" />
-                  <CardContent className="p-8 relative z-10">
+                  <CardContent className="p-5 xs:p-6 sm:p-8 relative z-10">
                     <div
                       className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-br from-current/10 to-current/20 mb-6 group-hover:scale-110 transition-transform duration-300"
                     >
@@ -126,7 +126,7 @@ const FeaturesSection: React.FC = () => {
                     </div>
                     <h3
                       className={`
-                        text-xl font-bold mb-4
+                        text-lg xs:text-xl font-bold mb-4
                         transition-colors duration-300
                         ${feature.color}
                         group-hover:text-blue-500
@@ -134,7 +134,7 @@ const FeaturesSection: React.FC = () => {
                     >
                       {feature.name}
                     </h3>
-                    <p className="text-cyan-100/80 leading-relaxed">
+                    <p className="text-cyan-100/80 leading-relaxed text-sm xs:text-base">
                       {feature.desc}
                     </p>
                   </CardContent>
