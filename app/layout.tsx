@@ -1,7 +1,7 @@
 import './globals.css'
 import React from 'react'
 import { AuthProvider } from "@/context/AuthContext";
-
+import { ThemeProvider } from "@/components/theme-provider";
 
 export const metadata = {
   title: 'Next.js',
@@ -16,9 +16,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
+        <ThemeProvider>
           <AuthProvider>
             {children}
           </AuthProvider>
+        </ThemeProvider>
       </body>
     </html>
   )

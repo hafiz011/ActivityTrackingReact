@@ -2,8 +2,8 @@ import type React from "react"
 import type { Metadata } from "next"
 import { Inter } from "next/font/google"
 import "./globals.css"
-import { ThemeProvider } from "@/components/theme-provider"
 import { AuthProvider } from "@/context/AuthContext";
+import { FilterProvider } from "@/context/FilterContext"
 
 
 
@@ -22,11 +22,11 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
-        <ThemeProvider>
             <AuthProvider>
+            <FilterProvider>
               {children}
+            </FilterProvider>
             </AuthProvider>
-          </ThemeProvider>
       </body>
     </html>
   )

@@ -34,7 +34,7 @@ export default function Login() {
       const data = await loginApi(email, password)
       if (!data.token) throw new Error("Token not received")
       login(data.token, data.user); // Pass both token and user
-      router.push("/dademo");
+      router.push("/dashboard");
     } catch (err: unknown) {
         // Try to extract a message from the API response
         const apiMessage =
