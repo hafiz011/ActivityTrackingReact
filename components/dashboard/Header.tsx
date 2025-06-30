@@ -38,11 +38,11 @@ const Header: React.FC<HeaderProps> = ({
   const isLoading = Object.values(loading).some(Boolean);
 
   return (
-    <div className="flex items-center gap-2 px-4">
+    <Card className="w-full h-full min-h-[4rem] flex flex-col sm:flex-row items-center justify-between gap-2 px-2 sm:px-6 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12">
       {/* Left Section */}
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-2 w-full sm:w-auto mb-2 sm:mb-0">
         <SidebarTrigger className="-ml-1" />
-        <Separator orientation="vertical" className="h-4 mr-2" />
+        <Separator orientation="vertical" className="h-4 mr-2 hidden sm:block" />
         <Breadcrumb>
           <BreadcrumbList>
             <BreadcrumbItem className="hidden md:block">
@@ -57,7 +57,7 @@ const Header: React.FC<HeaderProps> = ({
       </div>
 
       {/* Right Section */}
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-2 sm:gap-4 w-full sm:w-auto justify-end">
         <ThemeToggle showDropdown />
         <Button variant="outline" size="sm">
           <Bell className="h-4 w-4 mr-2" />
@@ -86,7 +86,7 @@ const Header: React.FC<HeaderProps> = ({
           Refresh
         </Button>
       </div>
-    </div>
+    </Card>
   );
 };
 

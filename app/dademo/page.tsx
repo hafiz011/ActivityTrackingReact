@@ -45,40 +45,35 @@ const Dashboard: React.FC = () => {
 
   return (
     <SidebarProvider>
-      <div className="flex min-h-screen">
         {/* Sidebar */}
         <AppSidebar />
-
         {/* Main Content */}
         <SidebarInset className="p-4">
-        <Card className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12">
-          <div className="flex items-center gap-2 px-4">
-
-            {/* Header */}
-            <Header
-              suspiciousActivities={suspiciousActivities}
-              loading={loading}
-              handleRefresh={handleRefresh}
-            />
-          </div>
-          </Card>
-            {/* Main Content */}
-            {/* Filters */}
-            <FiltersCard
-              dateRange={dateRange}
-              setDateRange={setDateRange}
-              selectedCountry={selectedCountry}
-              setSelectedCountry={setSelectedCountry}
-              selectedDevice={selectedDevice}
-              setSelectedDevice={setSelectedDevice}
-              suspiciousOnly={suspiciousOnly}
-              setSuspiciousOnly={setSuspiciousOnly}
-              timeRange={timeRange}
-              setTimeRange={setTimeRange}
-            />
-          
+        <div className="flex items-center gap-2">
+              {/* Header */}
+              <Header
+                suspiciousActivities={suspiciousActivities}
+                loading={loading}
+                handleRefresh={handleRefresh}
+              />
+        </div>
+        {/* Main Content */}
+        {/* Filters */}
+        <Card className="flex flex-1 flex-col gap-4 p-5 pt-3">
+          <FiltersCard
+            dateRange={dateRange}
+            setDateRange={setDateRange}
+            selectedCountry={selectedCountry}
+            setSelectedCountry={setSelectedCountry}
+            selectedDevice={selectedDevice}
+            setSelectedDevice={setSelectedDevice}
+            suspiciousOnly={suspiciousOnly}
+            setSuspiciousOnly={setSuspiciousOnly}
+            timeRange={timeRange}
+            setTimeRange={setTimeRange}
+          />
+        </Card>
         </SidebarInset>
-      </div>
     </SidebarProvider>
   );
 };
