@@ -24,37 +24,59 @@ import {
 import { ChevronDown, Filter } from "lucide-react";
 import { DatePickerWithRange } from "@/components/date-range-picker";
 import { DateRange } from "react-day-picker";
-import { useState } from "react";
+import { useEffect, useState } from "react"; // ✅ FIXED import
 
-interface FiltersCardProps {
-  dateRange: DateRange | undefined;
-  setDateRange: (range: DateRange | undefined) => void;
-  selectedCountry: string;
-  setSelectedCountry: (country: string) => void;
-  selectedDevice: string;
-  setSelectedDevice: (device: string) => void;
-  suspiciousOnly: boolean;
-  setSuspiciousOnly: (suspicious: boolean) => void;
-  timeRange: string;
-  setTimeRange: (range: string) => void;
-}
+import { useFilter } from "@/context/FilterContext";
 
-export function FiltersCard({
-  dateRange,
-  setDateRange,
-  selectedCountry,
-  setSelectedCountry,
-  selectedDevice,
-  setSelectedDevice,
-  suspiciousOnly,
-  setSuspiciousOnly,
-  timeRange,
-  setTimeRange,
-}: FiltersCardProps) {
+export const FiltersCard = () => {
+  const {
+    startDate,
+    endDate,
+    country,
+    device,
+    suspiciousOnly,
+    setStartDate,
+    setEndDate,
+    setCountry,
+    setDevice,
+    setSuspiciousOnly,
+  } = useFilter();
+
+  const [dateRange, setDateRange] = useState<DateRange | undefined>(undefined);
   const [open, setOpen] = useState(false);
+  const [timeRange, setTimeRange] = useState("24h");
+
+  // Sync date range with context
+  useEffect(() => {
+    if (dateRange?.from) setStartDate(dateRange.from.toISOString());
+    if (dateRange?.to) setEndDate(dateRange.to.toISOString());
+  }, [dateRange]);
+
+  // Sync quick time range to predefined dates
+  useEffect(() => {
+    const now = new Date();
+    let from: Date;
+
+    switch (timeRange) {
+      case "24h":
+        from = new Date(now.getTime() - 24 * 60 * 60 * 1000);
+        break;
+      case "7d":
+        from = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+        break;
+      case "30d":
+        from = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
+        break;
+      default:
+        from = now;
+    }
+
+    setDateRange({ from, to: now });
+  }, [timeRange]);
 
   return (
-    <div className="flex items-center justify-between gap-4">
+    <div className="flex items-center justify-between gap-4 flex-wrap">
+      {/* Left: Title */}
       <div>
         <h1 className="text-3xl font-bold tracking-tight bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
           Analytics Dashboard
@@ -64,8 +86,9 @@ export function FiltersCard({
         </p>
       </div>
 
-      <div className="flex items-center gap-4">
-        {/* Quick Time Range Buttons */}
+      {/* Right: Filters */}
+      <div className="flex items-center gap-4 flex-wrap">
+        {/* Quick Time Range */}
         <div className="flex items-center gap-2 p-1 bg-muted rounded-lg">
           {["24h", "7d", "30d"].map((range) => (
             <Button
@@ -82,7 +105,7 @@ export function FiltersCard({
 
         {/* Advanced Filters */}
         <Collapsible open={open} onOpenChange={setOpen}>
-          <Card className="hover:border-primary/50 transition-colors">
+          <Card className="hover:border-primary/50 transition-colors w-full sm:w-auto">
             <CardHeader className="pb-3">
               <div className="flex items-center justify-between">
                 <CardTitle className="flex items-center gap-2 text-lg">
@@ -107,20 +130,21 @@ export function FiltersCard({
             <CollapsibleContent>
               <CardContent>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                  {/* Date Range Picker */}
-                    <div>
-                        <div className="space-y-2">
-                            <Label className="text-sm font-medium">Date Range</Label>
-                            <DatePickerWithRange date={dateRange} setDate={setDateRange} />
-                        </div>
-                    </div>
+                  {/* Date Picker */}
+                  <div className="space-y-2">
+                    <Label className="text-sm font-medium">Date Range</Label>
+                    <DatePickerWithRange
+                      date={dateRange}
+                      setDate={setDateRange}
+                    />
+                  </div>
 
-                  {/* Country Selector */}
+                  {/* Country */}
                   <div className="space-y-2">
                     <Label className="text-sm font-medium">Country</Label>
-                    <Select value={selectedCountry} onValueChange={setSelectedCountry}>
+                    <Select value={country} onValueChange={setCountry}>
                       <SelectTrigger className="hover:border-primary/50 transition-colors">
-                        <SelectValue />
+                        <SelectValue placeholder="Select country" />
                       </SelectTrigger>
                       <SelectContent>
                         <SelectItem value="all">🌍 All Countries</SelectItem>
@@ -133,12 +157,12 @@ export function FiltersCard({
                     </Select>
                   </div>
 
-                  {/* Device Selector */}
+                  {/* Device */}
                   <div className="space-y-2">
                     <Label className="text-sm font-medium">Device Type</Label>
-                    <Select value={selectedDevice} onValueChange={setSelectedDevice}>
+                    <Select value={device} onValueChange={setDevice}>
                       <SelectTrigger className="hover:border-primary/50 transition-colors">
-                        <SelectValue />
+                        <SelectValue placeholder="Select device" />
                       </SelectTrigger>
                       <SelectContent>
                         <SelectItem value="all">💻 All Devices</SelectItem>
@@ -149,13 +173,13 @@ export function FiltersCard({
                     </Select>
                   </div>
 
-                  {/* Suspicious Activity Toggle */}
+                  {/* Suspicious Toggle */}
                   <div className="space-y-2">
                     <Label className="text-sm font-medium">Security Focus</Label>
                     <div className="flex items-center space-x-3 pt-2">
-                      <Switch 
-                        id="suspicious-only" 
-                        checked={suspiciousOnly} 
+                      <Switch
+                        id="suspicious-only"
+                        checked={suspiciousOnly}
                         onCheckedChange={setSuspiciousOnly}
                         className="data-[state=checked]:bg-red-600"
                       />

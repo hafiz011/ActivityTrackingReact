@@ -10,18 +10,12 @@ import {
   SidebarInset,
 } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
-import { DateRange } from "react-day-picker";
+import { FilterProvider } from "@/context/FilterContext";
+import SessionsInfo from "@/components/dashboard/SessionsInfo";
 
 const Dashboard: React.FC = () => {
   const [suspiciousActivities, setSuspiciousActivities] = useState<SuspiciousActivity[]>([]);
   const [loading, setLoading] = useState<{ suspicious: boolean }>({ suspicious: false });
-
-  // Filters
-  const [timeRange, setTimeRange] = useState<string>("7d");
-  const [dateRange, setDateRange] = useState<DateRange | undefined>(undefined);
-  const [selectedCountry, setSelectedCountry] = useState<string>("all");
-  const [selectedDevice, setSelectedDevice] = useState<string>("all");
-  const [suspiciousOnly, setSuspiciousOnly] = useState<boolean>(false);
 
   const handleRefresh = () => {
     setLoading({ suspicious: true });
@@ -44,37 +38,29 @@ const Dashboard: React.FC = () => {
   };
 
   return (
-    <SidebarProvider>
-        {/* Sidebar */}
+    <FilterProvider>
+      <SidebarProvider>
         <AppSidebar />
-        {/* Main Content */}
         <SidebarInset className="p-4">
-        <div className="flex items-center gap-2">
-              {/* Header */}
-              <Header
-                suspiciousActivities={suspiciousActivities}
-                loading={loading}
-                handleRefresh={handleRefresh}
-              />
-        </div>
-        {/* Main Content */}
-        {/* Filters */}
-        <Card className="flex flex-1 flex-col gap-4 p-5 pt-3">
-          <FiltersCard
-            dateRange={dateRange}
-            setDateRange={setDateRange}
-            selectedCountry={selectedCountry}
-            setSelectedCountry={setSelectedCountry}
-            selectedDevice={selectedDevice}
-            setSelectedDevice={setSelectedDevice}
-            suspiciousOnly={suspiciousOnly}
-            setSuspiciousOnly={setSuspiciousOnly}
-            timeRange={timeRange}
-            setTimeRange={setTimeRange}
-          />
-        </Card>
+          <div className="flex items-center gap-2">
+            <Header
+              suspiciousActivities={suspiciousActivities}
+              loading={loading}
+              handleRefresh={handleRefresh}
+            />
+          </div>
+
+          {/* Filters */}
+          <Card className="flex flex-1 flex-col gap-4 p-5 pt-3">
+            <FiltersCard />
+            {/* Session Info Cards */}
+            <SessionsInfo />
+          </Card>
+
+
         </SidebarInset>
-    </SidebarProvider>
+      </SidebarProvider>
+    </FilterProvider>
   );
 };
 
