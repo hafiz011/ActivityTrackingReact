@@ -5,7 +5,20 @@ import type {
   ActiveUsersResponse,
   SuspiciousActivity,
   SessionMetricsResponse,
+  SuspiciousActivityAlert,
+
 } from "@/services/types/session";
+
+
+
+
+// Fetch suspicious activity alert
+// This function fetches the latest suspicious activity alert from the server.
+export const fetchSuspiciousActivityAlert = async (): Promise<SuspiciousActivityAlert> => {
+  const response = await axios.get("/sessions/alert");
+  return response.data as SuspiciousActivityAlert;
+};
+
 
 // Fetch active user count
 export const fetchActiveUsersCount = async (filters: FilterState): Promise<ActiveUsersResponse> => {
@@ -31,6 +44,11 @@ export const fetchSessionMetrics = async (filters: FilterState): Promise<Session
   return response.data as SessionMetricsResponse;
 };
 
+
+
+
+
+
 // Helper: Convert filter context into query params
 function buildQueryParams(filters: FilterState) {
   return {
@@ -41,3 +59,6 @@ function buildQueryParams(filters: FilterState) {
     suspiciousOnly: filters.suspiciousOnly || undefined,
   };
 }
+
+
+

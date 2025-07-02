@@ -17,21 +17,15 @@ import { Badge } from "@/components/ui/badge";
 import { Bell, Download, Loader2, RefreshCw } from "lucide-react";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 
-export interface SuspiciousActivity {
-  id: string;
-  message: string;
-  timestamp: string;
-  [key: string]: any;
-}
 
 export interface HeaderProps {
-  suspiciousActivities: SuspiciousActivity[];
+  alertTotal: number;
   loading: Record<string, boolean>;
   handleRefresh: () => void;
 }
 
 const Header: React.FC<HeaderProps> = ({
-  suspiciousActivities,
+  alertTotal,
   loading,
   handleRefresh,
 }) => {
@@ -62,9 +56,9 @@ const Header: React.FC<HeaderProps> = ({
         <Button variant="outline" size="sm">
           <Bell className="h-4 w-4 mr-2" />
           Alerts
-          {suspiciousActivities.length > 0 && (
+          { alertTotal > 0 && (
             <Badge variant="destructive" className="ml-2">
-              {suspiciousActivities.length}
+              { alertTotal }
             </Badge>
           )}
         </Button>
