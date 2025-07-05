@@ -1,9 +1,9 @@
-"use client"
+"use client";
 
-import ConfirmEmailClient from "@/components/auth/ConfirmEmailClient"
+import ConfirmEmailClient from "@/components/auth/ConfirmEmailClient";
 
 export default function ConfirmEmailPage() {
-  return <ConfirmEmailClient />
+  return <ConfirmEmailClient />;
 }
 
 

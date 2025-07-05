@@ -1,7 +1,7 @@
 "use client"
 
-import { useEffect, useState } from "react"
-import { useSearchParams, useRouter } from "next/navigation"
+import { useSearchParams } from "next/navigation"
+import React, { useEffect, useState } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Alert, AlertDescription } from "@/components/ui/alert"
@@ -13,7 +13,6 @@ export default function ConfirmEmailClient() {
   const [isLoading, setIsLoading] = useState(true)
   const [isSuccess, setIsSuccess] = useState<boolean | null>(null)
   const searchParams = useSearchParams()
-  const router = useRouter()
 
   useEffect(() => {
     const userId = searchParams.get("userId")
@@ -47,8 +46,8 @@ export default function ConfirmEmailClient() {
       .finally(() => {
         setIsLoading(false)
       })
-  }, [searchParams])
-
+  }, [searchParams.toString()]) // safer dependency
+  
   return (
     <div className="min-h-screen flex items-center justify-center bg-background px-4 py-8">
       <Card className="w-full max-w-md">
