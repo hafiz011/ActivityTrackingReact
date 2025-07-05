@@ -467,14 +467,15 @@ const supportItems = [
 export function AppSidebar({ ...props }) {
   const [selectedWorkspace, setSelectedWorkspace] = React.useState(workspaces[0])
   
-  const { token, user, logout } = useAuth();
+  const { token, user, logout, isLoading, isAuthenticated } = useAuth();
+
   const router = useRouter();
 
    useEffect(() => {
-    if (!token || !user) {
-      router.push("/login");
+    if(!isLoading && !isAuthenticated){
+      router.push("/login")
     }
-  }, [token, user, router]);
+  }, [isLoading, isAuthenticated]);
 
   if (!token || !user) return null; // Optional: Blank while redirecting
     const handleLogout = () => {
@@ -482,6 +483,9 @@ export function AppSidebar({ ...props }) {
     router.push("/login"); // Redirect to login
   };
 
+  if(isLoading){
+    return <div>Loading...</div>
+  }
 
   return (
     <Sidebar collapsible="icon" {...props}>

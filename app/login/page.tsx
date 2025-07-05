@@ -1,7 +1,7 @@
 "use client"
 
 import type React from "react"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Eye, EyeOff, Mail, Lock, Loader2 } from "lucide-react"
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
@@ -21,20 +21,31 @@ export default function Login() {
   const [showPassword, setShowPassword] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [rememberMe, setRememberMe] = useState(false)
+  const [token,setToken] = useState<string | null>(null);
+  const [user, setUser] = useState();
 
-  const { login } = useAuth()
+  const { login } = useAuth();
   const router = useRouter();
 
+// useEffect(() =>{
+// const storedToken = localStorage.getItem("authToken")
+//       const storedUser = localStorage.getItem("authUser")
+//       if (storedToken) {setToken(storedToken)}
+//       if (storedUser || storedToken) {
+//         router.push("/dademo")
+//       }
+// }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setError(null)
     setIsLoading(true)
     try {
-      const data = await loginApi(email, password)
+      const data = await loginApi(email, password);
+      console.log(data)
       if (!data.token) throw new Error("Token not received")
       login(data.token, data.user); // Pass both token and user
-      router.push("/dademo");
+      router.push("/dashboard");
     } catch (err: unknown) {
         // Try to extract a message from the API response
         const apiMessage =

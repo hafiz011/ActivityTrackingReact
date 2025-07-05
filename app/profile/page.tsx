@@ -214,7 +214,7 @@ export default function ProfileSettings() {
       return imagePath
     }
     // Otherwise, construct the full URL with your API base
-    return `https://localhost:5011${imagePath}`
+    return `http://localhost:5010${imagePath}`
   }
 
   // Show loading while auth is loading
