@@ -1,11 +1,8 @@
 export const runtime = 'edge';
 
-import dynamic from 'next/dynamic';
 import { Suspense } from 'react';
 
-const ConfirmEmailClient = dynamic(() => import('@/components/auth/ConfirmEmailClient'), {
-  ssr: false,
-});
+import ConfirmEmailClient from "@/components/auth/ConfirmEmailClient"
 
 export default function ConfirmEmailPage() {
   return (
