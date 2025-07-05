@@ -1,9 +1,7 @@
-import { Suspense } from "react"
-import dynamic from "next/dynamic"
+"use client"
 
-const ConfirmEmailClient = dynamic(() => import("@/components/auth/ConfirmEmailClient"), {
-  ssr: false,
-})
+import { Suspense } from "react"
+import ConfirmEmailClient from "@/components/auth/ConfirmEmailClient"
 
 export default function ConfirmEmailPage() {
   return (
