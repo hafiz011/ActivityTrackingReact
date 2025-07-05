@@ -1,6 +1,6 @@
 "use client"
 
-import { useSearchParams } from "next/navigation"
+import { useSearchParams, useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -9,10 +9,11 @@ import { CheckCircle, XCircle, Loader2 } from "lucide-react"
 import { confirmEmail as confirmEmailApi } from "@/services/authService"
 
 export default function ConfirmEmailClient() {
-  const [message, setMessage] = useState("Confirming your email...")
-  const [isLoading, setIsLoading] = useState(true)
-  const [isSuccess, setIsSuccess] = useState<boolean | null>(null)
-  const searchParams = useSearchParams()
+const searchParams = useSearchParams();
+  const router = useRouter();
+  const [message, setMessage] = useState("Confirming your email...");
+  const [isLoading, setIsLoading] = useState(true);
+  const [isSuccess, setIsSuccess] = useState<boolean | null>(null);
 
   useEffect(() => {
     const userId = searchParams.get("userId")
@@ -46,8 +47,7 @@ export default function ConfirmEmailClient() {
       .finally(() => {
         setIsLoading(false)
       })
-  }, [searchParams.toString()]) // safer dependency
-  
+  }, [searchParams, router]);  
   return (
     <div className="min-h-screen flex items-center justify-center bg-background px-4 py-8">
       <Card className="w-full max-w-md">
