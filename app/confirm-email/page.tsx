@@ -1,11 +1,13 @@
-"use client";
+"use client"
 
-import ConfirmEmailClient from "@/components/auth/ConfirmEmailClient";
+import ConfirmEmailClient from "@/components/auth/ConfirmEmailClient"
+
+
+export const dynamic = "force-dynamic"
 
 export default function ConfirmEmailPage() {
-  return <ConfirmEmailClient />;
+  return <ConfirmEmailClient />
 }
-
 
 // // app/confirm-email/page.tsx
 // import { Suspense } from "react"
