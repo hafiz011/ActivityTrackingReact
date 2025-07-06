@@ -25,7 +25,7 @@ export const HeaderSection: React.FC = () => {
     { href: "#faq", label: "FAQ" },
     { href: "/docs", label: "Docs" },
     { href: "/about", label: "About" },
-    { href: "/comtact", label: "Contact" },
+    { href: "/Contact", label: "Contact" },
   ];
 
   return (
