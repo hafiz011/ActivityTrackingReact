@@ -19,10 +19,19 @@ export default function ResetPassword() {
   const [token, setToken] = useState("");
   const router = useRouter();
   const searchParams = useSearchParams();
+  const [isSuccess, setIsSuccess] = useState<boolean | null>(null);
 
   useEffect(() => {
-    setEmail(searchParams.get("email") || "");
-    setToken(searchParams.get("token") || "");
+    const emailParam = searchParams.get("email");
+    const tokenParam = searchParams.get("token");
+    if (!emailParam || !tokenParam) {
+      setMessage("Invalid confirmation link. Please check your email for the correct link.");
+      setIsSuccess(false);
+      setIsLoading(false);
+      return;
+    }
+    setEmail(emailParam);
+    setToken(tokenParam);
   }, [searchParams]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
