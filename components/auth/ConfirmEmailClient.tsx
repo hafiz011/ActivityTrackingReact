@@ -9,7 +9,7 @@ import { CheckCircle, XCircle, Loader2 } from "lucide-react"
 import { confirmEmail as confirmEmailApi } from "@/services/authService"
 
 export default function ConfirmEmailClient() {
-const searchParams = useSearchParams();
+  const searchParams = useSearchParams();
   const router = useRouter();
   const [message, setMessage] = useState("Confirming your email...");
   const [isLoading, setIsLoading] = useState(true);
