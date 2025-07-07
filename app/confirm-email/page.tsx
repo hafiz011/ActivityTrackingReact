@@ -3,7 +3,7 @@
 import ConfirmEmailClient from "@/components/auth/ConfirmEmailClient";
 
 
-export const dynamic = "force-dynamic";
+export const dynamic = "force-dynamic"
 
 export default function ConfirmEmailPage() {
   return <ConfirmEmailClient />
