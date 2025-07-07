@@ -12,11 +12,10 @@
 
 import ResetPassword from "@/components/auth/ResetPassword";
 
-export const dynamic = "force-dynamic";
+export const dynamic = "force-dynamic"
 
 export default function Page() {
   return (
-    
-      <ResetPassword />
+    <ResetPassword />
   );
 }
