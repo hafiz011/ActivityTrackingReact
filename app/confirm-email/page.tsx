@@ -2,14 +2,21 @@
 
 import { Suspense } from "react";
 import ConfirmEmailClient from "@/components/auth/ConfirmEmailClient";
+import { LandingTheme } from "@/components/LandingTheme";
+import { HeaderSection } from "@/components/headerSection";
 
 export const dynamic = "force-dynamic";
 
 export default function Page() {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <ConfirmEmailClient />
-    </Suspense>
+    <>
+    <LandingTheme>
+      <HeaderSection />
+      <Suspense fallback={<div>Loading...</div>}>
+        <ConfirmEmailClient />
+      </Suspense>
+    </LandingTheme>
+    </>
   );
 }
 

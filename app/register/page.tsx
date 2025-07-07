@@ -10,6 +10,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { HeaderSection } from "@/components/headerSection"
+import { LandingTheme } from "@/components/LandingTheme"
 
 export default function Register() {
   const [form, setForm] = useState({
@@ -74,8 +75,10 @@ export default function Register() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background px-4 py-8">
-      <HeaderSection />
+  <>
+  <LandingTheme>
+    <HeaderSection />
+    <div className="min-h-screen flex items-center justify-center px-4 py-8">
       <Card className="w-full max-w-md mt-20">
         <CardHeader>
           <CardTitle className="text-2xl font-bold text-center">Register</CardTitle>
@@ -160,5 +163,7 @@ export default function Register() {
         </DialogContent>
       </Dialog>
     </div>
+  </LandingTheme>
+  </>
   )
 }

@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import {HeaderSection} from "@/components/headerSection"
+import { LandingTheme } from "@/components/LandingTheme";
 
 
 export default function ForgotPassword() {
@@ -64,8 +65,11 @@ export default function ForgotPassword() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background px-4 py-8">
-      <HeaderSection />
+    <>
+    <LandingTheme>
+    <HeaderSection />
+    <div className="min-h-screen flex items-center justify-center px-4 py-8">
+
       <Card className="w-full max-w-md">
         <CardHeader className="text-center">
           <div className="flex justify-center mb-4">
@@ -142,5 +146,7 @@ export default function ForgotPassword() {
         </CardContent>
       </Card>
     </div>
+    </LandingTheme>
+    </>
   );
 }

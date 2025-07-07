@@ -13,7 +13,7 @@ import { Label } from "@/components/ui/label"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import {HeaderSection} from "@/components/headerSection"
-
+import { LandingTheme } from "@/components/LandingTheme";
 
 export default function Login() {
   const [email, setEmail] = useState("")
@@ -61,9 +61,9 @@ export default function Login() {
 
  return (
   <>
-    
-    <div className="min-h-screen flex items-center justify-center bg-background px-4 py-8">
-     <HeaderSection />
+    <LandingTheme>
+    <HeaderSection />
+    <div className="min-h-screen flex items-center justify-center px-4 py-8">
       <Card className="w-full max-w-md mt-20 bg-card shadow-lg">
         <CardHeader className="text-center space-y-4">
           <div className="w-16 h-16 bg-primary rounded-2xl mx-auto flex items-center justify-center shadow-lg">
@@ -177,7 +177,9 @@ export default function Login() {
           </div>
         </CardContent>
       </Card>
+
     </div>
+  </LandingTheme>
   </>
   )
 }

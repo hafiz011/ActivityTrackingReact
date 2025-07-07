@@ -81,7 +81,7 @@ export default function ResetPassword() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background px-4 py-8 transition-colors">
+    <div className="min-h-screen flex items-center justify-center px-4 py-8 transition-colors">
       <Card className="w-full max-w-md shadow-xl border-0 bg-card/90 backdrop-blur">
         <CardHeader className="text-center">
           <div className="flex justify-center mb-4">
