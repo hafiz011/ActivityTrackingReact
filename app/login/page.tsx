@@ -64,14 +64,14 @@ export default function Login() {
     <LandingTheme>
     <HeaderSection />
     <div className="min-h-screen flex items-center justify-center px-4 py-8">
-      <Card className="w-full max-w-md mt-20 bg-card shadow-lg">
+      <Card className="w-full max-w-md mt-20 shadow-lg">
         <CardHeader className="text-center space-y-4">
-          <div className="w-16 h-16 bg-primary rounded-2xl mx-auto flex items-center justify-center shadow-lg">
-            <Lock className="w-8 h-8 text-primary-foreground" />
+          <div className="w-16 h-16 rounded-2xl mx-auto flex items-center justify-center shadow-lg">
+            <Lock className="w-8 h-8 text-blue-500" />
           </div>
           <div>
             <CardTitle className="text-3xl font-bold mb-2">Welcome back</CardTitle>
-            <p className="text-muted-foreground text-sm">Sign in to your account to continue</p>
+            <p className="text-gray-400 text-sm">Sign in to your account to continue</p>
           </div>
         </CardHeader>
 

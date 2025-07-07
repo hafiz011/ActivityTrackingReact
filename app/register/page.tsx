@@ -81,7 +81,7 @@ export default function Register() {
     <div className="min-h-screen flex items-center justify-center px-4 py-8">
       <Card className="w-full max-w-md mt-20">
         <CardHeader>
-          <CardTitle className="text-2xl font-bold text-center">Register</CardTitle>
+          <CardTitle className="text-2xl font-bold text-center">Sign Up</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
           {error && (
@@ -144,7 +144,7 @@ export default function Register() {
             />
 
             <Button type="submit" className="w-full" disabled={isLoading}>
-              {isLoading ? "Registering..." : "Register"}
+              {isLoading ? "Registering..." : "Sign Up"}
             </Button>
           </form>
         </CardContent>
