@@ -20,9 +20,9 @@ export const HeaderSection: React.FC = () => {
   }, []);
 
   const navigationItems = [
-    { href: "#features", label: "Features" },
-    { href: "#pricing", label: "Pricing" },
-    { href: "#faq", label: "FAQ" },
+    { href: "/#features", label: "Features" },
+    { href: "/#pricing", label: "Pricing" },
+    { href: "/#faq", label: "FAQ" },
     { href: "/docs", label: "Docs" },
     { href: "/about", label: "About" },
     { href: "/Contact", label: "Contact" },

@@ -1,13 +1,16 @@
 'use client';
 
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Button } from "@/components/ui/button";
-import { toast } from "sonner";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { contactFormSchema, ContactFormData } from "@/lib/validation";
-import { submitContactForm } from "@/app/Contact/actions";
+import React from 'react';
+import { Send } from 'lucide-react';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { toast } from 'sonner';
+import { contactFormSchema, ContactFormData } from '@/lib/validation';
+import { submitContactForm } from '@/app/Contact/actions';
+import { Card } from './ui/card';
+import { Input } from './ui/input';
+import { Textarea } from './ui/textarea';
+import { Button } from './ui/button';
 
 export function ContactForm() {
   const {
@@ -22,16 +25,24 @@ export function ContactForm() {
   const onSubmit = async (data: ContactFormData) => {
     const res = await submitContactForm(data);
 
-    if ("error" in res) {
-      toast.error("Form submission failed.");
+    if ('error' in res) {
+      toast.error('Form submission failed.');
     } else {
-      toast.success("Message sent!");
+      toast.success('Message sent!');
       reset();
     }
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+    <Card className="p-8 shadow-lg">
+      <div className="mb-8">
+        <h3 className="text-2xl font-bold text-gray-300 mb-4">Send Us a Message</h3>
+        <p className="text-gray-400">
+          Fill out the form below and we'll get back to you within 24 hours.
+        </p>
+      </div>
+      
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
       <Input placeholder="Your Name" {...register("name")} />
       <Input placeholder="Email Address" type="email" {...register("email")} />
       <Input placeholder="Company (Optional)" {...register("company")} />
@@ -47,5 +58,7 @@ export function ContactForm() {
         {isSubmitting ? "Sending..." : "Send Message"}
       </Button>
     </form>
+
+    </Card>
   );
 }
