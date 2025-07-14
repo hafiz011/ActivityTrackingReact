@@ -100,7 +100,7 @@ export function ThemeProvider({
 
     // Detect system theme
     const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)")
-    setSystemTheme(mediaQuery.matches ? "dark" : "light")
+    setSystemTheme(mediaQuery.matches ? "dark" : "dark")
 
     // Set initial theme
     if (savedTheme && (savedTheme === "light" || savedTheme === "dark" || (enableSystem && savedTheme === "system"))) {
