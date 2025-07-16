@@ -480,7 +480,8 @@ export function AppSidebar({ ...props }) {
   if (!token || !user) return null; // Optional: Blank while redirecting
     const handleLogout = () => {
     logout();            // Clear localStorage & context
-    router.push("/login"); // Redirect to login
+    router.push("/dashboard"); // Redirect to login
+    //  router.push("/login"); // Redirect to login
   };
 
   if(isLoading){

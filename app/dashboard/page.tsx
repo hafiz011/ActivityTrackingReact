@@ -63,7 +63,7 @@ const Dashboard: React.FC = () => {
             {/* Suspicious Activity Alert */}
             <SuspiciousActivityAlert alert={alert} />
 
-          {/* Main Dashboard Tabs */}
+          {/* Main Dashboard Tabs *
           <Tabs defaultValue="sessions" className="space-y-4">
             <TabsList className="grid w-full grid-cols-6">
               <TabsTrigger value="sessions">Active Sessions</TabsTrigger>
@@ -74,12 +74,12 @@ const Dashboard: React.FC = () => {
               <TabsTrigger value="users">Top Users</TabsTrigger>
             </TabsList>
              
-             {/* Active Sessions Tab */}
+             {/* Active Sessions Tab *
             <TabsContent value="sessions" className="space-y-4">
               <ActiveSessionsTab activeSessions={yourSessionsArray} loading={{ activeSessions: isLoading }} />
             </TabsContent>
 
-            {/* Session Analytics Tab */}
+            {/* Session Analytics Tab *
             <TabsContent value="analytics" className="space-y-4">
               <SessionAnalyticsTab
                 loading={loading}
@@ -89,7 +89,7 @@ const Dashboard: React.FC = () => {
               />
             </TabsContent>
 
-            {/* Suspicious Activity Tab */}
+            {/* Suspicious Activity Tab *
             <TabsContent value="suspicious" className="space-y-4">
               <SuspiciousActivityTab
                 suspiciousActivities={suspiciousActivities}
@@ -99,7 +99,7 @@ const Dashboard: React.FC = () => {
               />
             </TabsContent>
 
-            {/* Activity Breakdown Tab */}
+            {/* Activity Breakdown Tab *
             <TabsContent value="breakdown" className="space-y-4">
               <ActivityBreakdownTab
                 loading={loading}
@@ -107,7 +107,7 @@ const Dashboard: React.FC = () => {
               />
             </TabsContent>
 
-            {/* Login Trends Tab */}
+            {/* Login Trends Tab *
             <TabsContent value="trends" className="space-y-4">
               <LoginTrendsTab
                 loading={loading}
@@ -116,7 +116,7 @@ const Dashboard: React.FC = () => {
               />
             </TabsContent>
 
-             {/* Top Users Tab */}
+             {/* Top Users Tab *
             <TabsContent value="users" className="space-y-4">
               <TopUsersTab loading={loading} topActiveUsers={topActiveUsers} /> 
             </TabsContent>
@@ -127,7 +127,7 @@ const Dashboard: React.FC = () => {
 
           </Tabs>
 
-
+*/}
           </Card>
         </SidebarInset>
       </SidebarProvider>

@@ -26,6 +26,7 @@ export type SuspiciousActivityAlert = {
   LastDetected: string;
 };
 
+
 // Suspicious activity alert Detected
 export type SuspiciousActivityDetails = {
   id: string;
