@@ -1,4 +1,12 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+// FiltersCard.tsx
+"use client";
+
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
@@ -17,34 +25,55 @@ import {
 import { ChevronDown, Filter } from "lucide-react";
 import { DatePickerWithRange } from "@/components/date-range-picker";
 import { DateRange } from "react-day-picker";
+import { useEffect, useState } from "react";
+import { useFilter } from "@/context/FilterContext";
 
-interface FiltersCardProps {
-  dateRange: DateRange | undefined;
-  setDateRange: (range: DateRange | undefined) => void;
-  selectedCountry: string;
-  setSelectedCountry: (country: string) => void;
-  selectedDevice: string;
-  setSelectedDevice: (device: string) => void;
-  suspiciousOnly: boolean;
-  setSuspiciousOnly: (suspicious: boolean) => void;
-  timeRange: string;
-  setTimeRange: (range: string) => void;
-}
+export const FiltersCard = () => {
+  const {
+    timeRange,
+    setTimeRange,
+    startDate,
+    endDate,
+    setStartDate,
+    setEndDate,
+    country,
+    setCountry,
+    device,
+    setDevice,
+    suspiciousOnly,
+    setSuspiciousOnly,
+  } = useFilter();
 
-export function FiltersCard({
-  dateRange,
-  setDateRange,
-  selectedCountry,
-  setSelectedCountry,
-  selectedDevice,
-  setSelectedDevice,
-  suspiciousOnly,
-  setSuspiciousOnly,
-  timeRange,
-  setTimeRange,
-}: FiltersCardProps) {
+  const [dateRange, setDateRange] = useState<DateRange | undefined>(undefined);
+  const [open, setOpen] = useState(false);
+
+  // Handle time range preset
+  useEffect(() => {
+    if (timeRange === "custom") return;
+    const now = new Date();
+    let from: Date;
+    switch (timeRange) {
+      case "24h": from = new Date(now.getTime() - 24 * 60 * 60 * 1000); break;
+      case "7d": from = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000); break;
+      case "30d": from = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000); break;
+      default: return;
+    }
+    setStartDate(from.toISOString());
+    setEndDate(now.toISOString());
+    setDateRange({ from, to: now });
+  }, [timeRange]);
+
+  // Set custom date range manually
+  useEffect(() => {
+    if (dateRange?.from && dateRange?.to) {
+      setTimeRange("custom");
+      setStartDate(dateRange.from.toISOString());
+      setEndDate(dateRange.to.toISOString());
+    }
+  }, [dateRange]);
+
   return (
-    <div className="flex items-center justify-between gap-4">
+    <div className="flex items-center justify-between gap-4 flex-wrap">
       <div>
         <h1 className="text-3xl font-bold tracking-tight bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
           Analytics Dashboard
@@ -54,37 +83,24 @@ export function FiltersCard({
         </p>
       </div>
 
-      <div className="flex items-center gap-4">
-        {/* Quick Time Range Buttons */}
+      <div className="flex items-center gap-4 flex-wrap">
+        {/* Time Range Presets */}
         <div className="flex items-center gap-2 p-1 bg-muted rounded-lg">
-          <Button
-            variant={timeRange === "24h" ? "default" : "ghost"}
-            size="sm"
-            onClick={() => setTimeRange("24h")}
-            className="h-8"
-          >
-            24h
-          </Button>
-          <Button 
-            variant={timeRange === "7d" ? "default" : "ghost"} 
-            size="sm" 
-            onClick={() => setTimeRange("7d")}
-            className="h-8"
-          >
-            7d
-          </Button>
-          <Button
-            variant={timeRange === "30d" ? "default" : "ghost"}
-            size="sm"
-            onClick={() => setTimeRange("30d")}
-            className="h-8"
-          >
-            30d
-          </Button>
+          {["24h", "7d", "30d"].map((range) => (
+            <Button
+              key={range}
+              variant={timeRange === range ? "default" : "ghost"}
+              size="sm"
+              onClick={() => setTimeRange(range as any)}
+              className="h-8"
+            >
+              {range}
+            </Button>
+          ))}
         </div>
 
         {/* Advanced Filters */}
-        <Collapsible>
+        <Collapsible open={open} onOpenChange={setOpen}>
           <Card className="hover:border-primary/50 transition-colors">
             <CardHeader className="pb-3">
               <div className="flex items-center justify-between">
@@ -93,8 +109,8 @@ export function FiltersCard({
                   Advanced Filters
                 </CardTitle>
                 <CollapsibleTrigger asChild>
-                  <Button variant="ghost" size="sm" className="hover:bg-primary/10">
-                    <ChevronDown className="h-4 w-4 transition-transform duration-200" />
+                  <Button variant="ghost" size="sm">
+                    <ChevronDown className={`h-4 w-4 transition-transform ${open ? "rotate-180" : ""}`} />
                   </Button>
                 </CollapsibleTrigger>
               </div>
@@ -102,17 +118,18 @@ export function FiltersCard({
             <CollapsibleContent>
               <CardContent>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                    <div>
-                        <div className="space-y-2">
-                            <Label className="text-sm font-medium">Date Range</Label>
-                            <DatePickerWithRange date={dateRange} setDate={setDateRange} />
-                        </div>
-                    </div>
+                  {/* Date Picker */}
+                  <div className="space-y-2">
+                    <Label className="text-sm font-medium">Date Range</Label>
+                    <DatePickerWithRange date={dateRange} setDate={setDateRange} />
+                  </div>
+
+                  {/* Country */}
                   <div className="space-y-2">
                     <Label className="text-sm font-medium">Country</Label>
-                    <Select value={selectedCountry} onValueChange={setSelectedCountry}>
-                      <SelectTrigger className="hover:border-primary/50 transition-colors">
-                        <SelectValue />
+                    <Select value={country} onValueChange={setCountry}>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select country" />
                       </SelectTrigger>
                       <SelectContent>
                         <SelectItem value="all">🌍 All Countries</SelectItem>
@@ -125,11 +142,12 @@ export function FiltersCard({
                     </Select>
                   </div>
 
+                  {/* Device */}
                   <div className="space-y-2">
                     <Label className="text-sm font-medium">Device Type</Label>
-                    <Select value={selectedDevice} onValueChange={setSelectedDevice}>
-                      <SelectTrigger className="hover:border-primary/50 transition-colors">
-                        <SelectValue />
+                    <Select value={device} onValueChange={setDevice}>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select device" />
                       </SelectTrigger>
                       <SelectContent>
                         <SelectItem value="all">💻 All Devices</SelectItem>
@@ -140,12 +158,13 @@ export function FiltersCard({
                     </Select>
                   </div>
 
+                  {/* Suspicious Toggle */}
                   <div className="space-y-2">
                     <Label className="text-sm font-medium">Security Focus</Label>
                     <div className="flex items-center space-x-3 pt-2">
-                      <Switch 
-                        id="suspicious-only" 
-                        checked={suspiciousOnly} 
+                      <Switch
+                        id="suspicious-only"
+                        checked={suspiciousOnly}
                         onCheckedChange={setSuspiciousOnly}
                         className="data-[state=checked]:bg-red-600"
                       />
@@ -162,4 +181,4 @@ export function FiltersCard({
       </div>
     </div>
   );
-}
+};

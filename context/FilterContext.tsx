@@ -1,8 +1,12 @@
+// FilterContext.tsx
+"use client";
+
 import React, { createContext, useContext, useState, ReactNode } from "react";
 
-export type DateFilterType = "24hours" | "7days" | "1month" | "custom";
+export type TimeRange = "24h" | "7d" | "30d" | "custom";
 
 export interface FilterState {
+  timeRange: TimeRange;
   startDate: string | null;
   endDate: string | null;
   country: string;
@@ -11,6 +15,7 @@ export interface FilterState {
 }
 
 interface FilterContextType extends FilterState {
+  setTimeRange: (range: TimeRange) => void;
   setStartDate: (date: string | null) => void;
   setEndDate: (date: string | null) => void;
   setCountry: (country: string) => void;
@@ -21,6 +26,7 @@ interface FilterContextType extends FilterState {
 const FilterContext = createContext<FilterContextType | undefined>(undefined);
 
 export const FilterProvider = ({ children }: { children: ReactNode }) => {
+  const [timeRange, setTimeRange] = useState<TimeRange>("24h");
   const [startDate, setStartDate] = useState<string | null>(null);
   const [endDate, setEndDate] = useState<string | null>(null);
   const [country, setCountry] = useState<string>("all");
@@ -30,15 +36,17 @@ export const FilterProvider = ({ children }: { children: ReactNode }) => {
   return (
     <FilterContext.Provider
       value={{
+        timeRange,
+        setTimeRange,
         startDate,
-        endDate,
-        country,
-        device,
-        suspiciousOnly,
         setStartDate,
+        endDate,
         setEndDate,
+        country,
         setCountry,
+        device,
         setDevice,
+        suspiciousOnly,
         setSuspiciousOnly,
       }}
     >
