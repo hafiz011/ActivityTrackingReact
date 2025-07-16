@@ -473,7 +473,7 @@ export function AppSidebar({ ...props }) {
 
    useEffect(() => {
     if(!isLoading && !isAuthenticated){
-      router.push("/login")
+      router.push("/dashboard") //login
     }
   }, [isLoading, isAuthenticated]);
 
