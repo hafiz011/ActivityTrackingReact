@@ -14,7 +14,7 @@ import { FilterProvider } from "@/context/FilterContext";
 import SessionsInfo from "@/components/dashboard/SessionsInfo";
 import SuspiciousActivityAlert from "@/components/dashboard/SuspiciousActivityAlert";
 import type { SuspiciousActivityAlert as SuspiciousActivityAlertType } from "@/services/types/session";
-import { fetchSuspiciousActivityAlert } from "@/services/sessionService";
+import { getSuspiciousActivityAlert } from "@/services/sessionService";
 
 import { ActiveSessionsTab } from "@/components/dashboard/ActiveSessionsTab";
 import { SessionAnalyticsTab } from "@/components/dashboard/SessionAnalyticsTab";
@@ -29,7 +29,7 @@ const Dashboard: React.FC = () => {
 
   useEffect(() => {
     setLoading({ suspicious: true });
-    fetchSuspiciousActivityAlert()
+    getSuspiciousActivityAlert()
       .then(setAlert)
       .catch(() => setAlert(null))
       .finally(() => setLoading({ suspicious: false }));
@@ -37,7 +37,7 @@ const Dashboard: React.FC = () => {
 
   const handleRefresh = () => {
     setLoading({ suspicious: true });
-    fetchSuspiciousActivityAlert()
+    getSuspiciousActivityAlert()
       .then(setAlert)
       .finally(() => setLoading({ suspicious: false }));
   };
