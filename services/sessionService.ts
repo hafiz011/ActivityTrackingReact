@@ -15,7 +15,7 @@ import type {
 // Fetch suspicious activity alert
 // This function fetches the latest suspicious activity alert from the server.
 export const getSuspiciousActivityAlert = async (): Promise<SuspiciousActivityAlert> => {
-  const response = await axios.get("/Suspicious/alert");
+  const response = await axios.get("/sessions/alert");
   return response.data as SuspiciousActivityAlert;
 };
 

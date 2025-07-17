@@ -14,7 +14,6 @@ import { FilterProvider } from "@/context/FilterContext";
 import SessionsInfo from "@/components/dashboard/SessionsInfo";
 import SuspiciousActivityAlert from "@/components/dashboard/SuspiciousActivityAlert";
 import type { SuspiciousActivityAlert as SuspiciousActivityAlertType } from "@/services/types/session";
-import { getSuspiciousActivityAlert } from "@/services/sessionService";
 
 import { ActiveSessionsTab } from "@/components/dashboard/ActiveSessionsTab";
 import { SessionAnalyticsTab } from "@/components/dashboard/SessionAnalyticsTab";
@@ -23,9 +22,15 @@ import { ActivityBreakdownTab } from "@/components/dashboard/ActivityBreakdownTa
 import { LoginTrendsTab } from "@/components/dashboard/LoginTrendsTab";
 import { TopUsersTab } from "@/components/dashboard/TopUsersTab";
 
+import { getSuspiciousActivityAlert } from "@/services/sessionService";
+import { getActiveSessions } from "@/services/sessionService";
+
 const Dashboard: React.FC = () => {
   const [alert, setAlert] = useState<SuspiciousActivityAlertType | null>(null);
   const [loading, setLoading] = useState<{ suspicious: boolean }>({ suspicious: false });
+  
+  const [activeSessions, setActiveSessions] = useState([]);
+  const [loadingSessions, setLoadingSessions] = useState(false);
 
   useEffect(() => {
     setLoading({ suspicious: true });
@@ -34,6 +39,19 @@ const Dashboard: React.FC = () => {
       .catch(() => setAlert(null))
       .finally(() => setLoading({ suspicious: false }));
   }, []);
+
+
+  // useEffect(() => {
+  //   setLoadingSessions(true);
+  //   getActiveSessions()
+  //     .then((data) => setActiveSessions(data))
+  //     .catch((err) => console.error(err))
+  //     .finally(() => setLoadingSessions(false));
+  // }, []);
+
+
+
+
 
   const handleRefresh = () => {
     setLoading({ suspicious: true });
@@ -77,6 +95,7 @@ const Dashboard: React.FC = () => {
              {/* Active Sessions Tab *
             <TabsContent value="sessions" className="space-y-4">
               <ActiveSessionsTab activeSessions={yourSessionsArray} loading={{ activeSessions: isLoading }} />
+              <ActiveSessionsTab activeSessions={activeSessions} loading={{ activeSessions: loadingSessions }} />
             </TabsContent>
 
             {/* Session Analytics Tab *
