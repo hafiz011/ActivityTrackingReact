@@ -5,12 +5,7 @@ import { Card } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import Header from "@/components/dashboard/Header";
 import { FiltersCard } from "@/components/dashboard/Filtter";
-import {
-  SidebarProvider,
-  SidebarInset,
-} from "@/components/ui/sidebar";
-import { AppSidebar } from "@/components/app-sidebar";
-import { FilterProvider } from "@/context/FilterContext";
+import { SidebarInset } from "@/components/ui/sidebar";
 import SessionsInfo from "@/components/dashboard/SessionsInfo";
 import SuspiciousActivityAlert from "@/components/dashboard/SuspiciousActivityAlert";
 import type { SuspiciousActivityAlert as SuspiciousActivityAlertType } from "@/services/types/session";
@@ -61,10 +56,8 @@ const Dashboard: React.FC = () => {
   };
 
   return (
-    <FilterProvider>
-      <SidebarProvider>
-        <AppSidebar />
-        <SidebarInset className="p-4">
+
+        <SidebarInset className="p-2">
           <div className="flex items-center gap-2">
             <Header
               alertTotal={alert?.Total || 0}
@@ -149,9 +142,6 @@ const Dashboard: React.FC = () => {
 */}
           </Card>
         </SidebarInset>
-      </SidebarProvider>
-    </FilterProvider>
   );
 };
-
 export default Dashboard;
