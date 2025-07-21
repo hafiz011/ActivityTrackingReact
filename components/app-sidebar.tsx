@@ -471,9 +471,9 @@ export function AppSidebar({ ...props }) {
 
   const router = useRouter();
 
-   useEffect(() => {
+  useEffect(() => {
     if(!isLoading && !isAuthenticated){
-      router.push("/login") //login
+      router.push("/login")
     }
   }, [isLoading, isAuthenticated]);
 
@@ -481,7 +481,6 @@ export function AppSidebar({ ...props }) {
     const handleLogout = () => {
     logout();            // Clear localStorage & context
     router.push("/login"); // Redirect to login
-    //  router.push("/login"); // Redirect to login
   };
 
   if(isLoading){
