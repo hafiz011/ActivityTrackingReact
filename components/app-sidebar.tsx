@@ -473,15 +473,15 @@ export function AppSidebar({ ...props }) {
 
    useEffect(() => {
     if(!isLoading && !isAuthenticated){
-      router.push("/dashboard") //login
+      router.push("/login") //login
     }
   }, [isLoading, isAuthenticated]);
 
   if (!token || !user) return null; // Optional: Blank while redirecting
     const handleLogout = () => {
     logout();            // Clear localStorage & context
-    router.push("/dashboard"); // Redirect to login
-    //  router.push("/login"); // Redirect to login
+    // router.push("/dashboard"); // Redirect to dashboard
+    router.push("/login"); // Redirect to login
   };
 
   if(isLoading){
