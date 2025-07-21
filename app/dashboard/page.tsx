@@ -23,7 +23,7 @@ import { LoginTrendsTab } from "@/components/dashboard/LoginTrendsTab";
 import { TopUsersTab } from "@/components/dashboard/TopUsersTab";
 
 import { getSuspiciousActivityAlert } from "@/services/sessionService";
-import { getActiveSessions } from "@/services/sessionService";
+//import { getActiveSessions } from "@/services/sessionService";
 
 const Dashboard: React.FC = () => {
   const [alert, setAlert] = useState<SuspiciousActivityAlertType | null>(null);
