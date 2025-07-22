@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import { Card } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import Header from "@/components/dashboard/Header";
-import { FiltersCard } from "@/components/dashboard/Filtter";
+import { FiltersCard } from "@/components/dashboard/FiltersCard";
 import { SidebarInset } from "@/components/ui/sidebar";
 import SessionsInfo from "@/components/dashboard/SessionsInfo";
 import SuspiciousActivityAlert from "@/components/dashboard/SuspiciousActivityAlert";
