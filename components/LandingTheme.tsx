@@ -1,12 +1,5 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
-import { 
-  Cpu,
-  Database,
-  Network,
-  Radar,
-} from "lucide-react";
-
 
 // Enhanced TechParticle with more dynamic effects
 const TechParticle = ({
@@ -40,31 +33,7 @@ const TechParticle = ({
   </div>
 );
 
-// Enhanced CircuitLine with better flow animation
-const CircuitLine = ({ delay = 0, position = 'left-10' }: { delay?: number; position?: string }) => (
-  <div 
-    className={`absolute ${position} animate-circuit-flow opacity-40`}
-    style={{ animationDelay: `${delay}s` }}
-  >
-    <div className="w-px h-40 bg-gradient-to-b from-transparent via-cyan-400 via-blue-400 to-transparent animate-data-flow shadow-cyan-glow" />
-  </div>
-);
-
-
-const HologramElement = ({ children, delay = 0 }: { children: React.ReactNode, delay?: number }) => (
-  <div 
-    className="absolute animate-hologram opacity-40"
-    style={{ animationDelay: `${delay}s` }}
-  >
-    <div className="relative">
-      {children}
-      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-cyan-400/20 to-transparent animate-scan-line" />
-    </div>
-  </div>
-);
-
 export function LandingTheme({ children }: { children: React.ReactNode }) {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [time, setTime] = useState(0);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const animationRef = useRef<number>();
@@ -103,18 +72,10 @@ export function LandingTheme({ children }: { children: React.ReactNode }) {
       }))
     );
 
-    const handleMouseMove = (e: MouseEvent) => {
-      setMousePosition({
-        x: (e.clientX / window.innerWidth) * 100,
-        y: (e.clientY / window.innerHeight) * 100,
-      });
-    };
 
     const timer = setInterval(() => {
       setTime(prev => prev + 1);
     }, 100);
-
-    window.addEventListener('mousemove', handleMouseMove);
 
     // Enhanced Neural Network Canvas with better performance
     const canvas = canvasRef.current;
@@ -217,13 +178,6 @@ export function LandingTheme({ children }: { children: React.ReactNode }) {
       }
     }
 
-    return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
-      clearInterval(timer);
-      if (animationRef.current) {
-        cancelAnimationFrame(animationRef.current);
-      }
-    };
   }, []);
 
   return (
@@ -236,25 +190,12 @@ export function LandingTheme({ children }: { children: React.ReactNode }) {
         style={{ zIndex: 1 }}
       />
 
-
       {/* Cyberpunk Grid Background */}
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-blue-950 to-cyan-950" />
         <div className="absolute inset-0 bg-cyber-grid opacity-20 animate-grid-pulse" />
         <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-black/30" />
       </div>
-
-      {/* Mouse-following gradient effect */}
-      <div 
-        className="absolute w-96 h-96 rounded-full opacity-20 transition-all duration-1000 ease-out pointer-events-none"
-        style={{
-          background: 'radial-gradient(circle, rgba(6, 182, 212, 0.4) 0%, rgba(59, 130, 246, 0.2) 50%, transparent 70%)',
-          left: `${mousePosition.x}%`,
-          top: `${mousePosition.y}%`,
-          transform: 'translate(-50%, -50%)',
-          zIndex: 3,
-        }}
-      />
 
       {/* Enhanced Dynamic Laser Grid */}
       <div className="absolute inset-0 overflow-hidden" style={{ zIndex: 4 }}>
@@ -282,32 +223,7 @@ export function LandingTheme({ children }: { children: React.ReactNode }) {
         ))}
       </div>
 
-      {/* Holographic Elements */}
-      <HologramElement delay={0}>
-        <div className="top-20 left-10">
-          <Cpu className="w-16 h-16 text-cyan-400 animate-tech-spin" />
-        </div>
-      </HologramElement>
-      
-      <HologramElement delay={2}>
-        <div className="top-32 right-20">
-          <Database className="w-12 h-12 text-blue-400 animate-tech-pulse" />
-        </div>
-      </HologramElement>
-      
-      <HologramElement delay={4}>
-        <div className="bottom-40 left-1/4">
-          <Network className="w-14 h-14 text-emerald-400 animate-tech-rotate" />
-        </div>
-      </HologramElement>
-      
-      <HologramElement delay={6}>
-        <div className="top-1/2 right-1/3">
-          <Radar className="w-10 h-10 text-purple-400 animate-radar-sweep" />
-        </div>
-      </HologramElement>
-
- {/* Enhanced Tech Particles */}
+      {/* Enhanced Tech Particles */}
       <div className="absolute inset-0" style={{ zIndex: 6 }}>
         {particles.map((p, i) => (
           <TechParticle
@@ -322,22 +238,11 @@ export function LandingTheme({ children }: { children: React.ReactNode }) {
         ))}
       </div>
 
-      {/* Enhanced Circuit Lines */}
-      <div className="absolute inset-0" style={{ zIndex: 7 }}>
-        {[...Array(15)].map((_, i) => (
-          <CircuitLine 
-            key={i} 
-            delay={i * 0.6} 
-            position={`${i % 2 === 0 ? 'left' : 'right'}-${10 + (i * 5)}%`}
-          />
-        ))}
-      </div>
-
       {/* Enhanced Glitch Effect Overlay */}
       <div 
         className="absolute inset-0 opacity-10 pointer-events-none animate-glitch-overlay"
         style={{
-          background: 'linear-gradient(45deg, transparent 30%, rgba(255, 0, 255, 0.1) 50%, transparent 70%)',
+          background: 'linear-gradient(45deg, transparent 30%, rgba(255, 0, 255, 0.23) 50%, transparent 70%)',
           zIndex: 8,
         }}
       />
@@ -348,7 +253,7 @@ export function LandingTheme({ children }: { children: React.ReactNode }) {
         <div className="absolute h-full w-px bg-cyan-400 animate-scan-vertical opacity-20" />
       </div>
 
-            {/* Additional atmospheric effects */}
+      {/* Additional atmospheric effects */}
       <div className="absolute inset-0" style={{ zIndex: 10 }}>
         <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-cyan-500/5 via-transparent to-purple-500/5 animate-pulse" />
       </div>

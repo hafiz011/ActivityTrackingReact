@@ -21,9 +21,6 @@ import {
     Webhook,
     BrainCog
 } from 'lucide-react';
-import { LandingTheme } from '@/components/LandingTheme';
-import { HeaderSection } from '@/components/headerSection';
-import  Footer  from "@/components/Footer";
 import { Card, CardContent } from "@/components/ui/card";
 
 
@@ -96,8 +93,6 @@ export default function AboutPage() {
   }, []);
     
  return (
-    <LandingTheme>
-      <HeaderSection />
     <div className="min-h-screen">
       {/* Hero Section */}
       <section className="relative overflow-hidden">
@@ -306,8 +301,5 @@ export default function AboutPage() {
         </div>
       </section>
     </div>
-      
-      <Footer />
-    </LandingTheme>
   );
 }

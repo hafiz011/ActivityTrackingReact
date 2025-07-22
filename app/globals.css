@@ -171,10 +171,7 @@ a,
     animation: counter-up 0.1s linear infinite;
   }
 
-  .animate-hologram-badge {
-    animation: hologram-badge 3s ease-in-out infinite;
-  }
-
+  
   .animate-glitch-text {
     animation: glitch-text 4s linear infinite;
   }
@@ -201,10 +198,6 @@ a,
 
   .animate-tech-arrow {
     animation: tech-arrow 1.5s ease-in-out infinite;
-  }
-
-  .animate-hologram-card {
-    animation: hologram-card 4s ease-in-out infinite;
   }
 
   .animate-tech-shimmer {
@@ -251,9 +244,7 @@ a,
     animation: grid-pulse 4s ease-in-out infinite;
   }
 
-  .animate-hologram {
-    animation: hologram 6s ease-in-out infinite;
-  }
+
 
   .animate-data-flow {
     animation: data-flow 2s linear infinite;
@@ -263,9 +254,6 @@ a,
     animation: pulse-tech 1.5s ease-in-out infinite;
   }
 
-  .animate-circuit-flow {
-    animation: circuit-flow 8s linear infinite;
-  }
 }
 /* Heavy Tech Keyframes */
 @keyframes tech-particle {
@@ -407,16 +395,7 @@ a,
   }
 }
 
-@keyframes hologram-badge {
-  0%, 100% {
-    box-shadow: 0 0 20px rgba(6, 182, 212, 0.3);
-    border-color: rgba(6, 182, 212, 0.5);
-  }
-  50% {
-    box-shadow: 0 0 30px rgba(6, 182, 212, 0.6);
-    border-color: rgba(6, 182, 212, 0.8);
-  }
-}
+
 
 @keyframes glitch-text {
   0%, 100% {
@@ -511,16 +490,7 @@ a,
   }
 }
 
-@keyframes hologram-card {
-  0%, 100% {
-    transform: translateY(0) rotateX(0deg);
-    box-shadow: 0 10px 30px rgba(6, 182, 212, 0.1);
-  }
-  50% {
-    transform: translateY(-5px) rotateX(2deg);
-    box-shadow: 0 20px 40px rgba(6, 182, 212, 0.2);
-  }
-}
+
 
 @keyframes tech-shimmer {
   0% {
@@ -639,16 +609,7 @@ a,
   }
 }
 
-@keyframes hologram {
-  0%, 100% {
-    opacity: 0.4;
-    transform: translateY(0) scale(1);
-  }
-  50% {
-    opacity: 0.6;
-    transform: translateY(-10px) scale(1.05);
-  }
-}
+
 
 @keyframes data-flow {
   0% {
@@ -672,22 +633,5 @@ a,
   50% {
     opacity: 0.8;
     transform: scale(1.1);
-  }
-}
-
-@keyframes circuit-flow {
-  0% {
-    transform: translateY(100vh) rotate(0deg);
-    opacity: 0;
-  }
-  10% {
-    opacity: 0.3;
-  }
-  90% {
-    opacity: 0.3;
-  }
-  100% {
-    transform: translateY(-100vh) rotate(360deg);
-    opacity: 0;
   }
 }

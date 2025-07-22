@@ -1,7 +1,6 @@
 "use client"
-
 import type React from "react"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { Eye, EyeOff, Mail, Lock, Loader2 } from "lucide-react"
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
@@ -12,8 +11,6 @@ import { Button } from "@/components/ui/button"
 import { Label } from "@/components/ui/label"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Alert, AlertDescription } from "@/components/ui/alert"
-import {HeaderSection} from "@/components/headerSection"
-import { LandingTheme } from "@/components/LandingTheme";
 
 export default function Login() {
   const [email, setEmail] = useState("")
@@ -27,15 +24,6 @@ export default function Login() {
 
   const { login } = useAuth();
   const router = useRouter();
-
-// useEffect(() =>{
-// const storedToken = localStorage.getItem("authToken")
-//       const storedUser = localStorage.getItem("authUser")
-//       if (storedToken) {setToken(storedToken)}
-//       if (storedUser || storedToken) {
-//         router.push("/dademo")
-//       }
-// }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -61,18 +49,16 @@ export default function Login() {
 
  return (
   <>
-    <LandingTheme>
-    <HeaderSection />
        {/* Main Content */}
       <div className="relative min-h-screen flex items-center justify-center px-4 py-8">
-        <Card className="w-full max-w-md mt-20 shadow-2xl border-0 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl">
+        <Card className="w-full max-w-md mt-20 bg-black/60 backdrop-blur-md rounded-2xl shadow-2xl shadow-cyan-500/10 border border-cyan-500/30 transition-all">
           <CardHeader className="text-center space-y-6 pb-8">
 
             <div className="space-y-2">
-              <CardTitle className="text-3xl font-bold bg-gradient-to-r from-slate-900 to-slate-700 dark:from-white dark:to-slate-300 bg-clip-text text-transparent">
+              <CardTitle className="text-3xl font-bold bg-gradient-to-r from-slate-200 to-slate-100 dark:from-white dark:to-slate-300 bg-clip-text text-transparent">
                 Welcome back
               </CardTitle>
-              <p className="text-slate-600 dark:text-slate-400 text-sm">
+              <p className="text-slate-400 dark:text-slate-300 text-sm">
                 Sign in to your account to continue your journey
               </p>
             </div>
@@ -81,7 +67,7 @@ export default function Login() {
           <CardContent className="space-y-6 px-8 pb-8">
             {error && (
               <Alert variant="destructive" className="border-red-200 bg-red-50 dark:border-red-800 dark:bg-red-950/50">
-                <AlertDescription className="text-center text-red-800 dark:text-red-200">
+                <AlertDescription className="text-center text-red-500 dark:text-red-200">
                   {error}
                 </AlertDescription>
               </Alert>
@@ -90,7 +76,7 @@ export default function Login() {
             <form onSubmit={handleSubmit} className="space-y-6">
               {/* Email Field */}
               <div className="space-y-2">
-                <Label htmlFor="email" className="text-sm font-medium text-slate-700 dark:text-slate-300">
+                <Label htmlFor="email" className="text-sm font-medium text-slate-300 dark:text-slate-200">
                   Email address
                 </Label>
                 <div className="relative group">
@@ -112,7 +98,7 @@ export default function Login() {
 
               {/* Password Field */}
               <div className="space-y-2">
-                <Label htmlFor="password" className="text-sm font-medium text-slate-700 dark:text-slate-300">
+                <Label htmlFor="password" className="text-sm font-medium text-slate-300 dark:text-slate-200">
                   Password
                 </Label>
                 <div className="relative group">
@@ -152,9 +138,9 @@ export default function Login() {
                     id="remember-me"
                     checked={rememberMe}
                     onCheckedChange={(checked) => setRememberMe(checked as boolean)}
-                    className="border-slate-300 dark:border-slate-600"
+                    className="border-slate-400 bg-white/80 dark:border-slate-300"
                   />
-                  <Label htmlFor="remember-me" className="text-sm font-normal text-slate-600 dark:text-slate-400">
+                  <Label htmlFor="remember-me" className="text-sm font-normal text-slate-400 dark:text-slate-300">
                     Remember me
                   </Label>
                 </div>
@@ -195,7 +181,6 @@ export default function Login() {
           </CardContent>
         </Card>
       </div>
-  </LandingTheme>
   </>
   )
 }

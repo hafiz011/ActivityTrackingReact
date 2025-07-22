@@ -1,15 +1,10 @@
 "use client"
-
 import { useState } from "react";
 import { Mail, Loader2, CheckCircle, XCircle } from "lucide-react";
 import { forgotPassword } from "@/services/authService";
 import { useRouter } from "next/navigation";
-
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import {HeaderSection} from "@/components/headerSection"
-import { LandingTheme } from "@/components/LandingTheme";
-
 
 export default function ForgotPassword() {
   const [email, setEmail] = useState("");
@@ -66,8 +61,6 @@ export default function ForgotPassword() {
 
   return (
     <>
-    <LandingTheme>
-    <HeaderSection />
     <div className="min-h-screen flex items-center justify-center px-4 py-8">
 
       <Card className="w-full max-w-md">
@@ -146,7 +139,6 @@ export default function ForgotPassword() {
         </CardContent>
       </Card>
     </div>
-    </LandingTheme>
     </>
   );
 }

@@ -1,9 +1,6 @@
 import { ContactForm } from "@/components/contact-form";
 import { ContactInfo } from "@/components/contact-info";
 import { GoogleMap } from "@/components/google-map";
-import { LandingTheme } from "@/components/LandingTheme";
-import {HeaderSection} from "@/components/headerSection"
-import Footer from "@/components/Footer";
 import React from "react";
 import { Sparkles } from "lucide-react";
 import { Facebook, Twitter, Linkedin } from 'lucide-react';
@@ -11,8 +8,6 @@ import { Card } from '@/components/ui/card';
 
 export default function ContactPage() {
   return (
-  <LandingTheme>
-    <HeaderSection />
     <div className="max-w-6xl mx-auto mt-10 p-6 md:p-12 space-y-10">
       {/* Hero Section */}
       <section className="relative overflow-hidden">
@@ -71,7 +66,5 @@ export default function ContactPage() {
         </Card>
       <GoogleMap />
     </div>
-     <Footer />
-  </LandingTheme>
   );
 }
