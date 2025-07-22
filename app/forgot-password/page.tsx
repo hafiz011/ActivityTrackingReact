@@ -5,6 +5,9 @@ import { forgotPassword } from "@/services/authService";
 import { useRouter } from "next/navigation";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import { LandingTheme } from '@/components/LandingTheme';
+import {HeaderSection} from '@/components/headerSection';
+import Footer from '@/components/Footer';
 
 export default function ForgotPassword() {
   const [email, setEmail] = useState("");
@@ -61,8 +64,9 @@ export default function ForgotPassword() {
 
   return (
     <>
+    <LandingTheme> 
+    <HeaderSection /> 
     <div className="min-h-screen flex items-center justify-center px-4 py-8">
-
       <Card className="w-full max-w-md">
         <CardHeader className="text-center">
           <div className="flex justify-center mb-4">
@@ -139,6 +143,8 @@ export default function ForgotPassword() {
         </CardContent>
       </Card>
     </div>
+    <Footer />
+    </LandingTheme>
     </>
   );
 }

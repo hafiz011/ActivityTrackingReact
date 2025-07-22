@@ -6,7 +6,7 @@ export function ContactInfo() {
     <div className="space-y-8">
 
       <div className="space-y-6">
-        <Card className="flex items-start space-x-4 p-6 shadow-lg">
+        <Card className="flex items-start space-x-4 p-6 bg-black/60 backdrop-blur-md rounded-2xl shadow-2xl shadow-cyan-500/10 border border-cyan-500/30 transition-all">
           <div className="flex-shrink-0">
             <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center">
               <Mail className="w-6 h-6 text-blue-600" />
@@ -21,7 +21,7 @@ export function ContactInfo() {
           </div>
         </Card>
 
-        <Card className="flex items-start space-x-4 p-6 shadow-lg">
+        <Card className="flex items-start space-x-4 p-6 bg-black/60 backdrop-blur-md rounded-2xl shadow-2xl shadow-cyan-500/10 border border-cyan-500/30 transition-all">
           <div className="flex-shrink-0">
             <div className="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center">
               <Phone className="w-6 h-6 text-green-600" />
@@ -36,7 +36,7 @@ export function ContactInfo() {
           </div>
         </Card>
 
-        <Card className="flex items-start space-x-4 p-6 shadow-lg">
+        <Card className="flex items-start space-x-4 p-6 bg-black/60 backdrop-blur-md rounded-2xl shadow-2xl shadow-cyan-500/10 border border-cyan-500/30 transition-all">
           <div className="flex-shrink-0">
             <div className="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center">
               <MapPin className="w-6 h-6 text-purple-600" />
@@ -52,7 +52,7 @@ export function ContactInfo() {
           </div>
         </Card>
 
-        <Card className="flex items-start space-x-4 p-6 shadow-lg">
+        <Card className="flex items-start space-x-4 p-6 bg-black/60 backdrop-blur-md rounded-2xl shadow-2xl shadow-cyan-500/10 border border-cyan-500/30 transition-all">
           <div className="flex-shrink-0">
             <div className="w-12 h-12 bg-orange-100 rounded-xl flex items-center justify-center">
               <Clock className="w-6 h-6 text-orange-600" />
@@ -66,8 +66,6 @@ export function ContactInfo() {
             </div>
           </div>
         </Card>
-
-        
       </div>
     </div>
   );

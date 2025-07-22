@@ -21,11 +21,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
           <AuthProvider>
-            <LandingTheme>
-              <HeaderSection />
               {children}
-              <Footer />
-            </LandingTheme>
           </AuthProvider>
       </body>
     </html>

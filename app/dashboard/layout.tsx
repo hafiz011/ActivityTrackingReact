@@ -23,14 +23,12 @@ export default function DashboardLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
         <ThemeProvider>
-          <AuthProvider>
             <FilterProvider>
               <SidebarProvider>
                 <AppSidebar />
                 {children}
               </SidebarProvider>
             </FilterProvider>
-          </AuthProvider>
         </ThemeProvider>
       </body>
     </html>

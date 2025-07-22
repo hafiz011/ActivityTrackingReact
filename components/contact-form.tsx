@@ -34,7 +34,7 @@ export function ContactForm() {
   };
 
   return (
-    <Card className="p-8 shadow-lg">
+    <Card className="p-8 bg-black/60 backdrop-blur-md rounded-2xl shadow-2xl shadow-cyan-500/10 border border-cyan-500/30 transition-all">
       <div className="mb-8">
         <h3 className="text-2xl font-bold text-gray-300 mb-4">Send Us a Message</h3>
         <p className="text-gray-400">
@@ -54,7 +54,7 @@ export function ContactForm() {
         <option value="Other">Other</option>
       </select>
       <Textarea rows={5} placeholder="Your Message" {...register("message")} />
-      <Button className="bg-blue-600 hover:bg-blue-700 text-white" type="submit" disabled={isSubmitting}>
+      <Button className="w-full h-12 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-medium shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-[1.02]" type="submit" disabled={isSubmitting}>
         {isSubmitting ? "Sending..." : "Send Message"}
       </Button>
     </form>

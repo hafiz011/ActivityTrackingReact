@@ -22,7 +22,9 @@ import {
     BrainCog
 } from 'lucide-react';
 import { Card, CardContent } from "@/components/ui/card";
-
+import { LandingTheme } from '@/components/LandingTheme';
+import {HeaderSection} from '@/components/headerSection';
+import Footer from '@/components/Footer';
 
 const features: Feature[] = [
   {
@@ -93,6 +95,8 @@ export default function AboutPage() {
   }, []);
     
  return (
+<LandingTheme>
+  <HeaderSection />
     <div className="min-h-screen">
       {/* Hero Section */}
       <section className="relative overflow-hidden">
@@ -301,5 +305,7 @@ export default function AboutPage() {
         </div>
       </section>
     </div>
+  <Footer />
+</LandingTheme>
   );
 }
