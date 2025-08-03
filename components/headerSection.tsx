@@ -22,8 +22,7 @@ export const HeaderSection: React.FC = () => {
   const navigationItems = [
     { href: "/#features", label: "Features" },
     { href: "/#pricing", label: "Pricing" },
-    { href: "/#faq", label: "FAQ" },
-    { href: "/docs", label: "Docs" },
+    { href: "/api-docs", label: "Docs" },
     { href: "/about", label: "About" },
     { href: "/Contact", label: "Contact" },
   ];
@@ -54,15 +53,8 @@ export const HeaderSection: React.FC = () => {
                 ? 'text-gray-100 group-hover:text-blue-600' 
                 : 'text-white group-hover:text-cyan-100'
             }`}>
-              Tracly
+              Tech Ciph
             </span>
-            <Badge 
-              variant="secondary" 
-              className="hidden sm:inline-flex ml-1 text-xs font-semibold bg-gradient-to-r from-cyan-50 via-blue-50 to-cyan-50 text-blue-700 border border-blue-200/50 hover:from-cyan-100 hover:to-blue-100 transition-all duration-300 shadow-sm hover:shadow-md"
-            >
-              <Sparkles className="w-3 h-3 mr-1" />
-              v2.0
-            </Badge>
           </div>
         </Link>
 

@@ -34,7 +34,7 @@ export function ContactForm() {
   };
 
   return (
-    <Card className="p-8 bg-black/60 backdrop-blur-md rounded-2xl shadow-2xl shadow-cyan-500/10 border border-cyan-500/30 transition-all">
+    <div className="relative bg-gradient-to-br from-blue-900/40 via-slate-900/60 to-cyan-900/30 via-transparent rounded-3xl p-6 border border-cyan-500/20 shadow-2xl mb-16 backdrop-blur-sm hover:border-cyan-400/40 transition-all duration-500 group overflow-hidden">
       <div className="mb-8">
         <h3 className="text-2xl font-bold text-gray-300 mb-4">Send Us a Message</h3>
         <p className="text-gray-400">
@@ -43,22 +43,22 @@ export function ContactForm() {
       </div>
       
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-      <Input placeholder="Your Name" {...register("name")} />
-      <Input placeholder="Email Address" type="email" {...register("email")} />
-      <Input placeholder="Company (Optional)" {...register("company")} />
-      <select {...register("type")} className="w-full p-2 border rounded-md">
+      <Input className="bg-black/30 text-white/70" placeholder="Your Name" {...register("name")} />
+      <Input className="bg-black/30 text-white/70" placeholder="Email Address" type="email" {...register("email")} />
+      <Input className="bg-black/30 text-white/70" placeholder="Company (Optional)" {...register("company")} />
+      <select {...register("type")} className="w-full p-2 border rounded-md bg-black/30 text-white/70">
         <option value="">Select Inquiry Type</option>
         <option value="Support">Support</option>
         <option value="Partnership">Partnership</option>
         <option value="Demo">Demo</option>
         <option value="Other">Other</option>
       </select>
-      <Textarea rows={5} placeholder="Your Message" {...register("message")} />
+      <Textarea className="bg-black/30 text-white/70" rows={5} placeholder="Your Message" {...register("message")} />
       <Button className="w-full h-12 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-medium shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-[1.02]" type="submit" disabled={isSubmitting}>
         {isSubmitting ? "Sending..." : "Send Message"}
       </Button>
     </form>
 
-    </Card>
+    </div>
   );
 }

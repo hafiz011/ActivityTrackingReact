@@ -21,7 +21,7 @@ const faqs: FAQ[] = [
     a: "We use industry-grade AES-256 encryption, follow GDPR and CCPA compliance strictly, and undergo regular security audits. Your data privacy is our top priority."
   },
   {
-    q: "What's next for Tracly?",
+    q: "What's next for Tech Ciph?",
     a: "Our roadmap includes AI-powered predictive analytics, session replay functionality, advanced heatmaps, and machine learning-driven insights."
   },
 ];
@@ -38,10 +38,11 @@ const FAQ: React.FC = () => {
             </span>
           </h2>
           <p className="text-base xs:text-lg md:text-xl text-muted-foreground text-gray-300">
-            Everything you need to know about Tracly
+            Everything you need to know about Tech Ciph
           </p>
         </div>
-        
+
+        {/* FAQ Cards */}
         <div className="space-y-6">
           {faqs.map((faq, index) => (
             <Card
@@ -52,7 +53,7 @@ const FAQ: React.FC = () => {
                 <h3 className="text-lg xs:text-xl font-bold mb-4 text-blue-600 dark:text-blue-400 text-center">
                   {faq.q}
                 </h3>
-                <p className="text-muted-foreground leading-relaxed text-sm xs:text-base text-center">
+                <p className="text-white/70 leading-relaxed text-sm xs:text-base text-center">
                   {faq.a}
                 </p>
               </CardContent>

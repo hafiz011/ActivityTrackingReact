@@ -2,9 +2,6 @@ import './globals.css'
 import React from 'react'
 import { AuthProvider } from "@/context/AuthContext";
 import { Inter } from "next/font/google";
-import { LandingTheme } from '@/components/LandingTheme';
-import {HeaderSection} from '@/components/headerSection';
-import Footer from '@/components/Footer';
 
 const inter = Inter({ subsets: ["latin"] })
 export const metadata = {

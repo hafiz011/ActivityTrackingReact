@@ -14,7 +14,7 @@ const Footer: React.FC = () => {
                 <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-blue-600 text-white font-bold">
                   T
                 </div>
-                <span className="font-bold text-2xl text-gray-200">Tracly</span>
+                <span className="font-bold text-2xl text-gray-200">Tech Ciph</span>
               </div>
               <p className="text-gray-300 mb-6 leading-relaxed">
                 The most comprehensive user analytics and security platform for modern businesses. Track smarter, grow faster, stay secure.
@@ -34,18 +34,16 @@ const Footer: React.FC = () => {
             <div>
               <h4 className="font-semibold mb-4 text-gray-200">Product</h4>
               <ul className="space-y-3 text-sm text-gray-400">
-                <li><Link href="/Features" className="hover:text-gray-400 transition-colors">Features</Link></li>
-                <li><Link href="/Pricing" className="hover:text-gray-400 transition-colors">Pricing</Link></li>
-                <li><Link href="/Documentation" className="hover:text-gray-400 transition-colors">Documentation</Link></li>
-                <li><Link href="/API-Reference" className="hover:text-gray-400 transition-colors">API Reference</Link></li>
+                <li><Link href="/#features" className="hover:text-gray-400 transition-colors">Features</Link></li>
+                <li><Link href="/#pricing" className="hover:text-gray-400 transition-colors">Pricing</Link></li>
+                <li><Link href="/api-docs" className="hover:text-gray-400 transition-colors">Documentation</Link></li>
               </ul>
             </div>
             
             <div>
               <h4 className="font-semibold mb-4 text-gray-200">Company</h4>
               <ul className="space-y-3 text-sm text-gray-400">
-                <li><Link href="/About" className="hover:text-gray-400 transition-colors">About</Link></li>
-                <li><Link href="/Blog" className="hover:text-gray-400 transition-colors">Blog</Link></li>
+                <li><Link href="/about" className="hover:text-gray-400 transition-colors">About</Link></li>
                 <li><Link href="/Careers" className="hover:text-gray-400 transition-colors">Careers</Link></li>
                 <li><Link href="/Contact" className="hover:text-gray-400 transition-colors">Contact</Link></li>
               </ul>
@@ -54,7 +52,7 @@ const Footer: React.FC = () => {
           
           <div className="border-t pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
             <div className="text-sm text-gray-400">
-              © {new Date().getFullYear()} Tracly. All rights reserved.
+              © {new Date().getFullYear()} Tech Ciph. All rights reserved.
             </div>
             <div className="flex items-center gap-6 text-sm text-gray-400">
               <Link href="/Privacy-Policy" className="hover:text-gray-400 transition-colors">Privacy Policy</Link>
