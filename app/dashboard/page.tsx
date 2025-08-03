@@ -8,7 +8,16 @@ import { FiltersCard } from "@/components/dashboard/FiltersCard";
 import { SidebarInset } from "@/components/ui/sidebar";
 import SessionsInfo from "@/components/dashboard/SessionsInfo";
 import SuspiciousActivityAlert from "@/components/dashboard/SuspiciousActivityAlert";
-import type { SuspiciousActivityAlert as SuspiciousActivityAlertType } from "@/services/types/session";
+import {
+  useActionSessions,
+  useActiveUsers,
+  useAvgSessions,
+  useBounceRate,
+  useSuspiciousAlerts,
+} from "@/hooks/useDashboardAPI";
+import { SuspiciousActivity } from "@/types/SuspiciousActivity";
+
+
 
 import { ActiveSessionsTab } from "@/components/dashboard/ActiveSessionsTab";
 import { SessionAnalyticsTab } from "@/components/dashboard/SessionAnalyticsTab";
@@ -17,62 +26,127 @@ import { ActivityBreakdownTab } from "@/components/dashboard/ActivityBreakdownTa
 import { LoginTrendsTab } from "@/components/dashboard/LoginTrendsTab";
 import { TopUsersTab } from "@/components/dashboard/TopUsersTab";
 
-import { getSuspiciousActivityAlert } from "@/services/sessionService";
-//import { getActiveSessions } from "@/services/sessionService";
 
-const Dashboard: React.FC = () => {
-  const [alert, setAlert] = useState<SuspiciousActivityAlertType | null>(null);
-  const [loading, setLoading] = useState<{ suspicious: boolean }>({ suspicious: false });
-  
-  const [activeSessions, setActiveSessions] = useState([]);
-  const [loadingSessions, setLoadingSessions] = useState(false);
+type ActiveUserStats = {
+  count: number;
+  trend: number;
+};
 
-  useEffect(() => {
-    setLoading({ suspicious: true });
-    getSuspiciousActivityAlert()
-      .then(setAlert)
-      .catch(() => setAlert(null))
-      .finally(() => setLoading({ suspicious: false }));
-  }, []);
+type SessionMetrics = {
+  avgDuration: string;
+  avgDurationTrend: number;
+  bounceRate: number;
+  bounceRateTrend: number;
+  avgActions: number;
+  avgActionsTrend: number;
+};
 
-
-  // useEffect(() => {
-  //   setLoadingSessions(true);
-  //   getActiveSessions()
-  //     .then((data) => setActiveSessions(data))
-  //     .catch((err) => console.error(err))
-  //     .finally(() => setLoadingSessions(false));
-  // }, []);
+type LoadingState = {
+  activeUsersCount: boolean;
+  suspiciousActivities: boolean;
+  sessionMetrics: boolean;
+  bounceRate: boolean;
+  actionSessions: boolean;
+};
 
 
 
+const Dashboard: React.FC = () => {  
+  // Hooks for fetching data
+  const { fetchActiveUsersCount } = useActiveUsers();
+  const { fetchSuspiciousActivities } = useSuspiciousAlerts();
+  const { fetchSessionMetrics } = useAvgSessions();
+  const { fetchBounceRate } = useBounceRate();
+  const { fetchActionSessions } = useActionSessions();
 
+  const [loading, setLoading] = useState<LoadingState>({
+    activeUsersCount: true,
+    suspiciousActivities: true,
+    sessionMetrics: true,
+    bounceRate: true,
+    actionSessions: true,
+  });
 
-  const handleRefresh = () => {
-    setLoading({ suspicious: true });
-    getSuspiciousActivityAlert()
-      .then(setAlert)
-      .finally(() => setLoading({ suspicious: false }));
+  // State for storing fetched data
+  const [activeUsersCount, setActiveUsersCount] = useState<ActiveUserStats | null>(null);
+  const [suspiciousActivities, setSuspiciousActivities] = useState<SuspiciousActivity[]>([]);
+  const [sessionMetrics, setSessionMetrics] = useState<SessionMetrics | null>(null);
+
+ useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const actives = await fetchActiveUsersCount();
+        setActiveUsersCount(actives);
+        setLoading(prev => ({ ...prev, activeUsersCount: false }));
+
+        const suspicious = await fetchSuspiciousActivities();
+        setSuspiciousActivities(suspicious);
+        setLoading(prev => ({ ...prev, suspiciousActivities: false }));
+
+        const sessions = await fetchSessionMetrics();
+        setSessionMetrics(sessions);
+        setLoading(prev => ({ ...prev, sessionMetrics: false }));
+
+        await fetchBounceRate();
+        setLoading(prev => ({ ...prev, bounceRate: false }));
+
+        await fetchActionSessions();
+        setLoading(prev => ({ ...prev, actionSessions: false }));
+      } catch (error) {
+        console.error("Error fetching dashboard data:", error);
+      }
+    };
+
+    fetchData();
+  }, [
+    fetchActiveUsersCount,
+    fetchSuspiciousActivities,
+    fetchSessionMetrics,
+    fetchBounceRate,
+    fetchActionSessions,
+  ]);
+
+  // Function to handle refreshing suspicious activities
+  const handleRefresh = async () => {
+    setLoading(prev => ({ ...prev, suspiciousActivities: true }));
+    try {
+      const refreshed = await fetchSuspiciousActivities();
+      setSuspiciousActivities(refreshed);
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setLoading(prev => ({ ...prev, suspiciousActivities: false }));
+    }
   };
 
   return (
+    <SidebarInset className="p-2">
+      <div className="flex items-center gap-2">
+        <Header
+          alertTotal={suspiciousActivities.length}
+          loading={loading}
+          handleRefresh={handleRefresh}
+        />
+      </div>
 
-        <SidebarInset className="p-2">
-          <div className="flex items-center gap-2">
-            <Header
-              alertTotal={alert?.Total || 0}
-              loading={loading}
-              handleRefresh={handleRefresh}
-            />
-          </div>
+      {/* Filters */}
+      <Card className="flex flex-1 flex-col gap-4 p-5 pt-3">
+        <FiltersCard />
+        {/* Session Info Cards */}
+        <SessionsInfo
+          activeUsersCount={activeUsersCount}
+          suspiciousCount={suspiciousActivities.length}
+          sessionMetrics={sessionMetrics}
+          loading={{
+            activeUsersCount: loading.activeUsersCount,
+            suspiciousActivities: loading.suspiciousActivities,
+            sessionMetrics: loading.sessionMetrics,
+          }}
+        />
 
-          {/* Filters */}
-          <Card className="flex flex-1 flex-col gap-4 p-5 pt-3">
-            <FiltersCard />
-            {/* Session Info Cards */}
-            <SessionsInfo />
-            {/* Suspicious Activity Alert */}
-            <SuspiciousActivityAlert alert={alert} />
+        {/* Suspicious Activity Alert */}
+            {/* <SuspiciousActivityAlert alert={alert} /> */}
+        <SuspiciousActivityAlert alert={suspiciousActivities} />
 
           {/* Main Dashboard Tabs *
           <Tabs defaultValue="sessions" className="space-y-4">
@@ -140,8 +214,8 @@ const Dashboard: React.FC = () => {
           </Tabs>
 
 */}
-          </Card>
-        </SidebarInset>
+      </Card>
+    </SidebarInset>
   );
 };
 export default Dashboard;

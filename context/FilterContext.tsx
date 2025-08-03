@@ -1,4 +1,3 @@
-// FilterContext.tsx
 "use client";
 
 import React, { createContext, useContext, useState, ReactNode } from "react";
@@ -11,7 +10,6 @@ export interface FilterState {
   endDate: string | null;
   country: string;
   device: string;
-  suspiciousOnly: boolean;
 }
 
 interface FilterContextType extends FilterState {
@@ -20,7 +18,6 @@ interface FilterContextType extends FilterState {
   setEndDate: (date: string | null) => void;
   setCountry: (country: string) => void;
   setDevice: (device: string) => void;
-  setSuspiciousOnly: (s: boolean) => void;
 }
 
 const FilterContext = createContext<FilterContextType | undefined>(undefined);
@@ -31,7 +28,6 @@ export const FilterProvider = ({ children }: { children: ReactNode }) => {
   const [endDate, setEndDate] = useState<string | null>(null);
   const [country, setCountry] = useState<string>("all");
   const [device, setDevice] = useState<string>("all");
-  const [suspiciousOnly, setSuspiciousOnly] = useState<boolean>(false);
 
   return (
     <FilterContext.Provider
@@ -46,8 +42,6 @@ export const FilterProvider = ({ children }: { children: ReactNode }) => {
         setCountry,
         device,
         setDevice,
-        suspiciousOnly,
-        setSuspiciousOnly,
       }}
     >
       {children}

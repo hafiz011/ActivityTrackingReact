@@ -1,4 +1,3 @@
-// FiltersCard.tsx
 "use client";
 
 import {
@@ -9,7 +8,6 @@ import {
 } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-import { Switch } from "@/components/ui/switch";
 import {
   Select,
   SelectContent,
@@ -40,8 +38,6 @@ export const FiltersCard = () => {
     setCountry,
     device,
     setDevice,
-    suspiciousOnly,
-    setSuspiciousOnly,
   } = useFilter();
 
   const [dateRange, setDateRange] = useState<DateRange | undefined>(undefined);
@@ -53,10 +49,17 @@ export const FiltersCard = () => {
     const now = new Date();
     let from: Date;
     switch (timeRange) {
-      case "24h": from = new Date(now.getTime() - 24 * 60 * 60 * 1000); break;
-      case "7d": from = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000); break;
-      case "30d": from = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000); break;
-      default: return;
+      case "24h":
+        from = new Date(now.getTime() - 24 * 60 * 60 * 1000);
+        break;
+      case "7d":
+        from = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+        break;
+      case "30d":
+        from = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
+        break;
+      default:
+        return;
     }
     setStartDate(from.toISOString());
     setEndDate(now.toISOString());
@@ -110,7 +113,11 @@ export const FiltersCard = () => {
                 </CardTitle>
                 <CollapsibleTrigger asChild>
                   <Button variant="ghost" size="sm">
-                    <ChevronDown className={`h-4 w-4 transition-transform ${open ? "rotate-180" : ""}`} />
+                    <ChevronDown
+                      className={`h-4 w-4 transition-transform ${
+                        open ? "rotate-180" : ""
+                      }`}
+                    />
                   </Button>
                 </CollapsibleTrigger>
               </div>
@@ -158,21 +165,7 @@ export const FiltersCard = () => {
                     </Select>
                   </div>
 
-                  {/* Suspicious Toggle */}
-                  <div className="space-y-2">
-                    <Label className="text-sm font-medium">Security Focus</Label>
-                    <div className="flex items-center space-x-3 pt-2">
-                      <Switch
-                        id="suspicious-only"
-                        checked={suspiciousOnly}
-                        onCheckedChange={setSuspiciousOnly}
-                        className="data-[state=checked]:bg-red-600"
-                      />
-                      <Label htmlFor="suspicious-only" className="text-sm">
-                        Suspicious Activity Only
-                      </Label>
-                    </div>
-                  </div>
+                  {/* Suspicious Toggle removed */}
                 </div>
               </CardContent>
             </CollapsibleContent>
