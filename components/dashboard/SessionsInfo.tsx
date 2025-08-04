@@ -22,11 +22,8 @@ type SessionsInfoProps = {
     suspiciousActivities: boolean;
     sessionMetrics: boolean;
   };
-  activeUsersCount: {
-    count: number;
-    trend: number;
-  } | null;
-  suspiciousCount: number;
+  activeUsersCount: number;
+  totalSuspicious: number;
   sessionMetrics: {
     avgDuration: string;
     avgDurationTrend: number;
@@ -37,10 +34,12 @@ type SessionsInfoProps = {
   } | null;
 };
 
+
+
 const SessionsInfo: React.FC<SessionsInfoProps> = ({
   loading,
   activeUsersCount,
-  suspiciousCount,
+  totalSuspicious,
   sessionMetrics,
 }) => {
   return (
@@ -59,12 +58,12 @@ const SessionsInfo: React.FC<SessionsInfoProps> = ({
           ) : (
             <>
               <div className="text-2xl font-bold text-green-600">
-                {activeUsersCount?.count ?? 0}
+                {activeUsersCount}
               </div>
-              <p className="text-xs text-muted-foreground">
+              {/* <p className="text-xs text-muted-foreground">
                 <span
                   className={
-                    activeUsersCount?.trend >= 0
+                    activeUsersCount >= 0
                       ? "text-green-600"
                       : "text-red-600"
                   }
@@ -73,7 +72,7 @@ const SessionsInfo: React.FC<SessionsInfoProps> = ({
                   {activeUsersCount?.trend ?? 0}%
                 </span>{" "}
                 from last period
-              </p>
+              </p> */}
             </>
           )}
         </CardContent>
@@ -93,10 +92,13 @@ const SessionsInfo: React.FC<SessionsInfoProps> = ({
           ) : (
             <>
               <div className="text-2xl font-bold text-red-600">
-                {suspiciousCount}
+                {totalSuspicious}
               </div>
-              <p className="text-xs text-muted-foreground">
+              {/* <p className="text-xs text-muted-foreground">
                 <span className="text-red-600">+15%</span> from yesterday
+              </p> */}
+              <p className="text-xs text-muted-foreground text-red-600">
+                {`Compared to last period`}
               </p>
             </>
           )}

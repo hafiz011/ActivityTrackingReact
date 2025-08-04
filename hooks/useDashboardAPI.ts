@@ -1,18 +1,20 @@
 // hooks/useDashboardAPI.ts
 // This file contains hooks for fetching various dashboard metrics using a filtered API approach.
 import { useFilteredApi } from "./useFilteredApi";
-import { SuspiciousActivity } from "../types/SuspiciousActivity";
+import { SuspiciousActivityApiResponse } from "../types/SuspiciousActivityAlert";
+import { ActiveSessionResponse } from "../types/ActiveSessionResponse";
+
 
 export const useActiveUsers = () => {
   const { get } = useFilteredApi();
-  const fetchActiveUsersCount = () => get("/Sessions/ActiveUsers");
-  return { fetchActiveUsersCount };
+  const fetchActiveUsers = () => get<ActiveSessionResponse>("/dashboard/ActiveUsers");
+  return { fetchActiveUsers };
 };
 
 
 export const useSuspiciousAlerts = () => {
   const { get } = useFilteredApi();
-  const fetchSuspiciousActivities = () => get<SuspiciousActivity[]>("/Suspicious/alert");
+  const fetchSuspiciousActivities = () => get<SuspiciousActivityApiResponse>("/dashboard/alert");
   return { fetchSuspiciousActivities };
 };
 
