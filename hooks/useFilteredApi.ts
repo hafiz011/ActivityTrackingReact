@@ -1,5 +1,7 @@
 import { useFilter } from "@/context/FilterContext";
-import axios from "axios";
+//import axios from "axios";
+import axios from "@/lib/axios";
+
 
 export const useFilteredApi = () => {
   const { timeRange, startDate, endDate, country, device } = useFilter();
