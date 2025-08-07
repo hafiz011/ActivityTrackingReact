@@ -19,8 +19,6 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body className={inter.className}>
         <ThemeProvider>
             <FilterProvider>
               <SidebarProvider>
@@ -29,7 +27,5 @@ export default function DashboardLayout({
               </SidebarProvider>
             </FilterProvider>
         </ThemeProvider>
-      </body>
-    </html>
   );
 }

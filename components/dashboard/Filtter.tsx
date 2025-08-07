@@ -34,12 +34,10 @@ export const FiltersCard = () => {
     endDate,
     country,
     device,
-    suspiciousOnly,
     setStartDate,
     setEndDate,
     setCountry,
     setDevice,
-    setSuspiciousOnly,
   } = useFilter();
 
   const [dateRange, setDateRange] = useState<DateRange | undefined>(undefined);
@@ -173,7 +171,7 @@ export const FiltersCard = () => {
                     </Select>
                   </div>
 
-                  {/* Suspicious Toggle */}
+                  {/* Suspicious Toggle
                   <div className="space-y-2">
                     <Label className="text-sm font-medium">Security Focus</Label>
                     <div className="flex items-center space-x-3 pt-2">
@@ -187,7 +185,7 @@ export const FiltersCard = () => {
                         Suspicious Activity Only
                       </Label>
                     </div>
-                  </div>
+                  </div> */}
                 </div>
               </CardContent>
             </CollapsibleContent>

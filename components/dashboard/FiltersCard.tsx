@@ -43,11 +43,21 @@ export const FiltersCard = () => {
   const [dateRange, setDateRange] = useState<DateRange | undefined>(undefined);
   const [open, setOpen] = useState(false);
 
-  // Handle time range preset
+  
+  // Sync date range with context
+  useEffect(() => {
+    if (dateRange?.from) setStartDate(dateRange.from.toISOString());
+    if (dateRange?.to) setEndDate(dateRange.to.toISOString());
+  }, [dateRange]);
+
+
+  // Update dateRange when timeRange is a preset
   useEffect(() => {
     if (timeRange === "custom") return;
+
     const now = new Date();
     let from: Date;
+
     switch (timeRange) {
       case "24h":
         from = new Date(now.getTime() - 24 * 60 * 60 * 1000);
@@ -61,19 +71,11 @@ export const FiltersCard = () => {
       default:
         return;
     }
+
     setStartDate(from.toISOString());
     setEndDate(now.toISOString());
     setDateRange({ from, to: now });
   }, [timeRange]);
-
-  // Set custom date range manually
-  useEffect(() => {
-    if (dateRange?.from && dateRange?.to) {
-      setTimeRange("custom");
-      setStartDate(dateRange.from.toISOString());
-      setEndDate(dateRange.to.toISOString());
-    }
-  }, [dateRange]);
 
   return (
     <div className="flex items-center justify-between gap-4 flex-wrap">
@@ -128,7 +130,10 @@ export const FiltersCard = () => {
                   {/* Date Picker */}
                   <div className="space-y-2">
                     <Label className="text-sm font-medium">Date Range</Label>
-                    <DatePickerWithRange date={dateRange} setDate={setDateRange} />
+                    <DatePickerWithRange
+                      date={dateRange}
+                      setDate={setDateRange}
+                    />
                   </div>
 
                   {/* Country */}
@@ -164,8 +169,6 @@ export const FiltersCard = () => {
                       </SelectContent>
                     </Select>
                   </div>
-
-                  {/* Suspicious Toggle removed */}
                 </div>
               </CardContent>
             </CollapsibleContent>

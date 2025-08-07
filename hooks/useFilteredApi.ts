@@ -1,18 +1,18 @@
 import { useFilter } from "@/context/FilterContext";
-//import axios from "axios";
 import axios from "@/lib/axios";
 
-
 export const useFilteredApi = () => {
-  const { timeRange, startDate, endDate, country, device } = useFilter();
+  const { startDate, endDate, country, device } = useFilter();
 
   const buildParams = () => {
     const params: Record<string, string> = {};
-    if (timeRange !== "custom") params.range = timeRange;
-    if (timeRange === "custom" && startDate) params.from = startDate;
-    if (timeRange === "custom" && endDate) params.to = endDate;
-    if (country !== "all") params.country = country;
-    if (device !== "all") params.device = device;
+
+    if (startDate) params.from = new Date(startDate).toISOString();
+    if (endDate) params.to = new Date(endDate).toISOString();
+
+    if (country && country !== "all") params.country = country;
+    if (device && device !== "all") params.device = device;
+
     return params;
   };
 
