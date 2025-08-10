@@ -81,7 +81,7 @@ const SessionsInfo: React.FC<SessionsInfoProps> = ({
       {/* Suspicious Activities */}
       <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className="text-sm font-medium">Suspicious Today</CardTitle>
+          <CardTitle className="text-sm font-medium">Suspicious Session</CardTitle>
           <AlertTriangle className="h-4 w-4 text-red-600" />
         </CardHeader>
         <CardContent>

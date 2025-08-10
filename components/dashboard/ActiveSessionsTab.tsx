@@ -38,20 +38,21 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 
-type Session = {
-  id: string;
-  userId: string;
-  email: string;
-  ipAddress: string;
-  city: string;
-  country: string;
-  deviceType: string;
-  device: string;
-  loginTime: string;
-  actions: number;
-  suspicious: boolean;
-};
+// type Session = {
+//   id: string;
+//   userId: string;
+//   email: string;
+//   ipAddress: string;
+//   city: string;
+//   country: string;
+//   deviceType: string;
+//   device: string;
+//   loginTime: string;
+//   actions: number;
+//   suspicious: boolean;
+// };
 
+import { Session } from "@/types/ActiveSessionResponse";
 interface ActiveSessionsTabProps {
   activeSessions: Session[];
   loading: { activeSessions: boolean };
@@ -63,10 +64,12 @@ function getDeviceIcon(type: string) {
   return <BarChart3 className="h-4 w-4 text-gray-400" />;
 }
 
+
 export const ActiveSessionsTab: React.FC<ActiveSessionsTabProps> = ({
   activeSessions,
   loading,
 }) => {
+  // State to manage view mode (table or map)
   const [viewMode, setViewMode] = useState<"table" | "map">("table");
 
   return (
@@ -125,16 +128,16 @@ export const ActiveSessionsTab: React.FC<ActiveSessionsTabProps> = ({
               </TableHeader>
               <TableBody>
                 {activeSessions.map((session) => (
-                  <TableRow key={session.id}>
+                  <TableRow key={session.sessionid}>
                     <TableCell>
                       <div className="flex items-center gap-2">
                         <Avatar className="h-8 w-8">
                           <AvatarFallback>
-                            {session.email.substring(0, 2).toUpperCase()}
+                            {session.userName.substring(0, 2).toUpperCase()}
                           </AvatarFallback>
                         </Avatar>
                         <div>
-                          <div className="font-medium">{session.userId}</div>
+                          <div className="font-medium">{session.userName}</div>
                           <div className="text-sm text-muted-foreground">
                             {session.email}
                           </div>
@@ -158,17 +161,18 @@ export const ActiveSessionsTab: React.FC<ActiveSessionsTabProps> = ({
                     <TableCell>
                       <div className="flex items-center gap-2">
                         {getDeviceIcon(session.deviceType)}
-                        <span className="text-sm">{session.device}</span>
+                        <span className="text-sm">{session.deviceType}</span>
                       </div>
                     </TableCell>
                     <TableCell className="text-sm">
-                      {session.loginTime}
+                      {/* {session.loginTime.seconds
+                        ? new Date(session.loginTime.seconds * 1000).toLocaleString()} */}
                     </TableCell>
                     <TableCell>
-                      <Badge variant="outline">{session.actions} actions</Badge>
+                      {/* <Badge variant="outline">{session.actions} actions</Badge> */}
                     </TableCell>
                     <TableCell>
-                      {session.suspicious ? (
+                      {/* {session.suspicious ? (
                         <Badge variant="destructive" className="flex items-center gap-1">
                           <AlertTriangle className="h-3 w-3" />
                           Suspicious
@@ -178,7 +182,7 @@ export const ActiveSessionsTab: React.FC<ActiveSessionsTabProps> = ({
                           <Shield className="h-3 w-3" />
                           Normal
                         </Badge>
-                      )}
+                      )} */}
                     </TableCell>
                     <TableCell>
                       <DropdownMenu>

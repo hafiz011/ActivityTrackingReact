@@ -1,24 +1,15 @@
 "use client";
 
 import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
+  Card, CardContent, CardHeader, CardTitle
 } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
+  Select, SelectContent, SelectItem, SelectTrigger, SelectValue
 } from "@/components/ui/select";
 import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
+  Collapsible, CollapsibleContent, CollapsibleTrigger
 } from "@/components/ui/collapsible";
 import { ChevronDown, Filter } from "lucide-react";
 import { DatePickerWithRange } from "@/components/date-range-picker";
@@ -28,30 +19,28 @@ import { useFilter } from "@/context/FilterContext";
 
 export const FiltersCard = () => {
   const {
-    timeRange,
-    setTimeRange,
-    startDate,
-    endDate,
-    setStartDate,
-    setEndDate,
-    country,
-    setCountry,
-    device,
-    setDevice,
+    timeRange, setTimeRange,
+    startDate, endDate, setStartDate, setEndDate,
+    country, setCountry,
+    device, setDevice
   } = useFilter();
 
   const [dateRange, setDateRange] = useState<DateRange | undefined>(undefined);
   const [open, setOpen] = useState(false);
 
-  
-  // Sync date range with context
+  // Sync dateRange to context — only if changed
   useEffect(() => {
-    if (dateRange?.from) setStartDate(dateRange.from.toISOString());
-    if (dateRange?.to) setEndDate(dateRange.to.toISOString());
+    if (dateRange?.from) {
+      const isoFrom = dateRange.from.toISOString();
+      if (startDate !== isoFrom) setStartDate(isoFrom);
+    }
+    if (dateRange?.to) {
+      const isoTo = dateRange.to.toISOString();
+      if (endDate !== isoTo) setEndDate(isoTo);
+    }
   }, [dateRange]);
 
-
-  // Update dateRange when timeRange is a preset
+  // Update dateRange when timeRange changes
   useEffect(() => {
     if (timeRange === "custom") return;
 
@@ -72,8 +61,12 @@ export const FiltersCard = () => {
         return;
     }
 
-    setStartDate(from.toISOString());
-    setEndDate(now.toISOString());
+    const isoFrom = from.toISOString();
+    const isoTo = now.toISOString();
+
+    if (startDate !== isoFrom) setStartDate(isoFrom);
+    if (endDate !== isoTo) setEndDate(isoTo);
+
     setDateRange({ from, to: now });
   }, [timeRange]);
 
@@ -116,9 +109,7 @@ export const FiltersCard = () => {
                 <CollapsibleTrigger asChild>
                   <Button variant="ghost" size="sm">
                     <ChevronDown
-                      className={`h-4 w-4 transition-transform ${
-                        open ? "rotate-180" : ""
-                      }`}
+                      className={`h-4 w-4 transition-transform ${open ? "rotate-180" : ""}`}
                     />
                   </Button>
                 </CollapsibleTrigger>
