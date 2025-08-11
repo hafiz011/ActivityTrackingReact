@@ -1,6 +1,12 @@
 "use client";
 
 import React, { useState } from "react";
+import dayjs from "dayjs";
+// import "leaflet/dist/leaflet.css";
+import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+// import L from "leaflet";
+
+
 import {
   Card,
   CardHeader,
@@ -37,22 +43,14 @@ import {
   DropdownMenuItem,
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-
-// type Session = {
-//   id: string;
-//   userId: string;
-//   email: string;
-//   ipAddress: string;
-//   city: string;
-//   country: string;
-//   deviceType: string;
-//   device: string;
-//   loginTime: string;
-//   actions: number;
-//   suspicious: boolean;
-// };
-
 import { Session } from "@/types/ActiveSessionResponse";
+import dynamic from "next/dynamic";
+
+// Dynamically load MapView component with SSR disabled
+const MapView = dynamic(() => import("./MapView").then((mod) => mod.MapView), {
+  ssr: false,
+});
+
 interface ActiveSessionsTabProps {
   activeSessions: Session[];
   loading: { activeSessions: boolean };
@@ -121,7 +119,7 @@ export const ActiveSessionsTab: React.FC<ActiveSessionsTabProps> = ({
                   <TableHead>Location</TableHead>
                   <TableHead>Device</TableHead>
                   <TableHead>Login Time</TableHead>
-                  <TableHead>Actions</TableHead>
+                  {/* <TableHead>Actions</TableHead> */}
                   <TableHead>Status</TableHead>
                   <TableHead></TableHead>
                 </TableRow>
@@ -165,14 +163,15 @@ export const ActiveSessionsTab: React.FC<ActiveSessionsTabProps> = ({
                       </div>
                     </TableCell>
                     <TableCell className="text-sm">
-                      {/* {session.loginTime.seconds
-                        ? new Date(session.loginTime.seconds * 1000).toLocaleString()} */}
+                    {dayjs(session.loginTime.seconds * 1000).format("DD-MM-YYYY")}
+                    <br />
+                    {dayjs(session.loginTime.seconds * 1000).format("hh:mm:ss A")}
                     </TableCell>
+                    {/* <TableCell>
+                       <Badge variant="outline">{session.actions} actions</Badge>
+                    </TableCell> */}
                     <TableCell>
-                      {/* <Badge variant="outline">{session.actions} actions</Badge> */}
-                    </TableCell>
-                    <TableCell>
-                      {/* {session.suspicious ? (
+                       {/* {session.status ? (
                         <Badge variant="destructive" className="flex items-center gap-1">
                           <AlertTriangle className="h-3 w-3" />
                           Suspicious
@@ -183,6 +182,17 @@ export const ActiveSessionsTab: React.FC<ActiveSessionsTabProps> = ({
                           Normal
                         </Badge>
                       )} */}
+                        {session.status ? (
+                        <Badge variant="default" className="flex items-center gap-1">
+                          <Shield className="h-3 w-3" />
+                          Normal
+                        </Badge>
+                      ) : (
+                        <Badge variant="destructive" className="flex items-center gap-1">
+                          <AlertTriangle className="h-3 w-3" />
+                          Suspicious
+                        </Badge>
+                      )}
                     </TableCell>
                     <TableCell>
                       <DropdownMenu>
@@ -196,14 +206,14 @@ export const ActiveSessionsTab: React.FC<ActiveSessionsTabProps> = ({
                             <Eye className="h-4 w-4 mr-2" />
                             View Details
                           </DropdownMenuItem>
-                          <DropdownMenuItem>
+                          {/* <DropdownMenuItem>
                             <LogOut className="h-4 w-4 mr-2" />
                             Force Logout
                           </DropdownMenuItem>
                           <DropdownMenuItem className="text-red-600">
                             <AlertTriangle className="h-4 w-4 mr-2" />
                             Block User
-                          </DropdownMenuItem>
+                          </DropdownMenuItem> */}
                         </DropdownMenuContent>
                       </DropdownMenu>
                     </TableCell>
@@ -212,24 +222,7 @@ export const ActiveSessionsTab: React.FC<ActiveSessionsTabProps> = ({
               </TableBody>
             </Table>
           ) : (
-            <div className="h-96 bg-muted rounded-lg flex items-center justify-center">
-              <div className="text-center">
-                <Map className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-                <h3 className="text-lg font-medium">Interactive Map View</h3>
-                <p className="text-muted-foreground">
-                  Integrate with Leaflet or Google Maps API to show active session locations
-                </p>
-                <div className="mt-4 text-sm text-muted-foreground">
-                  <p>
-                    API Endpoint:{" "}
-                    <code className="bg-muted-foreground/20 px-1 py-0.5 rounded">GET /api/sessions/active</code>
-                  </p>
-                  <p>
-                    Params: <code className="bg-muted-foreground/20 px-1 py-0.5 rounded">isActive=true</code>
-                  </p>
-                </div>
-              </div>
-            </div>
+            <MapView activeSessions={activeSessions} />
           )}
         </CardContent>
       </Card>

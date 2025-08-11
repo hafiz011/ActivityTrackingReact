@@ -3,6 +3,7 @@ import React from 'react'
 import { AuthProvider } from "@/context/AuthContext";
 import { Inter } from "next/font/google";
 
+
 const inter = Inter({ subsets: ["latin"] })
 export const metadata = {
   title: 'Landing page',
