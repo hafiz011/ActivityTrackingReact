@@ -165,8 +165,6 @@ const Dashboard: React.FC = () => {
              {/* Active Sessions Tab */}
             <TabsContent value="sessions" className="space-y-4">
               <ActiveSessionsTab activeSessions={sessions} loading={{ activeSessions: loading.sessions }} />
-
-               {/* <ActiveSessionsTab activeSessions={activeSessions} loading={{ activeSessions: loadingSessions }} /> */}
             </TabsContent>
 
             {/* Session Analytics Tab */}
@@ -180,14 +178,14 @@ const Dashboard: React.FC = () => {
             </TabsContent> */}
 
             {/* Suspicious Activity Tab */}
-            {/* <TabsContent value="suspicious" className="space-y-4">
+            <TabsContent value="suspicious" className="space-y-4">
               <SuspiciousActivityTab
-                suspiciousActivities={suspiciousActivities}
-                loading={loading}
-                dailySessionsData={dailySessionsData}
-                markAsReviewed={markAsReviewed}
+                SuspiciousActivities={suspiciousActivities} loading={{SuspiciousActivities: loading.suspiciousActivities}}
               />
-            </TabsContent> */}
+            </TabsContent>
+
+                {/* // dailySessionsData={dailySessionsData}
+                // markAsReviewed={markAsReviewed} */}
 
             {/* Activity Breakdown Tab *
             <TabsContent value="breakdown" className="space-y-4">

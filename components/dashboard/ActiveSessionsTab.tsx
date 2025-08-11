@@ -19,6 +19,9 @@ import { Badge } from "@/components/ui/badge";
 import {
   Users,
   Map,
+  Monitor,
+  Smartphone,
+  Tablet,
   BarChart3,
   Loader2,
   MapPin,
@@ -57,11 +60,10 @@ interface ActiveSessionsTabProps {
 }
 
 function getDeviceIcon(type: string) {
-  if (type === "mobile") return <BarChart3 className="h-4 w-4 text-blue-500" />;
-  if (type === "desktop") return <BarChart3 className="h-4 w-4 text-green-500" />;
-  return <BarChart3 className="h-4 w-4 text-gray-400" />;
+  if (type === "mobile") return <Smartphone className="h-4 w-4 text-blue-500" />;
+  if (type === "desktop") return <Monitor className="h-4 w-4 text-green-500" />;
+  return <Tablet className="h-4 w-4 text-gray-400" />;
 }
-
 
 export const ActiveSessionsTab: React.FC<ActiveSessionsTabProps> = ({
   activeSessions,
@@ -147,7 +149,7 @@ export const ActiveSessionsTab: React.FC<ActiveSessionsTabProps> = ({
                     </TableCell>
                     <TableCell>
                       <div className="flex items-center gap-2">
-                        <MapPin className="h-4 w-4 text-muted-foreground" />
+                        <MapPin className="h-4 w-4 text-red-400" />
                         <div>
                           <div>{session.city}</div>
                           <div className="text-sm text-muted-foreground">

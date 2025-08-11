@@ -1,27 +1,17 @@
 export interface SuspiciousActivityAlert {
   count: number;
   sessionId: string;
-  userName: string;
-  userEmail: string | null;
+  userEmail: string;
   ipAddress: string;
   loginTime: string;
-  riskScore: number;
+  DetectedAt: string;
   riskLevel: string;
-  detectedAt: string;
   riskFactors: string[];
   browser: string;
-  deiceType: string; // Typo from backend: "deiceType" should probably be "deviceType"
+  deviceType: string;
   os: string;
-  language: string;
-  screenResolution: string | null;
   country: string;
-  city: string | null;
-  region: string | null;
-  postal: string | null;
-  latitudeLongitude: string | null;
-  timeZone: string | null;
-  isp: string | null;
-  is_vpn: boolean;
+  Is_Suspicious: boolean;
 }
 
 export interface SuspiciousActivityApiResponse {
