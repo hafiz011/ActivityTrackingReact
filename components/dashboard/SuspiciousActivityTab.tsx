@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import dayjs from "dayjs";
 import {
   Card,
@@ -21,15 +21,25 @@ import {
   Monitor,
   Globe,
 } from "lucide-react";
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+} from "recharts";
 import { SuspiciousActivityAlert } from "@/types/SuspiciousActivityAlert";
 
 interface SuspiciousActivityTabProps {
   SuspiciousActivities: SuspiciousActivityAlert[];
   loading: {
     SuspiciousActivities: boolean;
+    dailySessions: boolean;
   };
 }
-
 function getRiskLevelBadgeColor(riskLevel: string) {
   switch (riskLevel?.toLowerCase()) {
     case "high":
@@ -56,10 +66,44 @@ function getSeverityClasses(riskLevel: string) {
   }
 }
 
+interface TrendData {
+  date: string;
+  suspicious: number;
+}
+
 export const SuspiciousActivityTab: React.FC<SuspiciousActivityTabProps> = ({
   SuspiciousActivities,
   loading,
-}) => (
+}) => {
+  const [dailySessionsData, setDailySessionsData] = useState<TrendData[]>([]);
+
+  useEffect(() => {
+    if (!loading.SuspiciousActivities && SuspiciousActivities.length > 0) {
+      const counts: Record<string, number> = {};
+
+      SuspiciousActivities.forEach((activity) => {
+        if (activity.is_Suspicious) {
+          const datePart = activity.loginTime.split(" ")[0]; // "07/29/2025"
+          const [mm, dd, yyyy] = datePart.split("/");
+          const formattedDate = `${yyyy}-${mm.padStart(2, "0")}-${dd.padStart(2, "0")}`;
+          counts[formattedDate] = (counts[formattedDate] || 0) + 1;
+        }
+      });
+
+      const trendArray = Object.entries(counts).map(([date, suspicious]) => ({
+        date,
+        suspicious,
+      }));
+
+      trendArray.sort((a, b) => (a.date > b.date ? 1 : -1));
+
+      setDailySessionsData(trendArray);
+    } else {
+      setDailySessionsData([]);
+    }
+  }, [loading.SuspiciousActivities, SuspiciousActivities]);
+
+  return (
   <TabsContent value="suspicious" className="space-y-4">
     <Card>
       <CardHeader>
@@ -149,7 +193,7 @@ export const SuspiciousActivityTab: React.FC<SuspiciousActivityTabProps> = ({
                         {activity.is_Suspicious ? "Suspicious" : "Reviewed"}
                       </Badge>
                       <Button size="sm" variant="secondary">
-                        <Eye className="h-4 w-4 mr-1" /> View Details
+                        <Eye className="h-4 w-4 mr-1" /> Investigate
                       </Button>
                     </div>
                   </div>
@@ -160,5 +204,44 @@ export const SuspiciousActivityTab: React.FC<SuspiciousActivityTabProps> = ({
         )}
       </CardContent>
     </Card>
+
+
+  <Card>
+        <CardHeader>
+          <CardTitle>Suspicious Login Trends</CardTitle>
+          <CardDescription>Daily suspicious login attempts over time</CardDescription>
+        </CardHeader>
+        <CardContent>
+          {loading.dailySessions ? (
+            <div className="flex items-center justify-center h-[300px]">
+              <Loader2 className="h-8 w-8 animate-spin" />
+            </div>
+          ) : dailySessionsData.length === 0 ? (
+            <p className="text-center text-muted-foreground">No suspicious login data found.</p>
+          ) : (
+            <div className="h-[300px] w-full">
+              <ResponsiveContainer width="100%" height="100%">
+                <LineChart data={dailySessionsData}>
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="date" />
+                  <YAxis />
+                  <Tooltip />
+                  <Legend />
+                  <Line
+                    type="monotone"
+                    dataKey="suspicious"
+                    stroke="#ff7300"
+                    name="Suspicious Logins"
+                    strokeWidth={2}
+                  />
+                </LineChart>
+              </ResponsiveContainer>
+            </div>
+          )}
+        </CardContent>
+      </Card>
+
+    
   </TabsContent>
-);
+  );
+};
