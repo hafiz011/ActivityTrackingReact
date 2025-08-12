@@ -11,13 +11,12 @@ import {
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Eye } from "lucide-react";
 import { TabsContent } from "@/components/ui/tabs";
 import {
   Loader2,
   Shield,
   AlertTriangle,
-  Check,
-  Eye,
   MapPin,
   Monitor,
   Globe,
@@ -29,6 +28,19 @@ interface SuspiciousActivityTabProps {
   loading: {
     SuspiciousActivities: boolean;
   };
+}
+
+function getRiskLevelBadgeColor(riskLevel: string) {
+  switch (riskLevel?.toLowerCase()) {
+    case "high":
+      return "bg-red-500 text-white";
+    case "medium":
+      return "bg-yellow-500 text-black";
+    case "low":
+      return "bg-green-500 text-white";
+    default:
+      return "bg-gray-500 text-white";
+  }
 }
 
 function getSeverityClasses(riskLevel: string) {
@@ -55,9 +67,7 @@ export const SuspiciousActivityTab: React.FC<SuspiciousActivityTabProps> = ({
           <AlertTriangle className="h-5 w-5 text-red-600" />
           Suspicious Activity Summary
         </CardTitle>
-        <CardDescription>
-          Recent threats and security alerts
-        </CardDescription>
+        <CardDescription>Recent threats and security alerts</CardDescription>
       </CardHeader>
       <CardContent>
         {loading.SuspiciousActivities ? (
@@ -67,9 +77,7 @@ export const SuspiciousActivityTab: React.FC<SuspiciousActivityTabProps> = ({
         ) : SuspiciousActivities.length === 0 ? (
           <div className="flex flex-col items-center justify-center h-64 text-muted-foreground">
             <Shield className="h-12 w-12 mb-4" />
-            <p className="text-lg font-medium">
-              No suspicious activity detected
-            </p>
+            <p className="text-lg font-medium">No suspicious activity detected</p>
             <p className="text-sm">All user sessions appear normal</p>
           </div>
         ) : (
@@ -79,51 +87,40 @@ export const SuspiciousActivityTab: React.FC<SuspiciousActivityTabProps> = ({
               return (
                 <Card
                   key={activity.sessionId}
-                  className={`p-4 border rounded-lg transition-shadow hover:shadow-lg ${severityClasses} ${
-                    activity.Is_Suspicious ? "opacity-80" : ""
-                  }`}
+                  className={`p-4 border rounded-lg transition-shadow hover:shadow-lg ${severityClasses}`}
                 >
-                  <div className="flex items-start justify-between">
+                  <div className="flex items-start justify-between gap-4">
+                    {/* Left side info */}
                     <div className="space-y-3">
                       <div className="flex items-center gap-2 flex-wrap">
-                        <Badge
-                          variant={
-                            activity.riskLevel?.toLowerCase() === "critical"
-                              ? "destructive"
-                              : "secondary"
-                          }
-                        >
+                        <Badge className={getRiskLevelBadgeColor(activity.riskLevel)}>
                           {activity.riskLevel?.toUpperCase() || "UNKNOWN"}
                         </Badge>
                         <span className="font-medium">
                           {activity.userEmail || "Unknown"}
                         </span>
-                        {activity.Is_Suspicious && (
-                          <Badge variant="outline" className="ml-2">
-                            Reviewed
-                          </Badge>
-                        )}
                       </div>
 
-                      <div className="flex flex-wrap gap-2">
-                        {activity.riskFactors?.map((flag, index) => (
-                          <Badge
-                            key={index}
-                            variant="outline"
-                            className="text-xs"
-                            title="Risk factor"
-                          >
-                            {flag}
-                          </Badge>
-                        ))}
-                      </div>
+                      {activity.riskFactors?.length > 0 && (
+                        <div className="flex flex-wrap gap-2">
+                          {activity.riskFactors.map((flag, index) => (
+                            <Badge
+                              key={index}
+                              variant="outline"
+                              className="text-xs"
+                              title="Risk factor"
+                            >
+                              {flag}
+                            </Badge>
+                          ))}
+                        </div>
+                      )}
 
-                      <div className="text-sm text-muted-foreground space-x-2 flex flex-wrap items-center">
+                      <div className="text-sm text-muted-foreground flex flex-wrap gap-4">
                         <span>
-                          {dayjs(
-                            activity.loginTime,
-                            "MM/DD/YYYY HH:mm:ss"
-                          ).format("DD-MM-YYYY hh:mm:ss A")}
+                          {dayjs(activity.loginTime, "MM/DD/YYYY HH:mm:ss").format(
+                            "DD-MM-YYYY hh:mm:ss A"
+                          )}
                         </span>
                         <span className="flex items-center gap-1">
                           <MapPin className="h-4 w-4" />
@@ -140,17 +137,17 @@ export const SuspiciousActivityTab: React.FC<SuspiciousActivityTabProps> = ({
                       </div>
                     </div>
 
-                    <div className="flex gap-2 flex-wrap">
-                      <Button
-                        size="sm"
-                        variant="outline"
-                        disabled={activity.Is_Suspicious}
+                    {/* Right side status */}
+                    <div className="flex flex-col items-end gap-2">
+                      <Badge
+                        className={
+                          activity.is_Suspicious
+                            ? "bg-red-500 text-white"
+                            : "bg-green-500 text-white"
+                        }
                       >
-                        {activity.Is_Suspicious ? (
-                          <Check className="h-4 w-4 mr-2" />
-                        ) : null}
-                        Mark {activity.Is_Suspicious ? "Reviewed" : "Safe"}
-                      </Button>
+                        {activity.is_Suspicious ? "Suspicious" : "Reviewed"}
+                      </Badge>
                       <Button size="sm" variant="secondary">
                         <Eye className="h-4 w-4 mr-1" /> View Details
                       </Button>

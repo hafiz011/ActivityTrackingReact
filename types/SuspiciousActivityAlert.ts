@@ -11,7 +11,7 @@ export interface SuspiciousActivityAlert {
   deviceType: string;
   os: string;
   country: string;
-  Is_Suspicious: boolean;
+  is_Suspicious: boolean;
 }
 
 export interface SuspiciousActivityApiResponse {
