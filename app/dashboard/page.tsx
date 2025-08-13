@@ -36,7 +36,7 @@ type LoadingState = {
   sessionMetrics: boolean;
   bounceRate: boolean;
   actionSessions: boolean;
-  sessions: boolean;
+  // sessions: boolean;
 };
 
 type SessionMetrics = {
@@ -63,10 +63,10 @@ const Dashboard: React.FC = () => {
     sessionMetrics: true,
     bounceRate: true,
     actionSessions: true,
-    sessions: true,
+    // sessions: true,
   });
 
-  const [sessions, setSessions] = useState<Session[]>([]);
+  const [activeUsers, setSessions] = useState<Session[]>([]);
   const [suspiciousActivities, setSuspiciousActivities] = useState<SuspiciousActivityResponse[]>([]);
   const [sessionMetrics, setSessionMetrics] = useState<SessionMetrics | null>(null);
 
@@ -100,7 +100,7 @@ const Dashboard: React.FC = () => {
         sessionMetrics: false,
         bounceRate: false,
         actionSessions: false,
-        sessions: false,
+        // sessions: false,
       });
     }
   };
@@ -135,7 +135,7 @@ const Dashboard: React.FC = () => {
         <FiltersCard />
         {/* Session Info Cards */}
         <SessionsInfo
-          activeUsersCount={sessions.length}
+          activeUsersCount={activeUsers.length}
           totalSuspicious={suspiciousActivities.length}
           sessionMetrics={sessionMetrics}
           loading={{
@@ -164,7 +164,7 @@ const Dashboard: React.FC = () => {
              
              {/* Active Sessions Tab */}
             <TabsContent value="sessions" className="space-y-4">
-              <ActiveSessionsTab activeSessions={sessions} loading={{ activeSessions: loading.sessions }} />
+              <ActiveSessionsTab activeSessions={activeUsers} loading={{ activeSessions: loading.activeUsers }} />
             </TabsContent>
 
             {/* Session Analytics Tab */}
