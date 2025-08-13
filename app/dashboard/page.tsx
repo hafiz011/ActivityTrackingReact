@@ -31,7 +31,7 @@ import { TopUsersTab } from "@/components/dashboard/TopUsersTab";
 
 // Define types for loading state and session metrics
 type LoadingState = {
-  activeUsersCount: boolean;
+  activeUsers: boolean;
   suspiciousActivities: boolean;
   sessionMetrics: boolean;
   bounceRate: boolean;
@@ -58,7 +58,7 @@ const Dashboard: React.FC = () => {
   const { fetchActionSessions } = useActionSessions();
 
   const [loading, setLoading] = useState<LoadingState>({
-    activeUsersCount: true,
+    activeUsers: true,
     suspiciousActivities: true,
     sessionMetrics: true,
     bounceRate: true,
@@ -76,7 +76,7 @@ const Dashboard: React.FC = () => {
     try {
       const activeRes = await fetchActiveUsers();
       setSessions(activeRes.sessions);
-      setLoading(prev => ({ ...prev, activeUsersCount: false }));
+      setLoading(prev => ({ ...prev, activeUsers: false }));
 
       const suspicious = await fetchSuspiciousActivities();
       setSuspiciousActivities(suspicious.suspiciousActivities);
@@ -95,7 +95,7 @@ const Dashboard: React.FC = () => {
     } catch (error) {
       console.error("Error fetching dashboard data:", error);
       setLoading({
-        activeUsersCount: false,
+        activeUsers: false,
         suspiciousActivities: false,
         sessionMetrics: false,
         bounceRate: false,
@@ -139,7 +139,7 @@ const Dashboard: React.FC = () => {
           totalSuspicious={suspiciousActivities.length}
           sessionMetrics={sessionMetrics}
           loading={{
-            activeUsersCount: loading.activeUsersCount,
+            activeUsersCount: loading.activeUsers,
             suspiciousActivities: loading.suspiciousActivities,
             sessionMetrics: loading.sessionMetrics,
           }}
