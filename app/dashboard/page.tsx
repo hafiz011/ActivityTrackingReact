@@ -109,14 +109,31 @@ const Dashboard: React.FC = () => {
   }, [startDate, endDate, country, device]); // filter dependencies
 
   const handleRefresh = async () => {
-    setLoading((prev) => ({ ...prev, suspiciousActivities: true }));
+      // set loading for both sessions and suspicious activities
+    setLoading((prev) => ({
+      ...prev,
+      activeUsers: true,
+      suspiciousActivities: true,
+    }));
     try {
-      const refreshed = await fetchSuspiciousActivities();
-      setSuspiciousActivities(refreshed.suspiciousActivities);
+      // fetch active sessions
+      const refreshedSessions = await fetchActiveUsers();
+      setSessions(refreshedSessions.sessions);
+
+      // fetch suspicious activities
+      const refreshedSuspicious = await fetchSuspiciousActivities();
+      setSuspiciousActivities(refreshedSuspicious.suspiciousActivities);
+
+
     } catch (e) {
-      console.error(e);
+    console.error("Error refreshing dashboard data:", e);
     } finally {
-      setLoading((prev) => ({ ...prev, suspiciousActivities: false }));
+       // reset loading states
+    setLoading((prev) => ({
+      ...prev,
+      activeUsers: false,
+      suspiciousActivities: false,
+    }));
     }
   };
   
