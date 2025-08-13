@@ -180,7 +180,7 @@ const Dashboard: React.FC = () => {
             {/* Suspicious Activity Tab */}
             <TabsContent value="suspicious" className="space-y-4">
               <SuspiciousActivityTab
-                SuspiciousActivities={suspiciousActivities} loading={{SuspiciousActivities: loading.suspiciousActivities, dailySessions: loading.suspiciousActivities}}
+                SuspiciousActivities={suspiciousActivities} loading={{SuspiciousActivities: loading.suspiciousActivities}}
               />
             </TabsContent>
 

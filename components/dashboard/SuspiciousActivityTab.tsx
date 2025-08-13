@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React from "react";
 import dayjs from "dayjs";
 import {
   Card,
@@ -10,9 +10,9 @@ import {
   CardContent,
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { TabsContent } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { Eye } from "lucide-react";
-import { TabsContent } from "@/components/ui/tabs";
 import {
   Loader2,
   Shield,
@@ -21,25 +21,15 @@ import {
   Monitor,
   Globe,
 } from "lucide-react";
-import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-  ResponsiveContainer,
-} from "recharts";
 import { SuspiciousActivityAlert } from "@/types/SuspiciousActivityAlert";
 
 interface SuspiciousActivityTabProps {
   SuspiciousActivities: SuspiciousActivityAlert[];
   loading: {
     SuspiciousActivities: boolean;
-    dailySessions: boolean;
   };
 }
+
 function getRiskLevelBadgeColor(riskLevel: string) {
   switch (riskLevel?.toLowerCase()) {
     case "high":
@@ -66,44 +56,10 @@ function getSeverityClasses(riskLevel: string) {
   }
 }
 
-interface TrendData {
-  date: string;
-  suspicious: number;
-}
-
 export const SuspiciousActivityTab: React.FC<SuspiciousActivityTabProps> = ({
   SuspiciousActivities,
   loading,
-}) => {
-  const [dailySessionsData, setDailySessionsData] = useState<TrendData[]>([]);
-
-  useEffect(() => {
-    if (!loading.SuspiciousActivities && SuspiciousActivities.length > 0) {
-      const counts: Record<string, number> = {};
-
-      SuspiciousActivities.forEach((activity) => {
-        if (activity.is_Suspicious) {
-          const datePart = activity.loginTime.split(" ")[0]; // "07/29/2025"
-          const [mm, dd, yyyy] = datePart.split("/");
-          const formattedDate = `${yyyy}-${mm.padStart(2, "0")}-${dd.padStart(2, "0")}`;
-          counts[formattedDate] = (counts[formattedDate] || 0) + 1;
-        }
-      });
-
-      const trendArray = Object.entries(counts).map(([date, suspicious]) => ({
-        date,
-        suspicious,
-      }));
-
-      trendArray.sort((a, b) => (a.date > b.date ? 1 : -1));
-
-      setDailySessionsData(trendArray);
-    } else {
-      setDailySessionsData([]);
-    }
-  }, [loading.SuspiciousActivities, SuspiciousActivities]);
-
-  return (
+}) => (
   <TabsContent value="suspicious" className="space-y-4">
     <Card>
       <CardHeader>
@@ -206,7 +162,7 @@ export const SuspiciousActivityTab: React.FC<SuspiciousActivityTabProps> = ({
     </Card>
 
 
-  <Card>
+  {/* <Card>
         <CardHeader>
           <CardTitle>Suspicious Login Trends</CardTitle>
           <CardDescription>Daily suspicious login attempts over time</CardDescription>
@@ -239,9 +195,9 @@ export const SuspiciousActivityTab: React.FC<SuspiciousActivityTabProps> = ({
             </div>
           )}
         </CardContent>
-      </Card>
+      </Card> */}
 
     
   </TabsContent>
   );
-};
+
