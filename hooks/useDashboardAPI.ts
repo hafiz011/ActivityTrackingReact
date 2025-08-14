@@ -3,6 +3,7 @@ import { useCallback } from "react";
 import { useFilteredApi } from "./useFilteredApi";
 import { SuspiciousActivityApiResponse } from "../types/SuspiciousActivityAlert";
 import { ActiveSessionResponse } from "../types/ActiveSessionResponse";
+import { SessionsAnalyticsResponse } from "../types/SessionAnalytics";
 
 export const useActiveUsers = () => {
   const { get } = useFilteredApi();
@@ -20,7 +21,13 @@ export const useSuspiciousAlerts = () => {
   return { fetchSuspiciousActivities };
 };
 
-
+export const useSessionsAnalytics = () => {
+  const { get } = useFilteredApi();
+  const fetchSessionsAnalytics = useCallback(() => { 
+    return get<SessionsAnalyticsResponse>("/dashboard/analytics");
+  }, [get]);
+  return { fetchSessionsAnalytics };
+};
 
 
 
