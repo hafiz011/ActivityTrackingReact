@@ -21,21 +21,30 @@ export const useSuspiciousAlerts = () => {
   return { fetchSuspiciousActivities };
 };
 
-export const useSessionsAnalytics = () => {
+// export const useAvgSessions = () => {
+//   const { get } = useFilteredApi();
+//   const fetchSessionMetrics = useCallback(() => { 
+//     return get<SessionsAnalyticsResponse>("/dashboard/analytics");
+//   }, [get]);
+//   return { fetchSessionMetrics };
+// };
+export const useAvgSessions = () => { 
   const { get } = useFilteredApi();
-  const fetchSessionsAnalytics = useCallback(() => { 
+
+  const fetchSessionMetrics = useCallback(() => { 
     return get<SessionsAnalyticsResponse>("/dashboard/analytics");
   }, [get]);
-  return { fetchSessionsAnalytics };
-};
 
-
-
-export const useAvgSessions = () => {
-  const { get } = useFilteredApi();
-  const fetchSessionMetrics = () => get("/dashboard/AvgSessions");
   return { fetchSessionMetrics };
 };
+
+
+
+// export const useAvgSessions = () => {
+//   const { get } = useFilteredApi();
+//   const fetchSessionMetrics = () => get("/dashboard/AvgSessions");
+//   return { fetchSessionMetrics };
+// };
 
 
 export const useBounceRate = () => {

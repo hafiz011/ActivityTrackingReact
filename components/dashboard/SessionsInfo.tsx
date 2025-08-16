@@ -122,7 +122,7 @@ const SessionsInfo: React.FC<SessionsInfoProps> = ({
                 {sessionMetrics?.avgDuration ?? "--"}
               </div>
               <p className="text-xs text-muted-foreground">
-                <span
+                {/* <span
                   className={
                     sessionMetrics?.avgDurationTrend >= 0
                       ? "text-green-600"
@@ -131,7 +131,7 @@ const SessionsInfo: React.FC<SessionsInfoProps> = ({
                 >
                   {sessionMetrics?.avgDurationTrend >= 0 ? "+" : ""}
                   {sessionMetrics?.avgDurationTrend ?? 0}%
-                </span>{" "}
+                </span>{" "} */}
                 from last week
               </p>
             </>
@@ -155,7 +155,7 @@ const SessionsInfo: React.FC<SessionsInfoProps> = ({
               <div className="text-2xl font-bold">
                 {sessionMetrics?.bounceRate ?? "--"}%
               </div>
-              <p className="text-xs text-muted-foreground">
+              {/* <p className="text-xs text-muted-foreground">
                 <span
                   className={
                     sessionMetrics?.bounceRateTrend < 0
@@ -169,7 +169,7 @@ const SessionsInfo: React.FC<SessionsInfoProps> = ({
                 {sessionMetrics?.bounceRateTrend < 0
                   ? "improvement"
                   : "increase"}
-              </p>
+              </p> */}
             </>
           )}
         </CardContent>
@@ -191,7 +191,7 @@ const SessionsInfo: React.FC<SessionsInfoProps> = ({
               <div className="text-2xl font-bold">
                 {sessionMetrics?.avgActions ?? "--"}
               </div>
-              <p className="text-xs text-muted-foreground">
+              {/* <p className="text-xs text-muted-foreground">
                 <span
                   className={
                     sessionMetrics?.avgActionsTrend >= 0
@@ -203,7 +203,7 @@ const SessionsInfo: React.FC<SessionsInfoProps> = ({
                   {sessionMetrics?.avgActionsTrend ?? 0}%
                 </span>{" "}
                 from last week
-              </p>
+              </p> */}
             </>
           )}
         </CardContent>

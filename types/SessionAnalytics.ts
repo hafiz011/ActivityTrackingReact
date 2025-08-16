@@ -1,4 +1,4 @@
-export interface DailySession {
+export interface DailySession { 
   date: string;
   sessions: number;
   suspicious: number;
@@ -10,7 +10,12 @@ export interface DeviceDistribution {
 }
 
 export interface SessionMetrics {
+  avgDuration: string;
+  avgDurationTrend: number;
   bounceRate: number;
+  bounceRateTrend: number;
+  avgActions: number;
+  avgActionsTrend: number;
 }
 
 export interface SessionsAnalyticsResponse {
