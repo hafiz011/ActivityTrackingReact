@@ -15,6 +15,7 @@ import {
   TrendingUp,
   Activity,
 } from "lucide-react";
+import { SessionMetrics } from "@/types/SessionAnalytics";
 
 type SessionsInfoProps = {
   loading: {
@@ -24,16 +25,37 @@ type SessionsInfoProps = {
   };
   activeUsersCount: number;
   totalSuspicious: number;
-  sessionMetrics: {
-    avgDuration: string;
-    avgDurationTrend: number;
-    bounceRate: number;
-    bounceRateTrend: number;
-    avgActions: number;
-    avgActionsTrend: number;
-  } | null;
+  sessionMetrics: SessionMetrics | null;
 };
 
+// helper component to display trend text
+const TrendText = ({
+  value,
+  positiveIsGood = true,
+  compareText = "from last period",
+}: {
+  value?: number | null;
+  positiveIsGood?: boolean;
+  compareText?: string;
+}) => {
+  if (value == null) return null;
+
+  const isPositive = value >= 0;
+  const colorClass =
+    (isPositive && positiveIsGood) || (!isPositive && !positiveIsGood)
+      ? "text-green-600"
+      : "text-red-600";
+
+  return (
+    <p className="text-xs text-muted-foreground">
+      <span className={colorClass}>
+        {isPositive ? "+" : ""}
+        {value}%
+      </span>{" "}
+      {compareText}
+    </p>
+  );
+};
 
 
 const SessionsInfo: React.FC<SessionsInfoProps> = ({
@@ -90,22 +112,19 @@ const SessionsInfo: React.FC<SessionsInfoProps> = ({
               <Loader2 className="h-4 w-4 animate-spin" />
             </div>
           ) : (
-            <>
+           <>
               <div className="text-2xl font-bold text-red-600">
                 {totalSuspicious}
               </div>
-              {/* <p className="text-xs text-muted-foreground">
-                <span className="text-red-600">+15%</span> from yesterday
-              </p> */}
               <p className="text-xs text-muted-foreground text-red-600">
-                {`Compared to last period`}
+                Compared to last period
               </p>
             </>
           )}
         </CardContent>
       </Card>
 
-      {/* Avg Session */}
+      {/* Avg Session Duration */}
       <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
           <CardTitle className="text-sm font-medium">Avg Session</CardTitle>
@@ -117,23 +136,15 @@ const SessionsInfo: React.FC<SessionsInfoProps> = ({
               <Loader2 className="h-4 w-4 animate-spin" />
             </div>
           ) : (
-            <>
+           <>
               <div className="text-2xl font-bold">
-                {sessionMetrics?.avgDuration ?? "--"}
+                {sessionMetrics?.avgDuration
+                  ? `${Math.floor(sessionMetrics.avgDuration / 60)}m ${Math.floor(
+                      sessionMetrics.avgDuration % 60
+                    )}s`
+                  : "--"}
               </div>
-              <p className="text-xs text-muted-foreground">
-                {/* <span
-                  className={
-                    sessionMetrics?.avgDurationTrend >= 0
-                      ? "text-green-600"
-                      : "text-red-600"
-                  }
-                >
-                  {sessionMetrics?.avgDurationTrend >= 0 ? "+" : ""}
-                  {sessionMetrics?.avgDurationTrend ?? 0}%
-                </span>{" "} */}
-                from last week
-              </p>
+              <TrendText value={sessionMetrics?.avgDurationTrend} />
             </>
           )}
         </CardContent>
@@ -153,32 +164,23 @@ const SessionsInfo: React.FC<SessionsInfoProps> = ({
           ) : (
             <>
               <div className="text-2xl font-bold">
-                {sessionMetrics?.bounceRate ?? "--"}%
+                {sessionMetrics?.bounceRate !== undefined
+                  ? `${sessionMetrics.bounceRate.toFixed(2)}%`
+                  : "--"}
               </div>
-              {/* <p className="text-xs text-muted-foreground">
-                <span
-                  className={
-                    sessionMetrics?.bounceRateTrend < 0
-                      ? "text-green-600"
-                      : "text-red-600"
-                  }
-                >
-                  {sessionMetrics?.bounceRateTrend >= 0 ? "+" : ""}
-                  {sessionMetrics?.bounceRateTrend ?? 0}%
-                </span>{" "}
-                {sessionMetrics?.bounceRateTrend < 0
-                  ? "improvement"
-                  : "increase"}
-              </p> */}
+              <TrendText
+                value={sessionMetrics?.bounceRateTrend}
+                positiveIsGood={false}
+              />
             </>
           )}
         </CardContent>
       </Card>
 
-      {/* Actions per Session */}
+      {/* Avg Actions per Session */}
       <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className="text-sm font-medium">Actions/Session</CardTitle>
+          <CardTitle className="text-sm font-medium">Actions / Session</CardTitle>
           <Activity className="h-4 w-4 text-muted-foreground" />
         </CardHeader>
         <CardContent>
@@ -189,21 +191,11 @@ const SessionsInfo: React.FC<SessionsInfoProps> = ({
           ) : (
             <>
               <div className="text-2xl font-bold">
-                {sessionMetrics?.avgActions ?? "--"}
+                {sessionMetrics?.avgActions !== undefined
+                  ? sessionMetrics.avgActions.toFixed(2)
+                  : "--"}
               </div>
-              {/* <p className="text-xs text-muted-foreground">
-                <span
-                  className={
-                    sessionMetrics?.avgActionsTrend >= 0
-                      ? "text-green-600"
-                      : "text-red-600"
-                  }
-                >
-                  {sessionMetrics?.avgActionsTrend >= 0 ? "+" : ""}
-                  {sessionMetrics?.avgActionsTrend ?? 0}%
-                </span>{" "}
-                from last week
-              </p> */}
+              <TrendText value={sessionMetrics?.avgActionsTrend} />
             </>
           )}
         </CardContent>

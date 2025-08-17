@@ -179,7 +179,7 @@ const Dashboard: React.FC = () => {
         <SessionsInfo
           activeUsersCount={activeUsers.length}
           totalSuspicious={suspiciousActivities.length}
-          sessionMetrics={sessionMetrics}
+          sessionMetrics={sessionMetrics} 
 
           loading={{
             activeUsersCount: loading.activeUsers,

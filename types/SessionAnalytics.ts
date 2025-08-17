@@ -10,7 +10,7 @@ export interface DeviceDistribution {
 }
 
 export interface SessionMetrics {
-  avgDuration: string;
+  avgDuration: number;
   avgDurationTrend: number;
   bounceRate: number;
   bounceRateTrend: number;
