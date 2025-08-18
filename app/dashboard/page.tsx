@@ -211,19 +211,19 @@ const Dashboard: React.FC = () => {
             </TabsContent>
 
             {/* Session Analytics Tab */}
-            {/* <TabsContent value="analytics" className="space-y-4">
+            <TabsContent value="analytics" className="space-y-4">
               <SessionAnalyticsTab
                 SessionMetrics={sessionMetrics}
                 dailySessionsData={dailySessions}
                 deviceDistribution={deviceDistributions}
                 loading={{
-                sessionMetrics: loading.sessionMetrics,
-                dailySessionsData: loading.dailySessions,
+                SessionMetrics: loading.sessionMetrics,
                 deviceDistribution: loading.deviceDistributions,
+                dailySessionsData: loading.dailySessions,
               }}
 
               />
-            </TabsContent> */}
+            </TabsContent>
 
             {/* Suspicious Activity Tab */}
             <TabsContent value="suspicious" className="space-y-4">

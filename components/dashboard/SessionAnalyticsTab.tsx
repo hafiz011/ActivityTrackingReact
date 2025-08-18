@@ -24,16 +24,17 @@ import {
   BarChart,
   Bar,
 } from "recharts";
+import { SessionMetrics } from "@/types/SessionAnalytics";
 
 interface SessionAnalyticsTabProps {
   loading: {
-    dailySessions: boolean;
+    SessionMetrics: boolean;
+    dailySessionsData: boolean;
     deviceDistribution: boolean;
-    sessionMetrics: boolean;
   };
   dailySessionsData: { date: string; sessions: number; suspicious: number }[];
   deviceDistribution: { name: string; value: number }[];
-  sessionMetrics: { bounceRate: number };
+  SessionMetrics: SessionMetrics | null;
 }
 
 const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
@@ -68,9 +69,9 @@ const renderCustomizedLabel = ({
 
 export const SessionAnalyticsTab: React.FC<SessionAnalyticsTabProps> = ({
   loading,
+  SessionMetrics,
   dailySessionsData,
   deviceDistribution,
-  sessionMetrics,
 }) => {
   return (
     <>
@@ -84,7 +85,7 @@ export const SessionAnalyticsTab: React.FC<SessionAnalyticsTabProps> = ({
             </CardDescription>
           </CardHeader>
           <CardContent>
-            {loading.dailySessions ? (
+            {loading.dailySessionsData ? (
               <div className="flex items-center justify-center h-[300px]">
                 <Loader2 className="h-8 w-8 animate-spin" />
               </div>
@@ -117,11 +118,6 @@ export const SessionAnalyticsTab: React.FC<SessionAnalyticsTabProps> = ({
                 </ResponsiveContainer>
               </div>
             )}
-            <div className="mt-2 text-xs text-muted-foreground">
-              <p>
-                API: <code>GET /api/analytics/sessions/daily</code>
-              </p>
-            </div>
           </CardContent>
         </Card>
 
@@ -172,7 +168,7 @@ export const SessionAnalyticsTab: React.FC<SessionAnalyticsTabProps> = ({
             </CardDescription>
           </CardHeader>
           <CardContent>
-            {loading.sessionMetrics ? (
+            {loading.SessionMetrics ? (
               <div className="flex items-center justify-center h-[300px]">
                 <Loader2 className="h-8 w-8 animate-spin" />
               </div>
@@ -197,11 +193,6 @@ export const SessionAnalyticsTab: React.FC<SessionAnalyticsTabProps> = ({
                 </ResponsiveContainer>
               </div>
             )}
-            <div className="mt-2 text-xs text-muted-foreground">
-              <p>
-                API: <code>GET /api/analytics/actions-per-session</code>
-              </p>
-            </div>
           </CardContent>
         </Card>
 
@@ -213,7 +204,7 @@ export const SessionAnalyticsTab: React.FC<SessionAnalyticsTabProps> = ({
             </CardDescription>
           </CardHeader>
           <CardContent>
-            {loading.sessionMetrics ? (
+            {loading.SessionMetrics ? (
               <div className="flex items-center justify-center h-[300px]">
                 <Loader2 className="h-8 w-8 animate-spin" />
               </div>
@@ -222,10 +213,10 @@ export const SessionAnalyticsTab: React.FC<SessionAnalyticsTabProps> = ({
                 <ResponsiveContainer width="100%" height="100%">
                   <PieChart>
                     <Pie
-                      data={[
-                        { name: "Bounce", value: sessionMetrics.bounceRate },
-                        { name: "Engaged", value: 100 - sessionMetrics.bounceRate },
-                      ]}
+                     data={[
+                            { name: "Bounce", value: SessionMetrics?.bounceRate ?? 0 },
+                            { name: "Engaged", value: 100 - (SessionMetrics?.bounceRate ?? 0) },
+                          ]}
                       cx="50%"
                       cy="50%"
                       labelLine={false}
@@ -243,11 +234,6 @@ export const SessionAnalyticsTab: React.FC<SessionAnalyticsTabProps> = ({
                 </ResponsiveContainer>
               </div>
             )}
-            <div className="mt-2 text-xs text-muted-foreground">
-              <p>
-                API: <code>GET /api/analytics/bounce-rate</code>
-              </p>
-            </div>
           </CardContent>
         </Card>
       </div>
