@@ -36,7 +36,7 @@ interface SessionAnalyticsTabProps {
   dailySessionsData: { date: string; sessions: number; suspicious: number }[];
   deviceDistribution: { name: string; value: number }[];
   SessionMetrics: SessionMetrics | null;
-  deviceMetricsData: { name: string; value: number }[];
+  deviceMetricsData: { name: string; count: number; avgDuration: number; avgActions: number }[];
 }
 
 const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
@@ -181,7 +181,7 @@ export const SessionAnalyticsTab: React.FC<SessionAnalyticsTabProps> = ({
                   <BarChart
                     data={deviceMetricsData.map(d => ({
                       name: d.name,
-                      value: d.value,
+                      value: d.avgActions,
                     }))}
                     margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
                   >

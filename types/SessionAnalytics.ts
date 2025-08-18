@@ -20,7 +20,9 @@ export interface SessionMetrics {
 
 export interface DeviceMetrics {
   name: string;
-  value: number;
+  count: number;
+  avgDuration: number;
+  avgActions: number;
 }
 
 export interface SessionsAnalyticsResponse {
