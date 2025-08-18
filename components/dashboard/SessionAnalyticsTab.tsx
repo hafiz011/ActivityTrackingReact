@@ -31,10 +31,12 @@ interface SessionAnalyticsTabProps {
     SessionMetrics: boolean;
     dailySessionsData: boolean;
     deviceDistribution: boolean;
+    deviceMetricsData: boolean;
   };
   dailySessionsData: { date: string; sessions: number; suspicious: number }[];
   deviceDistribution: { name: string; value: number }[];
   SessionMetrics: SessionMetrics | null;
+  deviceMetricsData: { name: string; value: number }[];
 }
 
 const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
@@ -72,6 +74,7 @@ export const SessionAnalyticsTab: React.FC<SessionAnalyticsTabProps> = ({
   SessionMetrics,
   dailySessionsData,
   deviceDistribution,
+  deviceMetricsData,
 }) => {
   return (
     <>
@@ -168,7 +171,7 @@ export const SessionAnalyticsTab: React.FC<SessionAnalyticsTabProps> = ({
             </CardDescription>
           </CardHeader>
           <CardContent>
-            {loading.SessionMetrics ? (
+            {loading.deviceMetricsData ? (
               <div className="flex items-center justify-center h-[300px]">
                 <Loader2 className="h-8 w-8 animate-spin" />
               </div>
@@ -176,11 +179,10 @@ export const SessionAnalyticsTab: React.FC<SessionAnalyticsTabProps> = ({
               <div className="h-[300px] w-full">
                 <ResponsiveContainer width="100%" height="100%">
                   <BarChart
-                    data={[
-                      { name: "Desktop", value: 15.2 },
-                      { name: "Mobile", value: 8.7 },
-                      { name: "Tablet", value: 11.3 },
-                    ]}
+                    data={deviceMetricsData.map(d => ({
+                      name: d.name,
+                      value: d.value,
+                    }))}
                     margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
                   >
                     <CartesianGrid strokeDasharray="3 3" />
@@ -189,6 +191,8 @@ export const SessionAnalyticsTab: React.FC<SessionAnalyticsTabProps> = ({
                     <Tooltip />
                     <Legend />
                     <Bar dataKey="value" name="Actions" fill="#8884d8" />
+                    {/* <Bar dataKey="value" name="Avg Actions" fill="#4f46e5" radius={[8, 8, 0, 0]} /> */}
+
                   </BarChart>
                 </ResponsiveContainer>
               </div>
@@ -214,9 +218,9 @@ export const SessionAnalyticsTab: React.FC<SessionAnalyticsTabProps> = ({
                   <PieChart>
                     <Pie
                      data={[
-                            { name: "Bounce", value: SessionMetrics?.bounceRate ?? 0 },
-                            { name: "Engaged", value: 100 - (SessionMetrics?.bounceRate ?? 0) },
-                          ]}
+                        { name: "Bounce", value: SessionMetrics?.bounceRate ?? 0 },
+                        { name: "Engaged", value: 100 - (SessionMetrics?.bounceRate ?? 0) },
+                      ]}
                       cx="50%"
                       cy="50%"
                       labelLine={false}

@@ -18,8 +18,14 @@ export interface SessionMetrics {
   avgActionsTrend: number;
 }
 
+export interface DeviceMetrics {
+  name: string;
+  value: number;
+}
+
 export interface SessionsAnalyticsResponse {
   dailySessions: DailySession[];
   deviceDistribution: DeviceDistribution[];
+  deviceMetrics: DeviceMetrics[];
   sessionMetrics: SessionMetrics;
 }
