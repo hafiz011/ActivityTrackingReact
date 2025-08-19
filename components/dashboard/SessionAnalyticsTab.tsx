@@ -181,28 +181,43 @@ export const SessionAnalyticsTab: React.FC<SessionAnalyticsTabProps> = ({
               <div className="flex items-center justify-center h-[300px]">
                 <Loader2 className="h-8 w-8 animate-spin" />
               </div>
+            ) : deviceDistribution.length === 0 ? (
+              <div className="flex items-center justify-center h-[300px] text-gray-500">
+                No data available
+              </div>
             ) : (
               <div className="h-[300px] w-full">
                 <ResponsiveContainer width="100%" height="100%">
                   <BarChart
                     data={deviceDistribution.map(d => ({
                       name: d.name,
-                      avgDuration: d.avgDuration,
-                      avgActions: d.avgActions,
+                      avgDuration: d.avgDuration || 0,  // keep numeric
+                      avgActions: d.avgActions || 0,
                     }))}
                     margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
                   >
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis dataKey="name" />
                     <YAxis />
-                    <Tooltip />
+                    <Tooltip
+                      formatter={(value, name) => {
+                        if (name === "Avg Duration") {
+                          const minutes = Math.floor(Number(value) / 60);
+                          const seconds = Math.floor(Number(value) % 60);
+                          return `${minutes}m ${seconds}s`;
+                        }
+                        if (name === "Avg Actions") {
+                          return Number(value).toFixed(2);
+                        }
+                        return value;
+                      }}
+                    />
                     <Legend />
-                    <Bar dataKey="avgDuration" name="Avg Duration" fill="#3b82f6" radius={[8, 8, 0, 0]} /> {/* Indigo */}
-                    <Bar dataKey="avgActions" name="Avg Actions" fill="#14b8a6" radius={[8, 8, 0, 0]} />  {/* Teal */}
+                    <Bar dataKey="avgDuration" name="Avg Duration" fill="#3b82f6" radius={[8, 8, 0, 0]} />
+                    <Bar dataKey="avgActions" name="Avg Actions" fill="#14b8a6" radius={[8, 8, 0, 0]} />
                   </BarChart>
                 </ResponsiveContainer>
               </div>
-
             )}
           </CardContent>
         </Card>
@@ -239,7 +254,8 @@ export const SessionAnalyticsTab: React.FC<SessionAnalyticsTabProps> = ({
                       <Cell fill="#FF8042" />
                       <Cell fill="#0088FE" />
                     </Pie>
-                    <Tooltip formatter={(value) => [`${value}%`, "Percentage"]} />
+                    {/* <Tooltip formatter={(value) => [`${value}%`, "Percentage"]} /> */}
+                    <Tooltip formatter={(value: number) => `${value.toFixed(2)}%`} />
                     <Legend />
                   </PieChart>
                 </ResponsiveContainer>
