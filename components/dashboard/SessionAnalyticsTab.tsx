@@ -31,12 +31,10 @@ interface SessionAnalyticsTabProps {
     SessionMetrics: boolean;
     dailySessionsData: boolean;
     deviceDistribution: boolean;
-    deviceMetricsData: boolean;
   };
-  dailySessionsData: { date: string; sessions: number; suspicious: number }[];
-  deviceDistribution: { name: string; value: number }[];
   SessionMetrics: SessionMetrics | null;
-  deviceMetricsData: { name: string; count: number; avgDuration: number; avgActions: number }[];
+  dailySessionsData: { date: string; sessions: number; suspicious: number }[];
+  deviceDistribution: {  name: string; total: number; avgDuration: number; avgActions: number; }[];
 }
 
 const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
@@ -74,7 +72,7 @@ export const SessionAnalyticsTab: React.FC<SessionAnalyticsTabProps> = ({
   SessionMetrics,
   dailySessionsData,
   deviceDistribution,
-  deviceMetricsData,
+  // deviceMetricsData,
 }) => {
   return (
     <>
@@ -101,6 +99,14 @@ export const SessionAnalyticsTab: React.FC<SessionAnalyticsTabProps> = ({
                     <YAxis />
                     <Tooltip />
                     <Legend />
+                    <Area
+                      type="monotone"
+                      dataKey="date"
+                      stackId="1"
+                      stroke="#1399ceff"
+                      fill="#1399ceff"
+                      name="Date"
+                    />
                     <Area
                       type="monotone"
                       dataKey="sessions"
@@ -146,13 +152,13 @@ export const SessionAnalyticsTab: React.FC<SessionAnalyticsTabProps> = ({
                       label={renderCustomizedLabel}
                       outerRadius={80}
                       fill="#8884d8"
-                      dataKey="value"
+                      dataKey="total"
                     >
                       {deviceDistribution.map((entry, index) => (
                         <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                       ))}
                     </Pie>
-                    <Tooltip formatter={(value) => [`${value}%`, "Percentage"]} />
+                    <Tooltip formatter={(total) => [`${total}`, "Total Session"]} />
                     <Legend />
                   </PieChart>
                 </ResponsiveContainer>
@@ -171,7 +177,7 @@ export const SessionAnalyticsTab: React.FC<SessionAnalyticsTabProps> = ({
             </CardDescription>
           </CardHeader>
           <CardContent>
-            {loading.deviceMetricsData ? (
+            {loading.deviceDistribution ? (
               <div className="flex items-center justify-center h-[300px]">
                 <Loader2 className="h-8 w-8 animate-spin" />
               </div>
@@ -179,9 +185,10 @@ export const SessionAnalyticsTab: React.FC<SessionAnalyticsTabProps> = ({
               <div className="h-[300px] w-full">
                 <ResponsiveContainer width="100%" height="100%">
                   <BarChart
-                    data={deviceMetricsData.map(d => ({
+                    data={deviceDistribution.map(d => ({
                       name: d.name,
-                      value: d.avgActions,
+                      avgDuration: d.avgDuration,
+                      avgActions: d.avgActions,
                     }))}
                     margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
                   >
@@ -190,12 +197,12 @@ export const SessionAnalyticsTab: React.FC<SessionAnalyticsTabProps> = ({
                     <YAxis />
                     <Tooltip />
                     <Legend />
-                    <Bar dataKey="value" name="Actions" fill="#8884d8" />
-                    {/* <Bar dataKey="value" name="Avg Actions" fill="#4f46e5" radius={[8, 8, 0, 0]} /> */}
-
+                    <Bar dataKey="avgDuration" name="Avg Duration" fill="#3b82f6" radius={[8, 8, 0, 0]} /> {/* Indigo */}
+                    <Bar dataKey="avgActions" name="Avg Actions" fill="#14b8a6" radius={[8, 8, 0, 0]} />  {/* Teal */}
                   </BarChart>
                 </ResponsiveContainer>
               </div>
+
             )}
           </CardContent>
         </Card>

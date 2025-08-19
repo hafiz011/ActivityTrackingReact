@@ -6,7 +6,9 @@ export interface DailySession {
 
 export interface DeviceDistribution {
   name: string;
-  value: number;
+  total: number;
+  avgDuration: number;
+  avgActions: number;
 }
 
 export interface SessionMetrics {
@@ -18,16 +20,16 @@ export interface SessionMetrics {
   avgActionsTrend: number;
 }
 
-export interface DeviceMetrics {
-  name: string;
-  count: number;
-  avgDuration: number;
-  avgActions: number;
-}
+// export interface DeviceMetrics {
+//   name: string;
+//   total: number;
+//   avgDuration: number;
+//   avgActions: number;
+// }
 
 export interface SessionsAnalyticsResponse {
   dailySessions: DailySession[];
   deviceDistribution: DeviceDistribution[];
-  deviceMetrics: DeviceMetrics[];
+  // deviceMetrics: DeviceMetrics[];
   sessionMetrics: SessionMetrics;
 }
