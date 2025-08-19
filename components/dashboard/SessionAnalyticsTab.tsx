@@ -171,7 +171,7 @@ export const SessionAnalyticsTab: React.FC<SessionAnalyticsTabProps> = ({
       <div className="grid gap-4 md:grid-cols-2">
         <Card>
           <CardHeader>
-            <CardTitle>Actions Per Session</CardTitle>
+            <CardTitle>Average Actions and Duration Per Device</CardTitle>
             <CardDescription>
               Average number of actions users take per session
             </CardDescription>
