@@ -162,40 +162,7 @@ export const SuspiciousActivityTab: React.FC<SuspiciousActivityTabProps> = ({
     </Card>
 
 
-  {/* <Card>
-        <CardHeader>
-          <CardTitle>Suspicious Login Trends</CardTitle>
-          <CardDescription>Daily suspicious login attempts over time</CardDescription>
-        </CardHeader>
-        <CardContent>
-          {loading.dailySessions ? (
-            <div className="flex items-center justify-center h-[300px]">
-              <Loader2 className="h-8 w-8 animate-spin" />
-            </div>
-          ) : dailySessionsData.length === 0 ? (
-            <p className="text-center text-muted-foreground">No suspicious login data found.</p>
-          ) : (
-            <div className="h-[300px] w-full">
-              <ResponsiveContainer width="100%" height="100%">
-                <LineChart data={dailySessionsData}>
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="date" />
-                  <YAxis />
-                  <Tooltip />
-                  <Legend />
-                  <Line
-                    type="monotone"
-                    dataKey="suspicious"
-                    stroke="#ff7300"
-                    name="Suspicious Logins"
-                    strokeWidth={2}
-                  />
-                </LineChart>
-              </ResponsiveContainer>
-            </div>
-          )}
-        </CardContent>
-      </Card> */}
+  
 
     
   </TabsContent>

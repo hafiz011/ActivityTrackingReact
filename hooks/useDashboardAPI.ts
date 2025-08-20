@@ -5,6 +5,7 @@ import { SuspiciousActivityApiResponse } from "../types/SuspiciousActivityAlert"
 import { ActiveSessionResponse } from "../types/ActiveSessionResponse";
 import { SessionsAnalyticsResponse } from "../types/SessionAnalytics";
 
+//
 export const useActiveUsers = () => {
   const { get } = useFilteredApi();
   const fetchActiveUsers = useCallback(() => {
@@ -22,38 +23,26 @@ export const useSuspiciousAlerts = () => {
 };
 
 
-// export const useAvgSessions = () => { 
-//   const { get } = useFilteredApi();
-
-//   const fetchSessionMetrics = useCallback(() => { 
-//     return get<SessionsAnalyticsResponse>("/dashboard/analytics");
-//   }, [get]);
-
-//   return { fetchSessionMetrics };
-// };
-
 export const useAvgSessions = () => { 
   const { get } = useFilteredApi();
 
   const fetchSessionMetrics = useCallback(async () => { 
     const res = await get<SessionsAnalyticsResponse>("/dashboard/analytics");
     return res; // Assuming the response structure matches SessionsAnalyticsResponse
-  }, [get]);
+  }, [get]); 
 
   return { fetchSessionMetrics }; 
 };
 
+// export const useBounceRate = () => {
+//   const { get } = useFilteredApi();
+//   const fetchBounceRate = () => get("/dashboard/BounceRate");
+//   return { fetchBounceRate };
+// };
 
 
-export const useBounceRate = () => {
-  const { get } = useFilteredApi();
-  const fetchBounceRate = () => get("/dashboard/BounceRate");
-  return { fetchBounceRate };
-};
-
-
-export const useActionSessions = () => {
-  const { get } = useFilteredApi();
-  const fetchActionSessions = () => get("/dashboard/ActionSessions");
-  return { fetchActionSessions };
-};
+// export const useActionSessions = () => {
+//   const { get } = useFilteredApi();
+//   const fetchActionSessions = () => get("/dashboard/ActionSessions");
+//   return { fetchActionSessions };
+// };

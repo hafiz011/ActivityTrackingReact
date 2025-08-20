@@ -17,6 +17,15 @@ export type Session = {
   sessionid: string;
 };
 
+export type TopUser {
+   userId: string;
+  name: string;
+  email: string;
+  sessions: number;
+  actions: number;
+};
+
 export type ActiveSessionResponse = {
   sessions: Session[];
+  topActiveUsers: TopUser[];
 };

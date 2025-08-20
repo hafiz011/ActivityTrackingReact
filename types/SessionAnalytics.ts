@@ -20,16 +20,10 @@ export interface SessionMetrics {
   avgActionsTrend: number;
 }
 
-// export interface DeviceMetrics {
-//   name: string;
-//   total: number;
-//   avgDuration: number;
-//   avgActions: number;
-// }
+
 
 export interface SessionsAnalyticsResponse {
   dailySessions: DailySession[];
   deviceDistribution: DeviceDistribution[];
-  // deviceMetrics: DeviceMetrics[];
   sessionMetrics: SessionMetrics;
 }

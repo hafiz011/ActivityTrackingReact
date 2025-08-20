@@ -8,20 +8,16 @@ import Header from "@/components/dashboard/Header";
 import { FiltersCard } from "@/components/dashboard/FiltersCard";
 import SessionsInfo from "@/components/dashboard/SessionsInfo";
 import {
-  useActionSessions,
   useActiveUsers,
   useAvgSessions,
-  useBounceRate,
   useSuspiciousAlerts,
 } from "@/hooks/useDashboardAPI";
 import { useFilter } from "@/context/FilterContext";
 
 import SuspiciousActivityAlert from "@/components/dashboard/SuspiciousActivityAlert";
 import { SuspiciousActivityAlert as SuspiciousActivityResponse } from "@/types/SuspiciousActivityAlert";
-import { Session } from "@/types/ActiveSessionResponse";
+import { Session, TopUser } from "@/types/ActiveSessionResponse";
 import { DailySession, DeviceDistribution, SessionMetrics } from "@/types/SessionAnalytics";
-
-
 
 
 import { ActiveSessionsTab } from "@/components/dashboard/ActiveSessionsTab";
@@ -35,6 +31,7 @@ import { TopUsersTab } from "@/components/dashboard/TopUsersTab";
 // Define types for loading state and session metrics
 type LoadingState = {
   activeUsers: boolean;
+  topActiveUsers: boolean;
   suspiciousActivities: boolean;
   sessionMetrics: boolean;
   deviceDistributions: boolean;
@@ -56,6 +53,7 @@ const Dashboard: React.FC = () => {
 
   const [loading, setLoading] = useState<LoadingState>({
     activeUsers: true,
+    topActiveUsers: true,
     suspiciousActivities: true,
     sessionMetrics: true,
     deviceDistributions: true,
@@ -67,6 +65,7 @@ const Dashboard: React.FC = () => {
   });
 
   const [activeUsers, setSessions] = useState<Session[]>([]);
+  const [topActiveUsers, setTopActiveUsers] = useState<TopUser[]>([]);
   const [suspiciousActivities, setSuspiciousActivities] = useState<SuspiciousActivityResponse[]>([]);
 
   const [sessionMetrics, setSessionMetrics] = useState<SessionMetrics | null>(null);
@@ -81,7 +80,8 @@ const Dashboard: React.FC = () => {
     try {
       const activeRes = await fetchActiveUsers();
       setSessions(activeRes.sessions);
-      setLoading(prev => ({ ...prev, activeUsers: false }));
+      setTopActiveUsers(activeRes.topActiveUsers);
+      setLoading(prev => ({ ...prev, activeUsers: false, topActiveUsers: false }));
 
       const suspicious = await fetchSuspiciousActivities();
       setSuspiciousActivities(suspicious.suspiciousActivities);
@@ -102,6 +102,7 @@ const Dashboard: React.FC = () => {
       console.error("Error fetching dashboard data:", error);
       setLoading({
         activeUsers: false,
+        topActiveUsers: false,
         suspiciousActivities: false,
         sessionMetrics: false,
         deviceDistributions: false,
@@ -122,6 +123,7 @@ const Dashboard: React.FC = () => {
     setLoading((prev) => ({
       ...prev,
       activeUsers: true,
+      topActiveUsers: true,
       suspiciousActivities: true,
       sessionMetrics: true,
       deviceDistributions: true,
@@ -131,6 +133,7 @@ const Dashboard: React.FC = () => {
       // fetch active sessions
       const refreshedSessions = await fetchActiveUsers();
       setSessions(refreshedSessions.sessions);
+      setTopActiveUsers(refreshedSessions.topActiveUsers);
 
       // fetch suspicious activities
       const refreshedSuspicious = await fetchSuspiciousActivities();
@@ -150,6 +153,7 @@ const Dashboard: React.FC = () => {
     setLoading((prev) => ({
       ...prev,
       activeUsers: false,
+      topActiveUsers: false,
       suspiciousActivities: false,
       sessionMetrics: false,
       deviceDistributions: false,
@@ -198,7 +202,7 @@ const Dashboard: React.FC = () => {
               <TabsTrigger value="analytics">Session Analytics</TabsTrigger>
               <TabsTrigger value="suspicious">Suspicious Activity</TabsTrigger>
               <TabsTrigger value="breakdown">Activity Breakdown</TabsTrigger>
-              <TabsTrigger value="trends">Login Trends</TabsTrigger>
+              {/* <TabsTrigger value="trends">Login Trends</TabsTrigger> */}
               <TabsTrigger value="users">Top Users</TabsTrigger>
             </TabsList>
              
@@ -248,13 +252,14 @@ const Dashboard: React.FC = () => {
                 timeRange={timeRange}
               />
             </TabsContent>
+            */}
 
-             {/* Top Users Tab *
+             {/* Top Users Tab */}
             <TabsContent value="users" className="space-y-4">
-              <TopUsersTab loading={loading} topActiveUsers={topActiveUsers} /> 
+              <TopUsersTab topActiveUsers={topActiveUsers} loading={{topUsers: loading.topActiveUsers}} /> 
             </TabsContent>
 
-            */}
+            
 
 
 

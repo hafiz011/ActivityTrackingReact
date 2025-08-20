@@ -18,17 +18,11 @@ import {
   TableCell,
 } from "@/components/ui/table";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-
-type TopUser = {
-  userId: string;
-  email: string;
-  sessions: number;
-  actions: number;
-};
+import { TopUser } from "@/types/ActiveSessionResponse";
 
 interface TopUsersTabProps {
   loading: { topUsers: boolean };
-  topActiveUsers: TopUser[];
+  topActiveUsers: TopUser[] | null;
 }
 
 export const TopUsersTab: React.FC<TopUsersTabProps> = ({
@@ -58,23 +52,31 @@ export const TopUsersTab: React.FC<TopUsersTabProps> = ({
             </TableRow>
           </TableHeader>
           <TableBody>
-            {topActiveUsers.map((user) => (
-              <TableRow key={user.userId}>
-                <TableCell>
-                  <div className="flex items-center gap-2">
-                    <Avatar className="h-8 w-8">
-                      <AvatarFallback>
-                        {user.email.substring(0, 2).toUpperCase()}
-                      </AvatarFallback>
-                    </Avatar>
-                    <div>{user.userId}</div>
-                  </div>
+            {topActiveUsers && topActiveUsers.length > 0 ? (
+              topActiveUsers.map((user) => (
+                <TableRow key={user.userId}>
+                  <TableCell>
+                    <div className="flex items-center gap-2">
+                      <Avatar className="h-8 w-8">
+                        <AvatarFallback>
+                          {user.userId.substring(0, 2).toUpperCase()}
+                        </AvatarFallback>
+                      </Avatar>
+                      <div>{user.userId}</div>
+                    </div>
+                  </TableCell>
+                  <TableCell>{user.email}</TableCell>
+                  <TableCell>{user.sessions}</TableCell>
+                  <TableCell>{user.actions}</TableCell>
+                </TableRow>
+              ))
+            ) : (
+              <TableRow>
+                <TableCell colSpan={4} className="text-center py-4">
+                  No top active users found.
                 </TableCell>
-                <TableCell>{user.email}</TableCell>
-                <TableCell>{user.sessions}</TableCell>
-                <TableCell>{user.actions}</TableCell>
               </TableRow>
-            ))}
+            )}
           </TableBody>
         </Table>
       )}
