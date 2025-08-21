@@ -30,61 +30,57 @@ export const TopUsersTab: React.FC<TopUsersTabProps> = ({
   topActiveUsers,
 }) => (
   <Card>
-    <CardHeader>
-      <CardTitle>Top Active Users</CardTitle>
-      <CardDescription>
-        Most active users based on sessions and actions
-      </CardDescription>
-    </CardHeader>
-    <CardContent>
-      {loading.topUsers ? (
-        <div className="flex items-center justify-center h-64">
-          <Loader2 className="h-8 w-8 animate-spin" />
-        </div>
-      ) : (
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead>User</TableHead>
-              <TableHead>Email</TableHead>
-              <TableHead>Sessions</TableHead>
-              <TableHead>Actions</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {topActiveUsers && topActiveUsers.length > 0 ? (
-              topActiveUsers.map((user) => (
-                <TableRow key={user.userId}>
-                  <TableCell>
-                    <div className="flex items-center gap-2">
-                      <Avatar className="h-8 w-8">
-                        <AvatarFallback>
-                          {user.userId.substring(0, 2).toUpperCase()}
-                        </AvatarFallback>
-                      </Avatar>
-                      <div>{user.userId}</div>
-                    </div>
-                  </TableCell>
-                  <TableCell>{user.email}</TableCell>
-                  <TableCell>{user.sessions}</TableCell>
-                  <TableCell>{user.actions}</TableCell>
-                </TableRow>
-              ))
-            ) : (
-              <TableRow>
-                <TableCell colSpan={4} className="text-center py-4">
-                  No top active users found.
-                </TableCell>
-              </TableRow>
-            )}
-          </TableBody>
-        </Table>
-      )}
-      <div className="mt-4 text-xs text-muted-foreground">
-        <p>
-          API: <code>GET /api/users/top-active?limit=5</code>
-        </p>
+  <CardHeader>
+    <CardTitle>Top Active Users</CardTitle>
+    <CardDescription>
+      Most active users based on sessions and actions
+    </CardDescription>
+  </CardHeader>
+  <CardContent>
+    {loading.topUsers ? (
+      <div className="flex items-center justify-center h-64">
+        <Loader2 className="h-8 w-8 animate-spin" />
       </div>
-    </CardContent>
-  </Card>
+    ) : (
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHead className="text-center">User</TableHead>
+            <TableHead className="text-center">Email</TableHead>
+            <TableHead className="text-center">Sessions</TableHead>
+            <TableHead className="text-center">Actions</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {topActiveUsers && topActiveUsers.length > 0 ? (
+            topActiveUsers.map((user) => (
+              <TableRow key={user.userId} className="text-center">
+                <TableCell>
+                  <div className="flex items-center justify-center gap-2">
+                    <Avatar className="h-8 w-8">
+                      <AvatarFallback>
+                        {user.userName.substring(0, 2).toUpperCase()}
+                      </AvatarFallback>
+                    </Avatar>
+                    <div>{user.userName}</div>
+                  </div>
+                </TableCell>
+                <TableCell className="text-center">{user.userEmail}</TableCell>
+                <TableCell className="text-center">{user.session}</TableCell>
+                <TableCell className="text-center">{user.action}</TableCell>
+              </TableRow>
+            ))
+          ) : (
+            <TableRow>
+              <TableCell colSpan={4} className="text-center py-4">
+                No top active users found.
+              </TableCell>
+            </TableRow>
+          )}
+        </TableBody>
+      </Table>
+    )}
+  </CardContent>
+</Card>
+
 );

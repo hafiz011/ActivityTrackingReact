@@ -80,7 +80,7 @@ const Dashboard: React.FC = () => {
     try {
       const activeRes = await fetchActiveUsers();
       setSessions(activeRes.sessions);
-      setTopActiveUsers(activeRes.topActiveUsers);
+      setTopActiveUsers(activeRes.topUsers);
       setLoading(prev => ({ ...prev, activeUsers: false, topActiveUsers: false }));
 
       const suspicious = await fetchSuspiciousActivities();
@@ -133,7 +133,7 @@ const Dashboard: React.FC = () => {
       // fetch active sessions
       const refreshedSessions = await fetchActiveUsers();
       setSessions(refreshedSessions.sessions);
-      setTopActiveUsers(refreshedSessions.topActiveUsers);
+      setTopActiveUsers(refreshedSessions.topUsers);
 
       // fetch suspicious activities
       const refreshedSuspicious = await fetchSuspiciousActivities();
