@@ -1,7 +1,7 @@
 "use client"
 
 import { Monitor, Moon, Sun } from "lucide-react"
-import { useTheme } from "@/components/theme-provider"
+import { useTheme } from "@/components/dashboard/theme-provider"
 import { Button } from "@/components/ui/button"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
