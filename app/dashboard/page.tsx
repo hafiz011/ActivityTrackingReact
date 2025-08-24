@@ -192,25 +192,17 @@ const Dashboard: React.FC = () => {
         {/* Suspicious Activity Alert */} 
         <SuspiciousActivityAlert count={suspiciousActivities.length} />
 
-        
-
           {/* Main Dashboard Tabs */}
-
-          <Tabs defaultValue="sessions" className="space-y-4">
+          <Tabs defaultValue="analytics" className="space-y-4">
             <TabsList className="grid w-full grid-cols-6">
-              <TabsTrigger value="sessions">Active Sessions</TabsTrigger>
               <TabsTrigger value="analytics">Session Analytics</TabsTrigger>
+              <TabsTrigger value="sessions">Active Sessions</TabsTrigger>
               <TabsTrigger value="suspicious">Suspicious Activity</TabsTrigger>
+              <TabsTrigger value="users">Top Users</TabsTrigger>
               <TabsTrigger value="breakdown">Activity Breakdown</TabsTrigger>
               {/* <TabsTrigger value="trends">Login Trends</TabsTrigger> */}
-              <TabsTrigger value="users">Top Users</TabsTrigger>
             </TabsList>
              
-             {/* Active Sessions Tab */}
-            <TabsContent value="sessions" className="space-y-4">
-              <ActiveSessionsTab activeSessions={activeUsers} loading={{ activeSessions: loading.activeUsers }} />
-            </TabsContent>
-
             {/* Session Analytics Tab */}
             <TabsContent value="analytics" className="space-y-4">
               <SessionAnalyticsTab
@@ -222,8 +214,12 @@ const Dashboard: React.FC = () => {
                 dailySessionsData: loading.dailySessions,
                 deviceDistribution: loading.deviceDistributions,
               }}
-
               />
+            </TabsContent>
+
+             {/* Active Sessions Tab */}
+            <TabsContent value="sessions" className="space-y-4">
+              <ActiveSessionsTab activeSessions={activeUsers} loading={{ activeSessions: loading.activeUsers }} />
             </TabsContent>
 
             {/* Suspicious Activity Tab */}
@@ -231,6 +227,11 @@ const Dashboard: React.FC = () => {
               <SuspiciousActivityTab
                 SuspiciousActivities={suspiciousActivities} loading={{SuspiciousActivities: loading.suspiciousActivities}}
               />
+            </TabsContent>
+
+            {/* Top Users Tab */}
+            <TabsContent value="users" className="space-y-4">
+              <TopUsersTab topActiveUsers={topActiveUsers} loading={{topUsers: loading.topActiveUsers}} /> 
             </TabsContent>
 
                 {/* // dailySessionsData={dailySessionsData}
@@ -253,11 +254,6 @@ const Dashboard: React.FC = () => {
               />
             </TabsContent>
             */}
-
-             {/* Top Users Tab */}
-            <TabsContent value="users" className="space-y-4">
-              <TopUsersTab topActiveUsers={topActiveUsers} loading={{topUsers: loading.topActiveUsers}} /> 
-            </TabsContent>
 
             
 
