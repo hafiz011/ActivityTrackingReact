@@ -9,10 +9,7 @@ export type Session = {
   status: "Active" | "Inactive";
   deviceOs: string;
   deviceType: string;
-  loginTime: {
-    seconds: number;
-    nanos: number;
-  };
+  loginTime: string;
   lac: string;
   sessionid: string;
 };

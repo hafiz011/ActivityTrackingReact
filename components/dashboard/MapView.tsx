@@ -23,7 +23,7 @@ interface MapViewProps {
     city: string;
     country: string;
     lac: string;
-    loginTime: { seconds: number };
+    loginTime: string;
   }[];
 }
 
@@ -50,7 +50,7 @@ export const MapView: React.FC<MapViewProps> = ({ activeSessions }) => {
                 <br />
                 {s.city}, {s.country}
                 <br />
-                {dayjs(s.loginTime.seconds * 1000).format("DD-MM-YYYY hh:mm:ss A")}
+                {dayjs(s.loginTime).format("DD-MM-YYYY hh:mm:ss A")}
               </Popup>
             </Marker>
           );

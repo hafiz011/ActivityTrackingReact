@@ -165,10 +165,11 @@ export const ActiveSessionsTab: React.FC<ActiveSessionsTabProps> = ({
                       </div>
                     </TableCell>
                     <TableCell className="text-sm">
-                    {dayjs(session.loginTime.seconds * 1000).format("DD-MM-YYYY")}
-                    <br />
-                    {dayjs(session.loginTime.seconds * 1000).format("hh:mm:ss A")}
+                      {dayjs(session.loginTime).format("DD-MM-YYYY")}
+                      <br />
+                      {dayjs(session.loginTime).format("hh:mm:ss A")}
                     </TableCell>
+
                     {/* <TableCell>
                        <Badge variant="outline">{session.actions} actions</Badge>
                     </TableCell> */}
