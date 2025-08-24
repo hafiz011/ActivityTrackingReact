@@ -4,6 +4,9 @@ import React, { useState, useEffect } from "react";
 import { Card } from "@/components/ui/card";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { SidebarInset } from "@/components/ui/sidebar";
+import { SidebarProvider } from "@/components/ui/sidebar";
+import { AppSidebar } from "@/components/dashboard/app-sidebar";
+
 import Header from "@/components/dashboard/Header";
 import { FiltersCard } from "@/components/dashboard/FiltersCard";
 import SessionsInfo from "@/components/dashboard/SessionsInfo";
@@ -44,6 +47,7 @@ type LoadingState = {
 
 const Dashboard: React.FC = () => {
   const { startDate, endDate, country, device } = useFilter();
+  const [currentTab, setCurrentTab] = useState<string>("analytics");
 
   const { fetchActiveUsers } = useActiveUsers();
   const { fetchSuspiciousActivities } = useSuspiciousAlerts();
@@ -164,6 +168,8 @@ const Dashboard: React.FC = () => {
   };
   
   return (
+  <SidebarProvider>
+    <AppSidebar currentTab={currentTab} onTabChange={setCurrentTab} />
     <SidebarInset className="p-2">
       <div className="flex items-center gap-2">
         <Header
@@ -192,8 +198,11 @@ const Dashboard: React.FC = () => {
         {/* Suspicious Activity Alert */} 
         <SuspiciousActivityAlert count={suspiciousActivities.length} />
 
+        
+
           {/* Main Dashboard Tabs */}
-          <Tabs defaultValue="analytics" className="space-y-4">
+          {/* <Tabs defaultValue="analytics" className="space-y-4"> */}
+          <Tabs value={currentTab} onValueChange={setCurrentTab} className="space-y-4">
             <TabsList className="grid w-full grid-cols-6">
               <TabsTrigger value="analytics">Session Analytics</TabsTrigger>
               <TabsTrigger value="sessions">Active Sessions</TabsTrigger>
@@ -229,7 +238,7 @@ const Dashboard: React.FC = () => {
               />
             </TabsContent>
 
-            {/* Top Users Tab */}
+             {/* Top Users Tab */}
             <TabsContent value="users" className="space-y-4">
               <TopUsersTab topActiveUsers={topActiveUsers} loading={{topUsers: loading.topActiveUsers}} /> 
             </TabsContent>
@@ -263,6 +272,7 @@ const Dashboard: React.FC = () => {
 
       </Card>
     </SidebarInset>
+  </SidebarProvider>
   );
 };
 export default Dashboard;

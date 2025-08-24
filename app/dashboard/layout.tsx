@@ -21,10 +21,7 @@ export default function DashboardLayout({
   return (
         <ThemeProvider>
             <FilterProvider>
-              <SidebarProvider>
-                <AppSidebar />
                 {children}
-              </SidebarProvider>
             </FilterProvider>
         </ThemeProvider>
   );

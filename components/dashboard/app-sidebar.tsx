@@ -42,19 +42,33 @@ import { Search } from 'lucide-react'
 // Type-safe Badge variant
 type BadgeVariant = "default" | "destructive" | "secondary" | "outline"
 
-// Workspace data
-const workspaces = [
-  { name: "ActivityTracking Pro", logo: Activity, plan: "Enterprise" }
-]
+interface AppSidebarProps {
+  currentTab: string
+  onTabChange: (tab: string) => void
+}
+
+// Workspace & Navigation Data
+const workspaces = [{ name: "ActivityTracking Pro", logo: Activity, plan: "Enterprise" }]
+
 
 // Main navigation items
+// const mainNavItems = [
+//   { title: "Overview", url: "/dashboard", icon: Home, isActive: true, description: "Main dashboard overview" },
+//   { title: "Active Sessions", url: "sessions", icon: Zap, badge: "1,234", badgeVariant: "default", description: "Active Sessions" },
+//   { title: "Suspicious Activity", url: "suspicious", icon: AlertTriangle, badge: "3", badgeVariant: "destructive", description: "Suspicious Activity" },
+//   { title: "Top Users", url: "users", icon: Users, badgeVariant: "destructive", description: "Top Users" },
+//   { title: "Activity Logs", url: "breakdown", icon: Activity, badgeVariant: "destructive", description: "Activity Logs" },
+//   { title: "Behavior Pattern", url: "behavior", icon: Logs, badgeVariant: "destructive", description: "Behavior Pattern" },
+// ]
+
 const mainNavItems = [
-  { title: "Overview", url: "/dashboard", icon: Home, isActive: true, description: "Main dashboard overview" },
+  { title: "Overview", url: "analytics", icon: Home, description: "Main dashboard overview" },
   { title: "Active Sessions", url: "sessions", icon: Zap, badge: "1,234", badgeVariant: "default", description: "Active Sessions" },
   { title: "Suspicious Activity", url: "suspicious", icon: AlertTriangle, badge: "3", badgeVariant: "destructive", description: "Suspicious Activity" },
-  { title: "Top Users", url: "users", icon: Users, badgeVariant: "destructive", description: "Top Users" },
-  { title: "Activity Logs", url: "breakdown", icon: Activity, badgeVariant: "destructive", description: "Activity Logs" },
-  { title: "Behavior Pattern", url: "behavior", icon: Logs, badgeVariant: "destructive", description: "Behavior Pattern" },
+  { title: "Top Users", url: "users", icon: Users, description: "Top Users" },
+  { title: "Activity Logs", url: "breakdown", icon: Activity, description: "Activity Logs" },
+  { title: "Behavior Pattern", url: "behavior", icon: Logs, description: "Behavior Pattern" },
+
 ]
 
 // Data & Analytics items
@@ -121,10 +135,11 @@ const supportItems = [
   { title: "System Status", url: "#", icon: Activity, description: "Check system status" },
 ]
 
-export function AppSidebar({ ...props }) {
+export function AppSidebar({ currentTab, onTabChange, ...props }: AppSidebarProps) {
   const [selectedWorkspace] = React.useState(workspaces[0])
   const { token, user, logout, isLoading, isAuthenticated } = useAuth()
   const router = useRouter()
+  
 
   useEffect(() => {
     if (!isLoading && !isAuthenticated) router.push("/login")
@@ -142,20 +157,28 @@ export function AppSidebar({ ...props }) {
     badge ? <Badge variant={variant as BadgeVariant || "secondary"} className="ml-auto text-xs">{badge}</Badge> : null
   )
 
-  const renderIcon = (Icon: any) => React.createElement(Icon, { className: "size-4" })
+  const renderIcon = (Icon: any) => <Icon className="size-4" />
 
-  const renderMenuItems = (items: any[]) =>
-    items?.map((subItem) => (
-      <SidebarMenuSubItem key={subItem.title}>
-        <SidebarMenuSubButton asChild tooltip={subItem.description}>
-          <a href={subItem.url}>
-            {subItem.icon && renderIcon(subItem.icon)}
-            <span>{subItem.title}</span>
-            {renderBadge(subItem.badge, subItem.badgeVariant)}
+  const renderSidebarItem = (item: any) => {
+    const isActive = currentTab === item.url
+
+    return (
+      <SidebarMenuItem key={item.title}>
+        <SidebarMenuButton 
+          asChild
+          tooltip={item.description}
+          isActive={isActive}
+          onClick={() => onTabChange(item.url)}
+        >
+          <a href="#">
+            {renderIcon(item.icon)}
+            <span>{item.title}</span>
+            {renderBadge(item.badge, item.badgeVariant)}
           </a>
-        </SidebarMenuSubButton>
-      </SidebarMenuSubItem>
-    ))
+        </SidebarMenuButton>
+      </SidebarMenuItem>
+    )
+  }
 
   const renderSidebarGroup = (items: any[]) =>
     items?.map((item) => (
@@ -171,7 +194,7 @@ export function AppSidebar({ ...props }) {
           </SidebarMenuButton>
           {item.items?.length && (
             <CollapsibleContent>
-              <SidebarMenuSub>{renderMenuItems(item.items)}</SidebarMenuSub>
+              <SidebarMenuSub>{renderSidebarItem(item.items)}</SidebarMenuSub>
             </CollapsibleContent>
           )}
         </SidebarMenuItem>
@@ -183,7 +206,7 @@ export function AppSidebar({ ...props }) {
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton size="lg" className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground">
+            <SidebarMenuButton size="lg">
               <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
                 {renderIcon(selectedWorkspace.logo)}
               </div>
@@ -202,10 +225,10 @@ export function AppSidebar({ ...props }) {
       </SidebarHeader>
 
       <SidebarContent>
-        <SidebarGroup>
+       <SidebarGroup>
           <SidebarGroupLabel>Dashboard</SidebarGroupLabel>
           <SidebarGroupContent>
-            <SidebarMenu>{renderSidebarGroup(mainNavItems)}</SidebarMenu>
+            <SidebarMenu>{mainNavItems.map(renderSidebarItem)}</SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
 
