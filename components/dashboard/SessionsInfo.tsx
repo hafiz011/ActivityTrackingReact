@@ -16,6 +16,7 @@ import {
   Activity,
 } from "lucide-react";
 import { SessionMetrics } from "@/types/SessionAnalytics";
+import { number } from "zod";
 
 type SessionsInfoProps = {
   loading: {
@@ -144,7 +145,12 @@ const SessionsInfo: React.FC<SessionsInfoProps> = ({
                     )}s`
                   : "--"}
               </div>
-              <TrendText value={sessionMetrics?.avgDurationTrend} />
+              <TrendText value={
+                sessionMetrics?.avgDurationTrend !== undefined
+                  ? Number(sessionMetrics.avgDurationTrend.toFixed(0))
+                  : null
+                } 
+                />
             </>
           )}
         </CardContent>
@@ -169,7 +175,11 @@ const SessionsInfo: React.FC<SessionsInfoProps> = ({
                   : "--"}
               </div>
               <TrendText
-                value={sessionMetrics?.bounceRateTrend}
+                value={
+                  sessionMetrics?.bounceRateTrend !== undefined
+                    ? Number(sessionMetrics.bounceRateTrend.toFixed(0))
+                    : null
+                }
                 positiveIsGood={false}
               />
             </>
@@ -195,7 +205,11 @@ const SessionsInfo: React.FC<SessionsInfoProps> = ({
                   ? sessionMetrics.avgActions.toFixed(2)
                   : "--"}
               </div>
-              <TrendText value={sessionMetrics?.avgActionsTrend} />
+              <TrendText value={
+                sessionMetrics?.avgActionsTrend !== undefined
+                ? Number(sessionMetrics.avgActions.toFixed(0))
+                : null
+                } />
             </>
           )}
         </CardContent>
