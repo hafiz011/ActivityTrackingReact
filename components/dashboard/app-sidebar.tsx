@@ -2,7 +2,7 @@
 
 import React, { useEffect } from "react"
 import { 
-  Activity, AlertTriangle, BarChart3, Logs, Zap, Users, Home, Calendar, Download, Globe, Plus,
+  Activity, AlertTriangle, Key, BarChart3, Logs, Zap, Users, Home, Calendar, Download, Globe, Plus,
   CreditCard, FileText, Settings, Phone, Mail, Star, TrendingUp, UserX, HelpCircle, MessageSquare,
   Headphones, Book, GraduationCap, ChevronDown, ChevronUp, LogOut 
 } from 'lucide-react'
@@ -38,6 +38,8 @@ import { Collapsible, CollapsibleContent } from "@/components/ui/collapsible"
 import { useAuth } from "@/context/AuthContext"
 import { useRouter } from "next/navigation"
 import { Search } from 'lucide-react'
+import { title } from "process"
+import { de } from "date-fns/locale"
 
 // Type-safe Badge variant
 type BadgeVariant = "default" | "destructive" | "secondary" | "outline"
@@ -89,6 +91,12 @@ const dataItems = [
 
 // Administration items
 const adminItems = [
+  {
+    title: "API Key Management",
+    url: "/dashboard/api-keys",
+    icon: Key,
+    description: "Manage API keys and access",
+  },
   {
     title: "User Management",
     url: "#",

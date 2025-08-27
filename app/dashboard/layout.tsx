@@ -2,10 +2,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { FilterProvider } from "@/context/FilterContext";
-import { SidebarProvider } from "@/components/ui/sidebar";
 import { ThemeProvider } from "@/components/dashboard/theme-provider";
-import { AppSidebar } from "@/components/dashboard/app-sidebar";
-
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
