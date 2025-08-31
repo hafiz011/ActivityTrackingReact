@@ -70,7 +70,7 @@ const SessionsInfo: React.FC<SessionsInfoProps> = ({
       {/* Active Users */}
       <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className="text-sm font-medium">Active Users</CardTitle>
+          <CardTitle className="text-sm font-medium">Active Sessions</CardTitle>
           <Zap className="h-4 w-4 text-green-600" />
         </CardHeader>
         <CardContent>
@@ -104,7 +104,7 @@ const SessionsInfo: React.FC<SessionsInfoProps> = ({
       {/* Suspicious Activities */}
       <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className="text-sm font-medium">Suspicious Session</CardTitle>
+          <CardTitle className="text-sm font-medium">Suspicious Activity</CardTitle>
           <AlertTriangle className="h-4 w-4 text-red-600" />
         </CardHeader>
         <CardContent>
@@ -128,7 +128,7 @@ const SessionsInfo: React.FC<SessionsInfoProps> = ({
       {/* Avg Session Duration */}
       <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className="text-sm font-medium">Avg Session</CardTitle>
+          <CardTitle className="text-sm font-medium">Avg Session Time</CardTitle>
           <Clock className="h-4 w-4 text-muted-foreground" />
         </CardHeader>
         <CardContent>
@@ -190,7 +190,7 @@ const SessionsInfo: React.FC<SessionsInfoProps> = ({
       {/* Avg Actions per Session */}
       <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className="text-sm font-medium">Actions / Session</CardTitle>
+          <CardTitle className="text-sm font-medium">Actions per Session</CardTitle>
           <Activity className="h-4 w-4 text-muted-foreground" />
         </CardHeader>
         <CardContent>
