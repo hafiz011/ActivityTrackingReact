@@ -53,7 +53,7 @@ export const HeroSection: React.FC = () => {
                 <span className="bg-gradient-to-r from-cyan-300 via-blue-300 to-purple-400 bg-clip-text text-transparent animate-neon-glow text-shadow-neon"> DIGITAL PULSE</span>
               </span>
               <span className="block text-xl xs:text-2xl sm:text-3xl lg:text-4xl mt-6 text-cyan-300 animate-tech-fade-in font-mono">
-                &gt; DETECT_EVERY_THREATS()
+                &gt; AI-powered Business Analysis Agent
               </span>
               <span className="block text-xl xs:text-2xl sm:text-3xl lg:text-4xl mt-6 text-blue-300 animate-tech-fade-in font-mono">
                 Grow Your Business Faster.
