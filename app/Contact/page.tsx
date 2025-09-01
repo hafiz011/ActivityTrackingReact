@@ -17,7 +17,7 @@ export default function ContactPage() {
           <div className="text-center">
             <div className="inline-flex items-center px-4 py-2 rounded-full bg-blue-100 text-blue-800 text-sm font-medium mb-8">
               <Sparkles className="w-4 h-4 mr-2" />
-              Contact Tech Ciph
+              Contact BizAgent
             </div>
             <h1 className="text-4xl md:text-5xl lg:text-5xl font-bold text-gray-300 mb-6 leading-tight">
               Let's Build Something{' '}
@@ -27,7 +27,7 @@ export default function ContactPage() {
             </h1>
             <p className="text-xl md:text-2xl text-gray-300 mb-8 max-w-4xl mx-auto leading-relaxed">
               Ready to unlock the power of user behavior intelligence? Our team is here to help you get started 
-              and answer any questions about Tech Ciph.
+              and answer any questions about BizAgent.
             </p>
           </div>
       </section>

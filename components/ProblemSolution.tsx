@@ -14,7 +14,7 @@ const features = [
   {
     icon: <BarChart3 className="w-8 h-8 text-blue-400" />,
     title: "Actionable Insights",
-    desc: "See not just what happened, but why. Tech Ciph reveals the story behind every user journey.",
+    desc: "See not just what happened, but why. BizAgent reveals the story behind every user journey.",
     gradient: "from-blue-500/20 to-cyan-500/20",
     iconBg: "from-blue-500 to-cyan-500",
     accentColor: "text-blue-400"
@@ -75,7 +75,7 @@ const ProblemSolution: React.FC = () => {
             
             <div className="space-y-8 text-gray-200 text-lg md:text-xl leading-relaxed max-w-4xl mx-auto">
               <p className="bg-gradient-to-r from-white via-gray-100 to-white bg-clip-text text-transparent">
-                <strong className="text-cyan-300 font-bold text-2xl">Tech Ciph doesn't just show you what users do — we tell you what to do next.</strong>
+                <strong className="text-cyan-300 font-bold text-2xl">BizAgent doesn't just show you what users do — we tell you what to do next.</strong>
               </p>
               
               <p className="text-gray-300 leading-relaxed">
@@ -84,7 +84,7 @@ const ProblemSolution: React.FC = () => {
               </p>
               
               <p className="text-gray-300 leading-relaxed">
-                Tech Ciph bridges the gap with real-time session tracking, <br />
+                BizAgent bridges the gap with real-time session tracking, <br />
                 <span className="text-emerald-400 font-semibold mx-2 px-3 py-1 bg-emerald-500/10 rounded-full border border-emerald-500/20">
                   AI-powered threat detection
                 </span>

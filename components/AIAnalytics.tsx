@@ -14,7 +14,7 @@ const AIAnalytics: React.FC = () => {
         </h2>
 
         <p className="text-base xs:text-lg md:text-xl text-gray-300 mb-10 sm:mb-14 leading-relaxed max-w-3xl mx-auto">
-          Tech Ciph’s AI doesn’t just analyze — it anticipates. Predict churn, detect fraud, and uncover hidden opportunities — all without lifting a finger.
+          BizAgent’s AI doesn’t just analyze — it anticipates. Predict churn, detect fraud, and uncover hidden opportunities — all without lifting a finger.
         </p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 mb-10 sm:mb-12">
@@ -72,7 +72,7 @@ const AIAnalytics: React.FC = () => {
         </div>
 
         <p className="text-base xs:text-lg sm:text-xl font-semibold text-blue-600 dark:text-blue-400">
-          Tech Ciph turns behavior noise into AI-driven guidance — so you can protect users, boost revenue, and scale with confidence.
+          BizAgent turns behavior noise into AI-driven guidance — so you can protect users, boost revenue, and scale with confidence.
         </p>
       </div>
     </section>

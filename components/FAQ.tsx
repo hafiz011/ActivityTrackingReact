@@ -21,7 +21,7 @@ const faqs: FAQ[] = [
     a: "We use industry-grade AES-256 encryption, follow GDPR and CCPA compliance strictly, and undergo regular security audits. Your data privacy is our top priority."
   },
   {
-    q: "What's next for Tech Ciph?",
+    q: "What's next for BizAgent?",
     a: "Our roadmap includes AI-powered predictive analytics, session replay functionality, advanced heatmaps, and machine learning-driven insights."
   },
 ];
@@ -38,7 +38,7 @@ const FAQ: React.FC = () => {
             </span>
           </h2>
           <p className="text-base xs:text-lg md:text-xl text-muted-foreground text-gray-300">
-            Everything you need to know about Tech Ciph
+            Everything you need to know about BizAgent
           </p>
         </div>
 

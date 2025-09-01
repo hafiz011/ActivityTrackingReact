@@ -105,7 +105,7 @@ export default function AboutPage() {
           <div className="text-center">
             <div className="inline-flex items-center px-4 py-2 rounded-full bg-blue-100 text-blue-800 text-sm font-medium mb-8">
               <Sparkles className="w-4 h-4 mr-2" />
-              About Tech Ciph
+              About BizAgent
             </div>
             <h1 className="text-4xl md:text-5xl lg:text-5xl font-bold text-gray-300 mb-6 leading-tight">
               Empowering Smarter Decisions with <br />
@@ -114,7 +114,7 @@ export default function AboutPage() {
               </span>
             </h1>
             <p className="text-xl md:text-2xl text-gray-300 mb-8 max-w-4xl mx-auto leading-relaxed">
-              At Tech Ciph, we believe that deeply understanding your users is the key to business growth, security, and retention. 
+              At BizAgent, we believe that deeply understanding your users is the key to business growth, security, and retention. 
               Our mission is to turn raw session data into actionable insights — fast.
             </p>
           </div>
@@ -291,7 +291,7 @@ export default function AboutPage() {
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">Let's Grow Together</h2>
           <p className="text-xl text-gray-300 max-w-3xl mx-auto mb-8">
             Whether you're building a lean startup or securing an enterprise-grade system, 
-            Tech Ciph is your partner in understanding and scaling user behavior — intelligently.
+            BizAgent is your partner in understanding and scaling user behavior — intelligently.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <button className="inline-flex items-center px-8 py-4 bg-blue-600 text-white font-semibold rounded-xl hover:bg-blue-700 transition-colors">

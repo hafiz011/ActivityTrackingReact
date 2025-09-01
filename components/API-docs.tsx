@@ -59,7 +59,7 @@ Headers:
         <div className="text-center space-y-2">
           <div className="flex items-center justify-center gap-2">
             <Rocket className="h-6 w-6 text-blue-600" />
-            <h1 className="text-3xl font-bold text-white">Tech Ciph API Documentation</h1>
+            <h1 className="text-3xl font-bold text-white">BizAgent API Documentation</h1>
           </div>
           <p className="text-white/70">Structured user session data tracking for enhanced security and analytics</p>
         </div>
@@ -72,7 +72,7 @@ Headers:
               Example API Request
             </h2>
             <p className="text-white/70">
-              Tech Chip API receives structured user session data from your frontend or backend. Here's how a sample
+              BizAgent API receives structured user session data from your frontend or backend. Here's how a sample
               request looks:
             </p>
           </div>

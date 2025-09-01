@@ -39,13 +39,14 @@ export const HeaderSection: React.FC = () => {
         {/* Logo & Branding */}
         <Link href="/" className="flex items-center gap-4 group">
           <div className="relative">
-            <div className="flex items-center justify-center w-12 h-12 rounded-2xl bg-gradient-to-br from-blue-600 via-cyan-500 to-blue-700 text-white font-bold text-xl shadow-2xl group-hover:shadow-blue-500/25 transition-all duration-500 group-hover:scale-110 group-hover:rotate-3">
+            <img src={"/logo/bizagent.png"} alt="Logo" className="w-8 h-8" />
+
+            {/* <div className="flex items-center justify-center w-12 h-12 rounded-2xl bg-gradient-to-br from-blue-600 via-cyan-500 to-blue-700 text-white font-bold text-xl shadow-2xl group-hover:shadow-blue-500/25 transition-all duration-500 group-hover:scale-110 group-hover:rotate-3">
               <span className="bg-gradient-to-r from-white via-cyan-100 to-white bg-clip-text text-transparent drop-shadow-sm">
-                T
               </span>
             </div>
             <div className="absolute -inset-2 bg-gradient-to-r from-blue-600 via-cyan-500 to-blue-700 rounded-2xl opacity-0 group-hover:opacity-30 transition-all duration-500 blur-xl"></div>
-            <div className="absolute top-0 right-0 w-3 h-3 bg-gradient-to-r from-cyan-400 to-blue-500 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 animate-pulse"></div>
+            <div className="absolute top-0 right-0 w-3 h-3 bg-gradient-to-r from-cyan-400 to-blue-500 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 animate-pulse"></div> */}
           </div>
           <div className="flex items-center gap-3">
             <span className={`font-bold text-3xl tracking-tight transition-all duration-500 ${
@@ -53,7 +54,7 @@ export const HeaderSection: React.FC = () => {
                 ? 'text-gray-100 group-hover:text-blue-600' 
                 : 'text-white group-hover:text-cyan-100'
             }`}>
-              Tech Ciph
+              BizAgent
             </span>
           </div>
         </Link>

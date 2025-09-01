@@ -13,7 +13,7 @@ interface Testimonial {
 
 const testimonials: Testimonial[] = [
   {
-    quote: "Tech Ciph uncovered $2,000+ in abandoned carts for us in the first week — pure gold! The insights helped us optimize our checkout flow and increase conversions by 23%.",
+    quote: "BizAgent uncovered $2,000+ in abandoned carts for us in the first week — pure gold! The insights helped us optimize our checkout flow and increase conversions by 23%.",
     author: "Aisha Rahman",
     role: "eCommerce Founder",
     company: "StyleHub",
@@ -21,7 +21,7 @@ const testimonials: Testimonial[] = [
     avatar: "https://images.pexels.com/photos/3763188/pexels-photo-3763188.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&fit=crop"
   },
   {
-    quote: "The suspicious login alerts saved us from several attacks. I trust Tech Ciph daily to keep our platform secure and our users protected. It's like having a security team 24/7.",
+    quote: "The suspicious login alerts saved us from several attacks. I trust BizAgent daily to keep our platform secure and our users protected. It's like having a security team 24/7.",
     author: "Imran Hassan",
     role: "Security Lead",
     company: "TechFlow",
@@ -29,7 +29,7 @@ const testimonials: Testimonial[] = [
     avatar: "https://images.pexels.com/photos/3785079/pexels-photo-3785079.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&fit=crop"
   },
   {
-    quote: "The real-time analytics and user behavior insights have transformed how we make product decisions. Our team productivity increased by 40% since implementing Tech Ciph.",
+    quote: "The real-time analytics and user behavior insights have transformed how we make product decisions. Our team productivity increased by 40% since implementing BizAgent.",
     author: "Sarah Chen",
     role: "Product Manager",
     company: "InnovateApp",

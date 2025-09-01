@@ -14,7 +14,7 @@ const Footer: React.FC = () => {
                 <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-blue-600 text-white font-bold">
                   T
                 </div>
-                <span className="font-bold text-2xl text-gray-200">Tech Ciph</span>
+                <span className="font-bold text-2xl text-gray-200">BizAgent</span>
               </div>
               <p className="text-gray-300 mb-6 leading-relaxed">
                 The most comprehensive user analytics and security platform for modern businesses. Track smarter, grow faster, stay secure.
@@ -52,7 +52,7 @@ const Footer: React.FC = () => {
           
           <div className="border-t pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
             <div className="text-sm text-gray-400">
-              © {new Date().getFullYear()} Tech Ciph. All rights reserved.
+              © {new Date().getFullYear()} BizAgent. All rights reserved.
             </div>
             <div className="flex items-center gap-6 text-sm text-gray-400">
               <Link href="/Privacy-Policy" className="hover:text-gray-400 transition-colors">Privacy Policy</Link>
