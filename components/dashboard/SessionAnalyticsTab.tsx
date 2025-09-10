@@ -23,7 +23,13 @@ import {
   BarChart,
   Bar,
 } from "recharts";
-import { SessionMetrics, DeviceDistribution, SessionDistribution } from "@/types/SessionAnalytics";
+import {
+  SessionMetrics,
+  DeviceDistribution,
+  SessionDistribution,
+  CountryDistribution,
+  TrafficSource,
+} from "@/types/SessionAnalytics";
 
 interface SessionAnalyticsTabProps {
   loading: {
@@ -31,34 +37,27 @@ interface SessionAnalyticsTabProps {
     dailySessionsData: boolean;
     deviceDistribution: boolean;
     sessionDistribution: boolean;
+    countryDistribution: boolean;
+    trafficSources: boolean;
   };
   SessionMetrics: SessionMetrics | null;
-  // dailySessionsData: DailySessionData[];
   dailySessionsData: { date: string; sessions: number; suspicious: number }[];
-
   deviceDistribution: DeviceDistribution[];
   sessionDistribution?: SessionDistribution[];
+  countryDistribution?: CountryDistribution[];
+  trafficSources?: TrafficSource[];
 }
-// import { SessionMetrics } from "@/types/SessionAnalytics";
 
-// interface SessionAnalyticsTabProps {
-//   loading: {
-//     SessionMetrics: boolean;
-//     dailySessionsData: boolean;
-//     deviceDistribution: boolean;
-//     sessionDistribution: boolean;
-//   };
-//   SessionMetrics: SessionMetrics | null;
-//   dailySessionsData: { date: string; sessions: number; suspicious: number }[];
-//   deviceDistribution: {  name: string; total: number; avgDuration: number; avgActions: number; }[];
-//   sessionDistribution?: { category: 'Short' | 'Medium' | 'Long'; count: number; percentage: number; }[];
-// }
-
-
-
-
-
-const COLORS = ["#0088FE", "#00C49F", "#f08944ff", "#f76218ff", "#8884D8"];
+const COLORS = [
+  "#0088FE",
+  "#00C49F",
+  "#FFBB28",
+  "#FF8042",
+  "#8884D8",
+  "#FF6B6B",
+  "#4ECDC4",
+  "#FFD166",
+];
 
 const renderCustomizedLabel = ({
   cx,
@@ -93,9 +92,11 @@ const CustomTooltip = ({ active, payload }: any) => {
     const data = payload[0].payload;
     return (
       <div className="bg-white p-3 border rounded-lg shadow-lg border-gray-200">
-        <p className="font-medium text-gray-900">{data.category} Sessions</p>
+        <p className="font-medium text-gray-900">
+          {data.category || data.country || data.source || "Sessions"}
+        </p>
         <p className="text-sm text-gray-600">
-          Count: <span className="font-medium text-gray-900">{data.count}</span>
+          Count: <span className="font-medium text-gray-900">{data.count || data.sessions}</span>
         </p>
         <p className="text-sm text-gray-600">
           Percentage: <span className="font-medium text-gray-900">{data.percentage}%</span>
@@ -111,7 +112,7 @@ const CustomLegend = ({ payload }: any) => {
     <div className="flex justify-center gap-6 mt-4 flex-wrap">
       {payload.map((entry: any, index: number) => (
         <div key={index} className="flex items-center gap-2">
-          <div 
+          <div
             className="w-3 h-3 rounded-full"
             style={{ backgroundColor: entry.color }}
           />
@@ -127,38 +128,17 @@ const CustomLegend = ({ payload }: any) => {
   );
 };
 
-const MetricCard = ({ title, value, icon: Icon, trend, description }: {
-  title: string;
-  value: string | number;
-  icon: any;
-  trend?: string;
-  description?: string;
-}) => (
-  <div className="p-4 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg border border-blue-100">
-    <div className="flex items-center gap-3">
-      <div className="p-2 bg-blue-100 rounded-lg">
-        <Icon className="h-5 w-5 text-blue-600" />
-      </div>
-      <div>
-        <p className="text-sm font-medium text-gray-600">{title}</p>
-        <p className="text-2xl font-bold text-gray-900">{value}</p>
-        {trend && <p className="text-xs text-green-600">{trend}</p>}
-        {description && <p className="text-xs text-gray-500 mt-1">{description}</p>}
-      </div>
-    </div>
-  </div>
-);
-
 export const SessionAnalyticsTab: React.FC<SessionAnalyticsTabProps> = ({
   loading,
   SessionMetrics,
   dailySessionsData,
   deviceDistribution,
   sessionDistribution,
+  countryDistribution,
+  trafficSources,
 }) => {
   return (
     <div className="space-y-6">
-
       {/* Charts Grid */}
       <div className="grid gap-6 md:grid-cols-2">
         <Card>
@@ -181,19 +161,19 @@ export const SessionAnalyticsTab: React.FC<SessionAnalyticsTabProps> = ({
                 <ResponsiveContainer width="100%" height="100%">
                   <AreaChart data={dailySessionsData}>
                     <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
-                    <XAxis 
-                      dataKey="date" 
+                    <XAxis
+                      dataKey="date"
                       stroke="#666"
                       fontSize={12}
                       tickMargin={5}
                     />
                     <YAxis stroke="#666" fontSize={12} />
-                    <Tooltip 
+                    <Tooltip
                       contentStyle={{
-                        backgroundColor: 'white',
-                        border: '1px solid #e2e8f0',
-                        borderRadius: '8px',
-                        boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
+                        backgroundColor: "white",
+                        border: "1px solid #e2e8f0",
+                        borderRadius: "8px",
+                        boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1)",
                       }}
                     />
                     <Legend />
@@ -245,7 +225,7 @@ export const SessionAnalyticsTab: React.FC<SessionAnalyticsTabProps> = ({
               <div className="h-[300px] w-full">
                 <ResponsiveContainer width="100%" height="100%">
                   <BarChart
-                    data={deviceDistribution.map(d => ({
+                    data={deviceDistribution.map((d) => ({
                       name: d.name,
                       avgDuration: d.avgDuration || 0,
                       avgActions: d.avgActions || 0,
@@ -257,10 +237,10 @@ export const SessionAnalyticsTab: React.FC<SessionAnalyticsTabProps> = ({
                     <YAxis stroke="#666" fontSize={12} />
                     <Tooltip
                       contentStyle={{
-                        backgroundColor: 'white',
-                        border: '1px solid #e2e8f0',
-                        borderRadius: '8px',
-                        boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
+                        backgroundColor: "white",
+                        border: "1px solid #e2e8f0",
+                        borderRadius: "8px",
+                        boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1)",
                       }}
                       formatter={(value, name) => {
                         if (name === "Avg Duration") {
@@ -275,16 +255,16 @@ export const SessionAnalyticsTab: React.FC<SessionAnalyticsTabProps> = ({
                       }}
                     />
                     <Legend />
-                    <Bar 
-                      dataKey="avgDuration" 
-                      name="Avg Duration" 
-                      fill="#3b82f6" 
+                    <Bar
+                      dataKey="avgDuration"
+                      name="Avg Duration"
+                      fill="#3b82f6"
                       radius={[4, 4, 0, 0]}
                     />
-                    <Bar 
-                      dataKey="avgActions" 
-                      name="Avg Actions" 
-                      fill="#10b981" 
+                    <Bar
+                      dataKey="avgActions"
+                      name="Avg Actions"
+                      fill="#10b981"
                       radius={[4, 4, 0, 0]}
                     />
                   </BarChart>
@@ -307,11 +287,11 @@ export const SessionAnalyticsTab: React.FC<SessionAnalyticsTabProps> = ({
             </CardDescription>
           </CardHeader>
           <CardContent>
-            {loading?.sessionDistribution ? (
+            {loading.sessionDistribution ? (
               <div className="flex items-center justify-center h-[300px]">
                 <Loader2 className="h-8 w-8 animate-spin text-purple-600" />
               </div>
-            ) : (
+            ) : sessionDistribution && sessionDistribution.length > 0 ? (
               <div className="h-[300px] w-full">
                 <ResponsiveContainer width="100%" height="100%">
                   <PieChart>
@@ -327,7 +307,7 @@ export const SessionAnalyticsTab: React.FC<SessionAnalyticsTabProps> = ({
                       animationBegin={0}
                       animationDuration={800}
                     >
-                      {sessionDistribution?.map((entry, index) => (
+                      {sessionDistribution.map((entry, index) => (
                         <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                       ))}
                     </Pie>
@@ -335,6 +315,10 @@ export const SessionAnalyticsTab: React.FC<SessionAnalyticsTabProps> = ({
                     <Legend content={<CustomLegend />} />
                   </PieChart>
                 </ResponsiveContainer>
+              </div>
+            ) : (
+              <div className="flex items-center justify-center h-[300px] text-gray-500">
+                No data available
               </div>
             )}
           </CardContent>
@@ -353,7 +337,7 @@ export const SessionAnalyticsTab: React.FC<SessionAnalyticsTabProps> = ({
               <div className="flex items-center justify-center h-[300px]">
                 <Loader2 className="h-8 w-8 animate-spin text-indigo-600" />
               </div>
-            ) : (
+            ) : deviceDistribution.length > 0 ? (
               <div className="h-[300px] w-full">
                 <ResponsiveContainer width="100%" height="100%">
                   <PieChart>
@@ -376,6 +360,10 @@ export const SessionAnalyticsTab: React.FC<SessionAnalyticsTabProps> = ({
                   </PieChart>
                 </ResponsiveContainer>
               </div>
+            ) : (
+              <div className="flex items-center justify-center h-[300px] text-gray-500">
+                No data available
+              </div>
             )}
           </CardContent>
         </Card>
@@ -395,14 +383,14 @@ export const SessionAnalyticsTab: React.FC<SessionAnalyticsTabProps> = ({
               <div className="flex items-center justify-center h-[300px]">
                 <Loader2 className="h-8 w-8 animate-spin text-red-600" />
               </div>
-            ) : (
+            ) : SessionMetrics ? (
               <div className="h-[300px] w-full">
                 <ResponsiveContainer width="100%" height="100%">
                   <PieChart>
                     <Pie
                       data={[
-                        { name: "Bounce", value: SessionMetrics?.bounceRate ?? 0 },
-                        { name: "Engaged", value: 100 - (SessionMetrics?.bounceRate ?? 0) },
+                        { name: "Bounce", value: SessionMetrics.bounceRate ?? 0 },
+                        { name: "Engaged", value: 100 - (SessionMetrics.bounceRate ?? 0) },
                       ]}
                       cx="50%"
                       cy="40%"
@@ -420,67 +408,147 @@ export const SessionAnalyticsTab: React.FC<SessionAnalyticsTabProps> = ({
                   </PieChart>
                 </ResponsiveContainer>
               </div>
+            ) : (
+              <div className="flex items-center justify-center h-[300px] text-gray-500">
+                No data available
+              </div>
             )}
           </CardContent>
         </Card>
       </div>
 
-      {/* Future Features */}
       <div className="grid gap-6 md:grid-cols-3">
-        <Card className="border-dashed border-gray-300">
+        {/* Geographic Distribution */}
+        <Card>
           <CardHeader>
-            <CardTitle className="text-gray-600">Geographic Distribution</CardTitle>
+            <CardTitle>Geographic Distribution</CardTitle>
             <CardDescription>Sessions by user location</CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="flex flex-col items-center justify-center h-[200px] text-gray-500">
-              <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mb-3">
-                🌍
+            {loading.countryDistribution ? (
+              <div className="flex items-center justify-center h-[300px]">
+                <Loader2 className="h-8 w-8 animate-spin" />
               </div>
-              <p className="text-center">Geographic distribution chart coming soon!</p>
-            </div>
+            ) : countryDistribution && countryDistribution.length > 0 ? (
+              <div className="h-[300px] w-full">
+                <ResponsiveContainer width="100%" height="100%">
+                  <PieChart>
+                    <Pie
+                      data={countryDistribution}
+                      cx="50%"
+                      cy="50%"
+                      labelLine={false}
+                      label={renderCustomizedLabel}
+                      outerRadius={80}
+                      dataKey="sessions"
+                      animationBegin={0}
+                      animationDuration={800}
+                    >
+                      {countryDistribution.map((entry, index) => (
+                        <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                      ))}
+                    </Pie>
+                    <Tooltip content={<CustomTooltip />} />
+                    <Legend content={<CustomLegend />} />
+                  </PieChart>
+                </ResponsiveContainer>
+              </div>
+            ) : (
+              <div className="flex items-center justify-center h-[300px] text-gray-500">
+                No data available
+              </div>
+            )}
           </CardContent>
         </Card>
 
-        <Card className="border-dashed border-gray-300">
+        {/* Traffic Sources */}
+        <Card>
           <CardHeader>
-            <CardTitle className="text-gray-600">Traffic Sources</CardTitle>
+            <CardTitle>Traffic Sources</CardTitle>
             <CardDescription>Session origins and referrers</CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="flex flex-col items-center justify-center h-[200px] text-gray-500">
-              <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mb-3">
-                🔗
+            {loading.trafficSources ? (
+              <div className="flex items-center justify-center h-[300px]">
+                <Loader2 className="h-8 w-8 animate-spin" />
               </div>
-              <p className="text-center">Traffic sources chart coming soon!</p>
-            </div>
+            ) : trafficSources && trafficSources.length > 0 ? (
+              <div className="h-[300px] w-full">
+                <ResponsiveContainer width="100%" height="100%">
+                  <PieChart>
+                    <Pie
+                      data={trafficSources}
+                      cx="50%"
+                      cy="50%"
+                      labelLine={false}
+                      label={renderCustomizedLabel}
+                      outerRadius={80}
+                      dataKey="sessions"
+                      animationBegin={0}
+                      animationDuration={800}
+                    >
+                      {trafficSources.map((entry, index) => (
+                        <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                      ))}
+                    </Pie>
+                    <Tooltip content={<CustomTooltip />} />
+                    <Legend content={<CustomLegend />} />
+                  </PieChart>
+                </ResponsiveContainer>
+              </div>
+            ) : (
+              <div className="flex items-center justify-center h-[300px] text-gray-500">
+                No data available
+              </div>
+            )}
           </CardContent>
         </Card>
 
-        <Card className="border-dashed border-gray-300">
+        {/* Bot vs Users */}
+        <Card>
           <CardHeader>
-            <CardTitle className="text-gray-600">Bot vs Users</CardTitle>
+            <CardTitle>Bot vs Users</CardTitle>
             <CardDescription>Automated vs human traffic</CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="flex flex-col items-center justify-center h-[200px] text-gray-500">
-              <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mb-3">
-                🤖
+            {loading.SessionMetrics ? (
+              <div className="flex items-center justify-center h-[300px]">
+                <Loader2 className="h-8 w-8 animate-spin" />
               </div>
-              <p className="text-center">Bot vs Users analysis coming soon!</p>
-            </div>
+            ) : SessionMetrics ? (
+              <div className="h-[300px] w-full">
+                <ResponsiveContainer width="100%" height="100%">
+                  <PieChart>
+                    <Pie
+                      data={[
+                        { name: "Bots", value: SessionMetrics.botPercentage ?? 0 },
+                        { name: "Users", value: SessionMetrics.userPercentage ?? 0 },
+                      ]}
+                      cx="50%"
+                      cy="50%"
+                      labelLine={false}
+                      label={renderCustomizedLabel}
+                      outerRadius={80}
+                      dataKey="value"
+                      animationBegin={0}
+                      animationDuration={800}
+                    >
+                      <Cell fill="#FF6B6B" />
+                      <Cell fill="#4ECDC4" />
+                    </Pie>
+                    <Tooltip content={<CustomTooltip />} />
+                    <Legend content={<CustomLegend />} />
+                  </PieChart>
+                </ResponsiveContainer>
+              </div>
+            ) : (
+              <div className="flex items-center justify-center h-[300px] text-gray-500">
+                No data available
+              </div>
+            )}
           </CardContent>
         </Card>
       </div>
     </div>
   );
 };
-
-
-
-
-
-
-
-
-

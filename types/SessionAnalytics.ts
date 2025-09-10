@@ -18,11 +18,27 @@ export interface SessionMetrics {
   bounceRateTrend: number;
   avgActions: number;
   avgActionsTrend: number;
+  bots: number;
+  users: number;
+  botPercentage: number;
+  userPercentage: number;
 }
 
 export interface SessionDistribution {
   category: 'Short' | 'Medium' | 'Long';
   count: number;
+  percentage: number;
+}
+
+export interface CountryDistribution {
+  country: string;
+  sessions: number;
+  percentage: number;
+}
+
+export interface TrafficSource {
+  source: string;
+  sessions: number;
   percentage: number;
 }
 
@@ -33,4 +49,6 @@ export interface SessionsAnalyticsResponse {
   deviceDistribution: DeviceDistribution[];
   sessionMetrics: SessionMetrics;
   sessionDistribution: SessionDistribution[];
+  countryDistribution: CountryDistribution[];
+  trafficSources: TrafficSource[];
 }
