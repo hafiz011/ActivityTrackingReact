@@ -48,6 +48,8 @@ interface SessionAnalyticsTabProps {
   trafficSources?: TrafficSource[];
 }
 
+
+
 const COLORS = [
   "#0088FE",
   "#00C49F",
@@ -144,7 +146,7 @@ export const SessionAnalyticsTab: React.FC<SessionAnalyticsTabProps> = ({
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              <TrendingUp className="h-5 w-5 text-blue-600" />
+              <TrendingUp className="h-5 w-5 text-blue-400" />
               Daily Sessions Trend
             </CardTitle>
             <CardDescription>
@@ -170,10 +172,10 @@ export const SessionAnalyticsTab: React.FC<SessionAnalyticsTabProps> = ({
                     <YAxis stroke="#666" fontSize={12} />
                     <Tooltip
                       contentStyle={{
-                        backgroundColor: "white",
-                        border: "1px solid #e2e8f0",
+                        backgroundColor: "#3b5881ff",
+                        border: "1px solid #4b92eeff",
                         borderRadius: "8px",
-                        boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1)",
+                        boxShadow: "0 4px 6px -1px rgba(40, 142, 238, 0.64)",
                       }}
                     />
                     <Legend />
@@ -181,8 +183,8 @@ export const SessionAnalyticsTab: React.FC<SessionAnalyticsTabProps> = ({
                       type="monotone"
                       dataKey="sessions"
                       stackId="1"
-                      stroke="#3b82f6"
-                      fill="#3b82f6"
+                      stroke="#6dd6daff"
+                      fill="#3187d6d5"
                       fillOpacity={0.6}
                       name="Total Sessions"
                     />
@@ -540,7 +542,6 @@ export const SessionAnalyticsTab: React.FC<SessionAnalyticsTabProps> = ({
                     <Legend content={<CustomLegend />} /> */}
                     <Tooltip formatter={(value: number) => `${value.toFixed(2)}%`} />
                     <Legend />
-
                   </PieChart>
                 </ResponsiveContainer>
               </div>
