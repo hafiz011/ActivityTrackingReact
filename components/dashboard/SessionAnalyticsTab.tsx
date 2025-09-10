@@ -387,7 +387,7 @@ export const SessionAnalyticsTab: React.FC<SessionAnalyticsTabProps> = ({
               Bounce Rate Analysis
             </CardTitle>
             <CardDescription>
-              Sessions with ≤1 action or &lt; 10 seconds
+              Sessions with ≤1 action or &lt; 30 seconds
             </CardDescription>
           </CardHeader>
           <CardContent>
