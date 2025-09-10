@@ -536,8 +536,11 @@ export const SessionAnalyticsTab: React.FC<SessionAnalyticsTabProps> = ({
                       <Cell fill="#FF6B6B" />
                       <Cell fill="#4ECDC4" />
                     </Pie>
-                    <Tooltip content={<CustomTooltip />} />
-                    <Legend content={<CustomLegend />} />
+                    {/* <Tooltip content={<CustomTooltip />} />
+                    <Legend content={<CustomLegend />} /> */}
+                    <Tooltip formatter={(value: number) => `${value.toFixed(2)}%`} />
+                    <Legend />
+
                   </PieChart>
                 </ResponsiveContainer>
               </div>
