@@ -8,7 +8,7 @@ import {
   CardDescription,
   CardContent,
 } from "@/components/ui/card";
-import { Loader2 } from "lucide-react";
+import { Loader2, Badge } from "lucide-react";
 import {
   ResponsiveContainer,
   AreaChart,
@@ -23,8 +23,7 @@ import {
   Cell,
   BarChart,
   Bar,
-  LineChart,
-  Line,
+  
 } from "recharts";
 import { SessionMetrics } from "@/types/SessionAnalytics";
 
@@ -33,10 +32,12 @@ interface SessionAnalyticsTabProps {
     SessionMetrics: boolean;
     dailySessionsData: boolean;
     deviceDistribution: boolean;
+    sessionDistribution: boolean;
   };
   SessionMetrics: SessionMetrics | null;
   dailySessionsData: { date: string; sessions: number; suspicious: number }[];
   deviceDistribution: {  name: string; total: number; avgDuration: number; avgActions: number; }[];
+  sessionDistribution?: { category: 'Short' | 'Medium' | 'Long'; count: number; percentage: number; }[];
 }
 
 const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
@@ -69,11 +70,51 @@ const renderCustomizedLabel = ({
   );
 };
 
+
+
+const CustomTooltip = ({ active, payload }: any) => {
+  if (active && payload && payload.length) {
+    const data = payload[0].payload;
+    return (
+      <div className="bg-white p-3 border rounded-lg shadow-lg">
+        <p className="font-medium">{data.category} Sessions</p>
+        <p className="text-sm text-gray-600">
+          Count: <span className="font-medium">{data.count}</span>
+        </p>
+        <p className="text-sm text-gray-600">
+          Percentage: <span className="font-medium">{data.percentage}%</span>
+        </p>
+      </div>
+    );
+  }
+  return null;
+};
+
+const CustomLegend = ({ payload }: any) => {
+  return (
+    <div className="flex justify-center gap-6 mt-4">
+      {payload.map((entry: any, index: number) => (
+        <div key={index} className="flex items-center gap-2">
+          <div 
+            className="w-3 h-3 rounded-full"
+            style={{ backgroundColor: entry.color }}
+          />
+          <span className="text-sm font-medium">{entry.value}</span>
+          <Badge variant="secondary" className="ml-1">
+            {entry.payload.count}
+          </Badge>
+        </div>
+      ))}
+    </div>
+  );
+};
+
 export const SessionAnalyticsTab: React.FC<SessionAnalyticsTabProps> = ({
   loading,
   SessionMetrics,
   dailySessionsData,
   deviceDistribution,
+  sessionDistribution,
   // deviceMetricsData,
 }) => {
   return (
@@ -134,11 +175,13 @@ export const SessionAnalyticsTab: React.FC<SessionAnalyticsTabProps> = ({
 
         <Card>
           <CardHeader>
-            <CardTitle>Device Distribution</CardTitle>
-            <CardDescription>Session breakdown by device type</CardDescription>
+            <CardTitle>Bounce Rate Analysis</CardTitle>
+            <CardDescription>
+              Sessions with ≤1 action or &lt; 10 seconds
+            </CardDescription>
           </CardHeader>
           <CardContent>
-            {loading.deviceDistribution ? (
+            {loading.SessionMetrics ? (
               <div className="flex items-center justify-center h-[300px]">
                 <Loader2 className="h-8 w-8 animate-spin" />
               </div>
@@ -147,20 +190,23 @@ export const SessionAnalyticsTab: React.FC<SessionAnalyticsTabProps> = ({
                 <ResponsiveContainer width="100%" height="100%">
                   <PieChart>
                     <Pie
-                      data={deviceDistribution}
+                     data={[
+                        { name: "Bounce", value: SessionMetrics?.bounceRate ?? 0 },
+                        { name: "Engaged", value: 100 - (SessionMetrics?.bounceRate ?? 0) },
+                      ]}
                       cx="50%"
                       cy="50%"
                       labelLine={false}
                       label={renderCustomizedLabel}
                       outerRadius={80}
                       fill="#8884d8"
-                      dataKey="total"
+                      dataKey="value"
                     >
-                      {deviceDistribution.map((entry, index) => (
-                        <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                      ))}
+                      <Cell fill="#FF8042" />
+                      <Cell fill="#0088FE" />
                     </Pie>
-                    <Tooltip formatter={(total) => [`${total}`, "Total Session"]} />
+                    {/* <Tooltip formatter={(value) => [`${value}%`, "Percentage"]} /> */}
+                    <Tooltip formatter={(value: number) => `${value.toFixed(2)}%`} />
                     <Legend />
                   </PieChart>
                 </ResponsiveContainer>
@@ -224,15 +270,111 @@ export const SessionAnalyticsTab: React.FC<SessionAnalyticsTabProps> = ({
           </CardContent>
         </Card>
 
-        <Card>
+    <Card>
+      <CardHeader>
+        <div className="flex items-center gap-2">
+          {/* <Clock className="h-5 w-5 text-blue-600" /> */}
+          <CardTitle>Session Duration Distribution</CardTitle>
+        </div>
+        <CardDescription>
+          Distribution of user sessions by duration categories
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
+        {loading?.sessionDistribution ? (
+          <div className="flex items-center justify-center h-[300px]">
+            <Loader2 className="h-8 w-8 animate-spin" />
+          </div>
+        ) : (
+          <div className="h-[300px] w-full">
+            <ResponsiveContainer width="100%" height="100%">
+              <PieChart>
+                <Pie
+                  data={sessionDistribution}
+                  cx="50%"
+                  cy="50%"
+                  labelLine={false}
+                  label={({ percentage }) => `${percentage}%`}
+                  outerRadius={80}
+                  fill="#8884d8"
+                  dataKey="count"
+                  animationBegin={0}
+                  animationDuration={800}
+                >
+                  {sessionDistribution?.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                  ))}
+                </Pie>
+                <Tooltip content={<CustomTooltip />} />
+                <Legend content={<CustomLegend />} />
+              </PieChart>
+            </ResponsiveContainer>
+          </div>
+        )}
+      </CardContent>
+    </Card>
+
+        
+        {/* <Card>
           <CardHeader>
-            <CardTitle>Bounce Rate Analysis</CardTitle>
+            <CardTitle>Session Duration Distribution</CardTitle>
             <CardDescription>
-              Sessions with ≤1 action or &lt; 10 seconds
+              Distribution of sessions by duration categories
             </CardDescription>
           </CardHeader>
           <CardContent>
-            {loading.SessionMetrics ? (
+            {loading.sessionDistribution ? (
+              <div className="flex items-center justify-center h-[300px]">
+                <Loader2 className="h-8 w-8 animate-spin" />
+              </div>
+            ) : sessionDistribution && sessionDistribution.length > 0 ? (
+              <div className="h-[300px] w-full">
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart
+                    data={sessionDistribution.map(d => ({
+                      category: d.category,
+                      percentage: d.percentage || 0,  // keep numeric
+                      count: d.count || 0,
+                    }))}
+                    margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
+                  >
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="category" />
+                    <YAxis />
+                    <Tooltip
+                      formatter={(value, name) => {
+                        if (name === "Percentage") {
+                          return `${Number(value).toFixed(2)}%`;
+                        }
+                        if (name === "Count") {
+                          return Number(value).toLocaleString();
+                        }
+                        return value;
+                      }}
+                    />
+                    <Legend />
+                    <Bar dataKey="percentage" name="Percentage" fill="#f97316" radius={[8, 8, 0, 0]} />
+                    <Bar dataKey="count" name="Count" fill="#10b981" radius={[8, 8, 0, 0]} />
+                  </BarChart>
+                </ResponsiveContainer>
+              </div>
+            ) : (
+              <div className="flex items-center justify-center h-[300px] text-gray-500">
+                No data available
+              </div>
+            )}
+          </CardContent>
+        </Card> */}
+      </div>
+
+      <div className="grid gap-4 md:grid-cols-1">
+        <Card>
+          <CardHeader>
+            <CardTitle>Device Distribution</CardTitle>
+            <CardDescription>Session breakdown by device type</CardDescription>
+          </CardHeader>
+          <CardContent>
+            {loading.deviceDistribution ? (
               <div className="flex items-center justify-center h-[300px]">
                 <Loader2 className="h-8 w-8 animate-spin" />
               </div>
@@ -241,23 +383,20 @@ export const SessionAnalyticsTab: React.FC<SessionAnalyticsTabProps> = ({
                 <ResponsiveContainer width="100%" height="100%">
                   <PieChart>
                     <Pie
-                     data={[
-                        { name: "Bounce", value: SessionMetrics?.bounceRate ?? 0 },
-                        { name: "Engaged", value: 100 - (SessionMetrics?.bounceRate ?? 0) },
-                      ]}
+                      data={deviceDistribution}
                       cx="50%"
                       cy="50%"
                       labelLine={false}
                       label={renderCustomizedLabel}
                       outerRadius={80}
                       fill="#8884d8"
-                      dataKey="value"
+                      dataKey="total"
                     >
-                      <Cell fill="#FF8042" />
-                      <Cell fill="#0088FE" />
+                      {deviceDistribution.map((entry, index) => (
+                        <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                      ))}
                     </Pie>
-                    {/* <Tooltip formatter={(value) => [`${value}%`, "Percentage"]} /> */}
-                    <Tooltip formatter={(value: number) => `${value.toFixed(2)}%`} />
+                    <Tooltip formatter={(total) => [`${total}`, "Total Session"]} />
                     <Legend />
                   </PieChart>
                 </ResponsiveContainer>
@@ -265,8 +404,6 @@ export const SessionAnalyticsTab: React.FC<SessionAnalyticsTabProps> = ({
             )}
           </CardContent>
         </Card>
-
-
 
 
     {/* <Card>

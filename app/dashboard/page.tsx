@@ -20,7 +20,7 @@ import { useFilter } from "@/context/FilterContext";
 import SuspiciousActivityAlert from "@/components/dashboard/SuspiciousActivityAlert";
 import { SuspiciousActivityAlert as SuspiciousActivityResponse } from "@/types/SuspiciousActivityAlert";
 import { Session, TopUser } from "@/types/ActiveSessionResponse";
-import { DailySession, DeviceDistribution, SessionMetrics } from "@/types/SessionAnalytics";
+import { DailySession, DeviceDistribution, SessionDistribution, SessionMetrics } from "@/types/SessionAnalytics";
 
 
 import { ActiveSessionsTab } from "@/components/dashboard/ActiveSessionsTab";
@@ -37,6 +37,7 @@ type LoadingState = {
   topActiveUsers: boolean;
   suspiciousActivities: boolean;
   sessionMetrics: boolean;
+  sessionDistributions: boolean;
   deviceDistributions: boolean;
   dailySessions: boolean;
   // deviceMetrics: boolean;
@@ -60,6 +61,7 @@ const Dashboard: React.FC = () => {
     topActiveUsers: true,
     suspiciousActivities: true,
     sessionMetrics: true,
+    sessionDistributions: true,
     deviceDistributions: true,
     dailySessions: true,
     // deviceMetrics: true,
@@ -74,6 +76,7 @@ const Dashboard: React.FC = () => {
 
   const [sessionMetrics, setSessionMetrics] = useState<SessionMetrics | null>(null);
   const [deviceDistributions, setDeviceDistributions] = useState<DeviceDistribution[]>([]);
+  const [sessionDistributions, setSessionDistributions] = useState<SessionDistribution[]>([]);
   const [dailySessions, setDailySessions] = useState<DailySession[]>([]);
   // const [deviceMetrics, setDeviceMetrics] = useState<DeviceMetrics[]>([]);
 
@@ -94,11 +97,13 @@ const Dashboard: React.FC = () => {
       const metrics = await fetchSessionMetrics();
       setSessionMetrics(metrics.sessionMetrics);
       setDeviceDistributions(metrics.deviceDistribution);
+      setSessionDistributions(metrics.sessionDistribution);
       setDailySessions(metrics.dailySessions);
       setLoading(prev => ({
         ...prev,
         sessionMetrics: false,
         deviceDistributions: false,
+        sessionDistributions: false,
         dailySessions: false,
       }));
 
@@ -110,6 +115,7 @@ const Dashboard: React.FC = () => {
         suspiciousActivities: false,
         sessionMetrics: false,
         deviceDistributions: false,
+        sessionDistributions: false,
         dailySessions: false,
 
         // bounceRate: false,
@@ -131,6 +137,7 @@ const Dashboard: React.FC = () => {
       suspiciousActivities: true,
       sessionMetrics: true,
       deviceDistributions: true,
+      sessionDistributions: true,
       dailySessions: true,
     }));
     try {
@@ -147,6 +154,7 @@ const Dashboard: React.FC = () => {
       const refreshedMatrics = await fetchSessionMetrics();
       setSessionMetrics(refreshedMatrics.sessionMetrics);
       setDeviceDistributions(refreshedMatrics.deviceDistribution);
+      setSessionDistributions(refreshedMatrics.sessionDistribution);
       setDailySessions(refreshedMatrics.dailySessions);
 
 
@@ -161,6 +169,7 @@ const Dashboard: React.FC = () => {
       suspiciousActivities: false,
       sessionMetrics: false,
       deviceDistributions: false,
+      sessionDistributions: false,
       dailySessions: false,
       deviceMetrics: false,
     }));
@@ -218,10 +227,12 @@ const Dashboard: React.FC = () => {
                 SessionMetrics={sessionMetrics}
                 dailySessionsData={dailySessions}
                 deviceDistribution={deviceDistributions}
+                sessionDistribution={sessionDistributions}
                 loading={{
                 SessionMetrics: loading.sessionMetrics,
                 dailySessionsData: loading.dailySessions,
                 deviceDistribution: loading.deviceDistributions,
+                sessionDistribution: loading.sessionDistributions,
               }}
               />
             </TabsContent>

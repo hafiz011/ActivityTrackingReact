@@ -20,10 +20,17 @@ export interface SessionMetrics {
   avgActionsTrend: number;
 }
 
+export interface SessionDistribution {
+  category: 'Short' | 'Medium' | 'Long';
+  count: number;
+  percentage: number;
+}
+
 
 
 export interface SessionsAnalyticsResponse {
   dailySessions: DailySession[];
   deviceDistribution: DeviceDistribution[];
   sessionMetrics: SessionMetrics;
+  sessionDistribution: SessionDistribution[];
 }
