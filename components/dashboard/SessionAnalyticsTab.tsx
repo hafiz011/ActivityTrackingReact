@@ -109,6 +109,8 @@ const CustomTooltip = ({ active, payload }: any) => {
   return null;
 };
 
+
+
 const CustomLegend = ({ payload }: any) => {
   return (
     <div className="flex justify-center gap-6 mt-4 flex-wrap">
@@ -162,7 +164,7 @@ export const SessionAnalyticsTab: React.FC<SessionAnalyticsTabProps> = ({
               <div className="h-[300px] w-full">
                 <ResponsiveContainer width="100%" height="100%">
                   <AreaChart data={dailySessionsData}>
-                    <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+                    <CartesianGrid strokeDasharray="3 3" />
                     <XAxis
                       dataKey="date"
                       stroke="#666"
@@ -172,10 +174,11 @@ export const SessionAnalyticsTab: React.FC<SessionAnalyticsTabProps> = ({
                     <YAxis stroke="#666" fontSize={12} />
                     <Tooltip
                       contentStyle={{
-                        backgroundColor: "#3b5881ff",
-                        border: "1px solid #4b92eeff",
+                        backgroundColor: "white",
+                        color: "#060607ff",
+                        border: "1px solid #e2e8f0",
                         borderRadius: "8px",
-                        boxShadow: "0 4px 6px -1px rgba(40, 142, 238, 0.64)",
+                        boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1)",
                       }}
                     />
                     <Legend />
@@ -183,7 +186,7 @@ export const SessionAnalyticsTab: React.FC<SessionAnalyticsTabProps> = ({
                       type="monotone"
                       dataKey="sessions"
                       stackId="1"
-                      stroke="#6dd6daff"
+                      stroke="#41b6e4ff"
                       fill="#3187d6d5"
                       fillOpacity={0.6}
                       name="Total Sessions"
@@ -240,6 +243,7 @@ export const SessionAnalyticsTab: React.FC<SessionAnalyticsTabProps> = ({
                     <Tooltip
                       contentStyle={{
                         backgroundColor: "white",
+                        color: "#060607ff",
                         border: "1px solid #e2e8f0",
                         borderRadius: "8px",
                         boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1)",
