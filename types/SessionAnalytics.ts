@@ -24,19 +24,19 @@ export interface SessionMetrics {
   userPercentage: number;
 }
 
-export interface SessionDistribution {
-  category: 'Short' | 'Medium' | 'Long';
+export interface sessionTimeDistribution {
+  category: string;
   count: number;
   percentage: number;
 }
 
-export interface CountryDistribution {
+export interface countryDistribution {
   country: string;
   sessions: number;
   percentage: number;
 }
 
-export interface TrafficSource {
+export interface trafficSource {
   source: string;
   sessions: number;
   percentage: number;
@@ -48,7 +48,7 @@ export interface SessionsAnalyticsResponse {
   dailySessions: DailySession[];
   deviceDistribution: DeviceDistribution[];
   sessionMetrics: SessionMetrics;
-  sessionDistribution: SessionDistribution[];
-  countryDistribution: CountryDistribution[];
-  trafficSources: TrafficSource[];
+  sessionTimeDistribution: sessionTimeDistribution[];
+  countryDistribution: countryDistribution[];
+  trafficSource: trafficSource[];
 }

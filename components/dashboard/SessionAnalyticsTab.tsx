@@ -26,9 +26,9 @@ import {
 import {
   SessionMetrics,
   DeviceDistribution,
-  SessionDistribution,
-  CountryDistribution,
-  TrafficSource,
+  sessionTimeDistribution,
+  countryDistribution,
+  trafficSource,
 } from "@/types/SessionAnalytics";
 
 interface SessionAnalyticsTabProps {
@@ -36,19 +36,17 @@ interface SessionAnalyticsTabProps {
     SessionMetrics: boolean;
     dailySessionsData: boolean;
     deviceDistribution: boolean;
-    sessionDistribution: boolean;
+    sessionTimeDistribution: boolean;
     countryDistribution: boolean;
-    trafficSources: boolean;
+    trafficSource: boolean;
   };
   SessionMetrics: SessionMetrics | null;
   dailySessionsData: { date: string; sessions: number; suspicious: number }[];
   deviceDistribution: DeviceDistribution[];
-  sessionDistribution?: SessionDistribution[];
-  countryDistribution?: CountryDistribution[];
-  trafficSources?: TrafficSource[];
+  sessionTimeDistribution?: sessionTimeDistribution[];
+  countryDistribution?: countryDistribution[];
+  trafficSource?: trafficSource[];
 }
-
-
 
 const COLORS = [
   "#0088FE",
@@ -137,9 +135,9 @@ export const SessionAnalyticsTab: React.FC<SessionAnalyticsTabProps> = ({
   SessionMetrics,
   dailySessionsData,
   deviceDistribution,
-  sessionDistribution,
+  sessionTimeDistribution,
   countryDistribution,
-  trafficSources,
+  trafficSource,
 }) => {
   return (
     <div className="space-y-6">
@@ -167,11 +165,11 @@ export const SessionAnalyticsTab: React.FC<SessionAnalyticsTabProps> = ({
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis
                       dataKey="date"
-                      stroke="#666"
+                      stroke="#8ca30bff"
                       fontSize={12}
                       tickMargin={5}
                     />
-                    <YAxis stroke="#666" fontSize={12} />
+                    <YAxis stroke="#8ca30bff" fontSize={12} />
                     <Tooltip
                       contentStyle={{
                         backgroundColor: "white",
@@ -293,16 +291,16 @@ export const SessionAnalyticsTab: React.FC<SessionAnalyticsTabProps> = ({
             </CardDescription>
           </CardHeader>
           <CardContent>
-            {loading.sessionDistribution ? (
+            {loading.sessionTimeDistribution ? (
               <div className="flex items-center justify-center h-[300px]">
                 <Loader2 className="h-8 w-8 animate-spin text-purple-600" />
               </div>
-            ) : sessionDistribution && sessionDistribution.length > 0 ? (
+            ) : sessionTimeDistribution && sessionTimeDistribution.length > 0 ? (
               <div className="h-[300px] w-full">
                 <ResponsiveContainer width="100%" height="100%">
                   <PieChart>
                     <Pie
-                      data={sessionDistribution}
+                      data={sessionTimeDistribution}
                       cx="50%"
                       cy="40%"
                       labelLine={false}
@@ -313,7 +311,7 @@ export const SessionAnalyticsTab: React.FC<SessionAnalyticsTabProps> = ({
                       animationBegin={0}
                       animationDuration={800}
                     >
-                      {sessionDistribution.map((entry, index) => (
+                      {sessionTimeDistribution.map((entry, index) => (
                         <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                       ))}
                     </Pie>
@@ -435,7 +433,7 @@ export const SessionAnalyticsTab: React.FC<SessionAnalyticsTabProps> = ({
               <div className="flex items-center justify-center h-[300px]">
                 <Loader2 className="h-8 w-8 animate-spin" />
               </div>
-            ) : countryDistribution && countryDistribution.length > 0 ? (
+            ) : countryDistribution?.length ? (
               <div className="h-[300px] w-full">
                 <ResponsiveContainer width="100%" height="100%">
                   <PieChart>
@@ -446,7 +444,7 @@ export const SessionAnalyticsTab: React.FC<SessionAnalyticsTabProps> = ({
                       labelLine={false}
                       label={renderCustomizedLabel}
                       outerRadius={80}
-                      dataKey="sessions"
+                      dataKey="percentage"
                       animationBegin={0}
                       animationDuration={800}
                     >
@@ -455,7 +453,7 @@ export const SessionAnalyticsTab: React.FC<SessionAnalyticsTabProps> = ({
                       ))}
                     </Pie>
                     <Tooltip content={<CustomTooltip />} />
-                    <Legend content={<CustomLegend />} />
+                    {/* <Legend content={<CustomLegend />} /> */}
                   </PieChart>
                 </ResponsiveContainer>
               </div>
@@ -468,47 +466,47 @@ export const SessionAnalyticsTab: React.FC<SessionAnalyticsTabProps> = ({
         </Card>
 
         {/* Traffic Sources */}
-        <Card>
-          <CardHeader>
-            <CardTitle>Traffic Sources</CardTitle>
-            <CardDescription>Session origins and referrers</CardDescription>
-          </CardHeader>
-          <CardContent>
-            {loading.trafficSources ? (
-              <div className="flex items-center justify-center h-[300px]">
-                <Loader2 className="h-8 w-8 animate-spin" />
-              </div>
-            ) : trafficSources && trafficSources.length > 0 ? (
-              <div className="h-[300px] w-full">
-                <ResponsiveContainer width="100%" height="100%">
-                  <PieChart>
-                    <Pie
-                      data={trafficSources}
-                      cx="50%"
-                      cy="50%"
-                      labelLine={false}
-                      label={renderCustomizedLabel}
-                      outerRadius={80}
-                      dataKey="sessions"
-                      animationBegin={0}
-                      animationDuration={800}
-                    >
-                      {trafficSources.map((entry, index) => (
-                        <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                      ))}
-                    </Pie>
-                    <Tooltip content={<CustomTooltip />} />
-                    <Legend content={<CustomLegend />} />
-                  </PieChart>
-                </ResponsiveContainer>
-              </div>
-            ) : (
-              <div className="flex items-center justify-center h-[300px] text-gray-500">
-                No data available
-              </div>
-            )}
-          </CardContent>
-        </Card>
+<Card>
+  <CardHeader>
+    <CardTitle>Traffic Sources</CardTitle>
+    <CardDescription>Session origins and referrers</CardDescription>
+  </CardHeader>
+  <CardContent>
+    {loading.trafficSource ? (
+      <div className="flex items-center justify-center h-[300px]">
+        <Loader2 className="h-8 w-8 animate-spin" />
+      </div>
+    ) : trafficSource && trafficSource.length > 0 ? (
+      <div className="h-[300px] w-full">
+        <ResponsiveContainer width="100%" height="100%">
+          <PieChart>
+            <Pie
+              data={trafficSource}
+              cx="50%"
+              cy="50%"
+              labelLine={false}
+              label={renderCustomizedLabel}
+              outerRadius={80}
+              dataKey="sessions"
+              animationBegin={0}
+              animationDuration={800}
+            >
+              {trafficSource.map((entry, index) => (
+                <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+              ))}
+            </Pie>
+            <Tooltip content={<CustomTooltip />} />
+            <Legend content={<CustomLegend />} />
+          </PieChart>
+        </ResponsiveContainer>
+      </div>
+    ) : (
+      <div className="flex items-center justify-center h-[300px] text-gray-500">
+        No data available
+      </div>
+    )}
+  </CardContent>
+</Card>
 
         {/* Bot vs Users */}
         <Card>

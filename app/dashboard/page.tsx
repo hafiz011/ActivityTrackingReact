@@ -20,7 +20,7 @@ import { useFilter } from "@/context/FilterContext";
 import SuspiciousActivityAlert from "@/components/dashboard/SuspiciousActivityAlert";
 import { SuspiciousActivityAlert as SuspiciousActivityResponse } from "@/types/SuspiciousActivityAlert";
 import { Session, TopUser } from "@/types/ActiveSessionResponse";
-import { CountryDistribution, DailySession, DeviceDistribution, SessionDistribution, SessionMetrics, TrafficSource } from "@/types/SessionAnalytics";
+import { countryDistribution, DailySession, DeviceDistribution, sessionTimeDistribution, SessionMetrics, trafficSource } from "@/types/SessionAnalytics";
 
 
 import { ActiveSessionsTab } from "@/components/dashboard/ActiveSessionsTab";
@@ -37,9 +37,9 @@ type LoadingState = {
   topActiveUsers: boolean;
   suspiciousActivities: boolean;
   sessionMetrics: boolean;
-  sessionDistributions: boolean;
+  sessionTimeDistributions: boolean;
   countryDistribution: boolean;
-  trafficSources: boolean;
+  trafficSource: boolean;
   deviceDistributions: boolean;
   dailySessions: boolean;
   // deviceMetrics: boolean;
@@ -63,9 +63,9 @@ const Dashboard: React.FC = () => {
     topActiveUsers: true,
     suspiciousActivities: true,
     sessionMetrics: true,
-    sessionDistributions: true,
+    sessionTimeDistributions: true,
     countryDistribution: true,
-    trafficSources: true,
+    trafficSource: true,
     deviceDistributions: true,
     dailySessions: true,
     // deviceMetrics: true,
@@ -80,9 +80,9 @@ const Dashboard: React.FC = () => {
 
   const [sessionMetrics, setSessionMetrics] = useState<SessionMetrics | null>(null);
   const [deviceDistributions, setDeviceDistributions] = useState<DeviceDistribution[]>([]);
-  const [sessionDistributions, setSessionDistributions] = useState<SessionDistribution[]>([]);
-  const [countryDistribution, setCountryDistribution] = useState<CountryDistribution[]>([]);
-  const [trafficSources, setTrafficSources] = useState<TrafficSource[]>([]);
+  const [sessionTimeDistributions, setsessionTimeDistributions] = useState<sessionTimeDistribution[]>([]);
+  const [countryDistribution, setCountryDistribution] = useState<countryDistribution[]>([]);
+  const [trafficSource, settrafficSource] = useState<trafficSource[]>([]);
   const [dailySessions, setDailySessions] = useState<DailySession[]>([]);
   // const [deviceMetrics, setDeviceMetrics] = useState<DeviceMetrics[]>([]);
 
@@ -103,13 +103,17 @@ const Dashboard: React.FC = () => {
       const metrics = await fetchSessionMetrics();
       setSessionMetrics(metrics.sessionMetrics);
       setDeviceDistributions(metrics.deviceDistribution);
-      setSessionDistributions(metrics.sessionDistribution);
+      setsessionTimeDistributions(metrics.sessionTimeDistribution);
+      setCountryDistribution(metrics.countryDistribution);
+      settrafficSource(metrics.trafficSource);
       setDailySessions(metrics.dailySessions);
       setLoading(prev => ({
         ...prev,
         sessionMetrics: false,
         deviceDistributions: false,
-        sessionDistributions: false,
+        sessionTimeDistributions: false,
+        countryDistribution: false,
+        trafficSource: false,
         dailySessions: false,
       }));
 
@@ -121,9 +125,9 @@ const Dashboard: React.FC = () => {
         suspiciousActivities: false,
         sessionMetrics: false,
         deviceDistributions: false,
-        sessionDistributions: false,
+        sessionTimeDistributions: false,
         countryDistribution: false,
-        trafficSources: false,
+        trafficSource: false,
         dailySessions: false,
 
         // bounceRate: false,
@@ -145,9 +149,9 @@ const Dashboard: React.FC = () => {
       suspiciousActivities: true,
       sessionMetrics: true,
       deviceDistributions: true,
-      sessionDistributions: true,
+      sessionTimeDistributions: true,
       countryDistribution: true,
-      trafficSources: true,
+      trafficSource: true,
       botVsUsers: true,
       dailySessions: true,
     }));
@@ -165,9 +169,9 @@ const Dashboard: React.FC = () => {
       const refreshedMatrics = await fetchSessionMetrics();
       setSessionMetrics(refreshedMatrics.sessionMetrics);
       setDeviceDistributions(refreshedMatrics.deviceDistribution);
-      setSessionDistributions(refreshedMatrics.sessionDistribution);
+      setsessionTimeDistributions(refreshedMatrics.sessionTimeDistribution);
       setCountryDistribution(refreshedMatrics.countryDistribution);
-      setTrafficSources(refreshedMatrics.trafficSources);
+      settrafficSource(refreshedMatrics.trafficSource);
       setDailySessions(refreshedMatrics.dailySessions);
 
 
@@ -182,9 +186,9 @@ const Dashboard: React.FC = () => {
       suspiciousActivities: false,
       sessionMetrics: false,
       deviceDistributions: false,
-      sessionDistributions: false,
+      sessionTimeDistributions: false,
       countryDistribution: false,
-      trafficSources: false,
+      trafficSource: false,
       botVsUsers: false,
       dailySessions: false,
       deviceMetrics: false,
@@ -243,16 +247,16 @@ const Dashboard: React.FC = () => {
                 SessionMetrics={sessionMetrics}
                 dailySessionsData={dailySessions}
                 deviceDistribution={deviceDistributions}
-                sessionDistribution={sessionDistributions}
+                sessionTimeDistribution={sessionTimeDistributions}
                 countryDistribution={countryDistribution}
-                trafficSources={trafficSources}
+                trafficSource={trafficSource}
                 loading={{
                 SessionMetrics: loading.sessionMetrics,
                 dailySessionsData: loading.dailySessions,
                 deviceDistribution: loading.deviceDistributions,
-                sessionDistribution: loading.sessionDistributions,
+                sessionTimeDistribution: loading.sessionTimeDistributions,
                 countryDistribution: loading.countryDistribution,
-                trafficSources: loading.trafficSources,
+                trafficSource: loading.trafficSource,
 
               }}
               />
