@@ -7,7 +7,7 @@ import {
   CardContent,
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Loader2, Clock, Smartphone, TrendingUp } from "lucide-react";
+import { Loader2, Clock, Map, Network, Smartphone, TrendingUp } from "lucide-react";
 import {
   ResponsiveContainer,
   AreaChart,
@@ -93,13 +93,22 @@ const CustomTooltip = ({ active, payload }: any) => {
     return (
       <div className="bg-white p-3 border rounded-lg shadow-lg border-gray-200">
         <p className="font-medium text-gray-900">
-          {data.category || data.country || data.source || "Sessions"}
+          {data.category || data.country || data.source || data.name || "Sessions"}
         </p>
         <p className="text-sm text-gray-600">
-          Count: <span className="font-medium text-gray-900">{data.count || data.sessions}</span>
+          Total:{" "}
+          <span className="font-medium text-gray-900">
+            {data.count || data.sessions || data.value}
+          </span>
         </p>
         <p className="text-sm text-gray-600">
-          Percentage: <span className="font-medium text-gray-900">{data.percentage}%</span>
+          Percentage:{" "}
+          <span className="font-medium text-gray-900">
+            {data.percentage !== undefined
+              ? data.percentage.toFixed(0)
+              : (data.value ?? 0).toFixed(0)}
+            %
+          </span>
         </p>
       </div>
     );
@@ -108,27 +117,26 @@ const CustomTooltip = ({ active, payload }: any) => {
 };
 
 
-
-const CustomLegend = ({ payload }: any) => {
-  return (
-    <div className="flex justify-center gap-6 mt-4 flex-wrap">
-      {payload.map((entry: any, index: number) => (
-        <div key={index} className="flex items-center gap-2">
-          <div
-            className="w-3 h-3 rounded-full"
-            style={{ backgroundColor: entry.color }}
-          />
-          <span className="text-sm font-medium text-gray-700">{entry.value}</span>
-          {entry.payload?.count && (
-            <Badge variant="secondary" className="ml-1">
-              {entry.payload.count}
-            </Badge>
-          )}
-        </div>
-      ))}
-    </div>
-  );
-};
+// const CustomLegend = ({ payload }: any) => {
+//   return (
+//     <div className="flex justify-center gap-6 mt-4 flex-wrap">
+//       {payload.map((entry: any, index: number) => (
+//         <div key={index} className="flex items-center gap-2">
+//           <div
+//             className="w-3 h-3 rounded-full"
+//             style={{ backgroundColor: entry.color }}
+//           />
+//           <span className="text-sm font-medium text-gray-700">{entry.value}</span>
+//           {entry.payload?.count && (
+//             <Badge variant="secondary" className="ml-1">
+//               {entry.payload.count}
+//             </Badge>
+//           )}
+//         </div>
+//       ))}
+//     </div>
+//   );
+// };
 
 export const SessionAnalyticsTab: React.FC<SessionAnalyticsTabProps> = ({
   loading,
@@ -282,8 +290,11 @@ export const SessionAnalyticsTab: React.FC<SessionAnalyticsTabProps> = ({
       <div className="grid gap-6 md:grid-cols-2">
         {/* Geographic Distribution */}
         <Card>
-          <CardHeader>
-            <CardTitle>Geographic Distribution</CardTitle>
+           <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <Map className="h-5 w-5 text-blue-600" />
+              Geographic Distribution
+            </CardTitle>
             <CardDescription>Sessions by user Country</CardDescription>
           </CardHeader>
           <CardContent>
@@ -292,14 +303,14 @@ export const SessionAnalyticsTab: React.FC<SessionAnalyticsTabProps> = ({
                 <Loader2 className="h-8 w-8 animate-spin" />
               </div>
             ) : countryDistribution?.length ? (
-              <div className="h-[300px] w-full flex gap-4">
+              <div className="h-[370px] w-full flex gap-4">
                 {/* Donut Chart */}
                 <div className="flex-1">
                   <ResponsiveContainer width="100%" height="100%">
                     <PieChart>
                       <Pie
                         data={countryDistribution
-                          .slice(0, 10) // top 6 countries
+                          .slice(0, 10)
                           .concat({
                             country: "Others",
                             sessions: countryDistribution
@@ -326,32 +337,40 @@ export const SessionAnalyticsTab: React.FC<SessionAnalyticsTabProps> = ({
                   </ResponsiveContainer>
                 </div>
 
-                {/* Top Countries List */}
-                <div className="w-1/3 overflow-y-auto">
-                  <ul className="space-y-2 text-sm">
-                    {countryDistribution.slice(0, 10).map((item, i) => (
-                      <li key={i} className="flex justify-between">
-                        <span>{item.country}</span>
-                        <span className="font-medium">Sessions: {item.sessions}</span>
-                        <span className="font-medium">({item.percentage.toFixed(1)}%)</span>
-                      </li>
-                    ))}
-                    {countryDistribution.length > 10 && (
-                      <li className="flex justify-between text-gray-500">
-                        <span>Others</span>
-                        <span>
-                          {countryDistribution
-                            .slice(6)
-                            .reduce((sum, c) => sum + c.sessions, 0)} (
-                          {countryDistribution
-                            .slice(6)
-                            .reduce((sum, c) => sum + c.percentage, 0)
-                            .toFixed(1)}
-                          %)
-                        </span>
-                      </li>
-                    )}
-                  </ul>
+                {/* Country Table */}
+                <div className="w-1/2 overflow-y-auto">
+                  <table className="w-full text-sm border-collapse text-center">
+                    <thead>
+                      <tr className="border-b">
+                        <th className="py-2 px-2">Country</th>
+                        <th className="py-2 px-2">Sessions</th>
+                        <th className="py-2 px-2">% Share</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {countryDistribution.slice(0, 10).map((item, i) => (
+                        <tr key={i} className="border-b">
+                          <td className="py-1 px-2">{item.country}</td>
+                          <td className="py-1 px-2 font-medium">{item.sessions}</td>
+                          <td className="py-1 px-2">{item.percentage.toFixed(1)}%</td>
+                        </tr>
+                      ))}
+                      {countryDistribution.length > 10 && (
+                        <tr className="text-gray-500">
+                          <td className="py-1 px-2">Others</td>
+                          <td className="py-1 px-2">
+                            {countryDistribution.slice(10).reduce((sum, c) => sum + c.sessions, 0)}
+                          </td>
+                          <td className="py-1 px-2">
+                            {countryDistribution
+                              .slice(10)
+                              .reduce((sum, c) => sum + c.percentage, 0)
+                              .toFixed(1)}%
+                          </td>
+                        </tr>
+                      )}
+                    </tbody>
+                  </table>
                 </div>
               </div>
             ) : (
@@ -365,7 +384,10 @@ export const SessionAnalyticsTab: React.FC<SessionAnalyticsTabProps> = ({
         {/* Traffic Sources */}
         <Card>
           <CardHeader>
-            <CardTitle>Traffic Sources</CardTitle>
+            <CardTitle className="flex items-center gap-2">
+              <Network className="h-5 w-5 text-yellow-600" />
+              Traffic Sources
+            </CardTitle>
             <CardDescription>Session origins and referrers</CardDescription>
           </CardHeader>
           <CardContent>
@@ -374,14 +396,14 @@ export const SessionAnalyticsTab: React.FC<SessionAnalyticsTabProps> = ({
                 <Loader2 className="h-8 w-8 animate-spin" />
               </div>
             ) : trafficSource?.length ? (
-              <div className="h-[300px] w-full flex gap-4">
+              <div className="h-[370px] w-full flex gap-4">
                 {/* Donut Chart */}
                 <div className="flex-1">
                   <ResponsiveContainer width="100%" height="100%">
                     <PieChart>
                       <Pie
                         data={trafficSource
-                          .slice(0, 10) // top 4 sources
+                          .slice(0, 10)
                           .concat({
                             source: "Others",
                             sessions: trafficSource
@@ -408,31 +430,40 @@ export const SessionAnalyticsTab: React.FC<SessionAnalyticsTabProps> = ({
                   </ResponsiveContainer>
                 </div>
 
-                {/* Top Sources List */}
-                <div className="w-1/3 overflow-y-auto">
-                  <ul className="space-y-2 text-sm">
-                    {trafficSource.slice(0, 10).map((item, i) => (
-                      <li key={i} className="flex justify-between">
-                        <span>{item.source}</span>
-                        <span className="font-medium">{item.sessions} ({item.percentage.toFixed(1)}%)</span>
-                      </li>
-                    ))}
-                    {trafficSource.length > 10 && (
-                      <li className="flex justify-between text-gray-500">
-                        <span>Others</span>
-                        <span>
-                          {trafficSource
-                            .slice(4)
-                            .reduce((sum, t) => sum + t.sessions, 0)} (
-                          {trafficSource
-                            .slice(4)
-                            .reduce((sum, t) => sum + t.percentage, 0)
-                            .toFixed(1)}
-                          %)
-                        </span>
-                      </li>
-                    )}
-                  </ul>
+                {/* Source Table */}
+                <div className="w-1/2 overflow-y-auto">
+                  <table className="w-full text-sm border-collapse text-center">
+                    <thead>
+                      <tr className="border-b">
+                        <th className="py-2 px-2">Source</th>
+                        <th className="py-2 px-2">Sessions</th>
+                        <th className="py-2 px-2">% Share</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {trafficSource.slice(0, 10).map((item, i) => (
+                        <tr key={i} className="border-b">
+                          <td className="py-1 px-2">{item.source}</td>
+                          <td className="py-1 px-2 font-medium">{item.sessions}</td>
+                          <td className="py-1 px-2">{item.percentage.toFixed(1)}%</td>
+                        </tr>
+                      ))}
+                      {trafficSource.length > 10 && (
+                        <tr className="text-gray-500">
+                          <td className="py-1 px-2">Others</td>
+                          <td className="py-1 px-2">
+                            {trafficSource.slice(10).reduce((sum, t) => sum + t.sessions, 0)}
+                          </td>
+                          <td className="py-1 px-2">
+                            {trafficSource
+                              .slice(10)
+                              .reduce((sum, t) => sum + t.percentage, 0)
+                              .toFixed(1)}%
+                          </td>
+                        </tr>
+                      )}
+                    </tbody>
+                  </table>
                 </div>
               </div>
             ) : (
@@ -467,9 +498,9 @@ export const SessionAnalyticsTab: React.FC<SessionAnalyticsTabProps> = ({
                     <Pie
                       data={sessionTimeDistribution}
                       cx="50%"
-                      cy="40%"
+                      cy="50%"
                       labelLine={false}
-                      label={({ percentage }) => `${percentage}%`}
+                      label={renderCustomizedLabel}
                       outerRadius={80}
                       fill="#8884d8"
                       dataKey="percentage"
@@ -481,7 +512,18 @@ export const SessionAnalyticsTab: React.FC<SessionAnalyticsTabProps> = ({
                       ))}
                     </Pie>
                     <Tooltip content={<CustomTooltip />} />
-                    <Legend content={<CustomLegend />} />
+                    <Legend
+                      formatter={(value, entry) => {
+                        // Safely access payload and provide fallbacks for label
+                        const payload = (entry as any)?.payload;
+                        return (
+                          payload?.category || "Unknown"
+                        );
+                      }}
+                      layout="horizontal"
+                      verticalAlign="bottom"
+                      align="center"
+                    />
                   </PieChart>
                 </ResponsiveContainer>
               </div>
@@ -572,7 +614,7 @@ export const SessionAnalyticsTab: React.FC<SessionAnalyticsTabProps> = ({
                       <Cell fill="#ef4444" />
                       <Cell fill="#10b981" />
                     </Pie>
-                    <Tooltip formatter={(value: number) => `${value.toFixed(2)}%`} />
+                    <Tooltip formatter={(value: number) => `${value.toFixed(0)}%`} />
                     <Legend />
                   </PieChart>
                 </ResponsiveContainer>
@@ -586,25 +628,19 @@ export const SessionAnalyticsTab: React.FC<SessionAnalyticsTabProps> = ({
         </Card>
       </div>
 
-      
-
-
-
-
-
-
-
-
-        {/* Bot vs Users */}
-        {/* <Card>
+      {/* <div className="grid gap-6 md:grid-cols-3">
+        <Card>
           <CardHeader>
-            <CardTitle>Bot vs Users</CardTitle>
+            <CardTitle className="flex items-center gap-2">
+              <Network className="h-5 w-5 text-pink-600" />
+              Bot vs Users
+            </CardTitle>
             <CardDescription>Automated vs human traffic</CardDescription>
           </CardHeader>
           <CardContent>
             {loading.SessionMetrics ? (
               <div className="flex items-center justify-center h-[300px]">
-                <Loader2 className="h-8 w-8 animate-spin" />
+                <Loader2 className="h-8 w-8 animate-spin text-pink-600" />
               </div>
             ) : SessionMetrics ? (
               <div className="h-[300px] w-full">
@@ -612,25 +648,24 @@ export const SessionAnalyticsTab: React.FC<SessionAnalyticsTabProps> = ({
                   <PieChart>
                     <Pie
                       data={[
-                        { name: "Bots", value: SessionMetrics.botPercentage ?? 0 },
-                        { name: "Users", value: SessionMetrics.userPercentage ?? 0 },
+                        { name: "Bots", value: SessionMetrics.botPercentage ?? 0, count: SessionMetrics.botCount ?? 0 },
+                        { name: "Users", value: SessionMetrics.userPercentage ?? 0, count: SessionMetrics.userCount ?? 0 },
                       ]}
                       cx="50%"
-                      cy="50%"
+                      cy="40%"
                       labelLine={false}
                       label={renderCustomizedLabel}
                       outerRadius={80}
+                      fill="#8884d8"
                       dataKey="value"
                       animationBegin={0}
                       animationDuration={800}
                     >
                       <Cell fill="#FF6B6B" />
                       <Cell fill="#4ECDC4" />
-                    </Pie> */}
-                    {/* <Tooltip content={<CustomTooltip />} />
-                    <Legend content={<CustomLegend />} /> */}
-                    {/* <Tooltip formatter={(value: number) => `${value.toFixed(2)}%`} />
-                    <Legend />
+                    </Pie>
+                    <Tooltip content={<CustomTooltip />} />
+                    <Legend content={<CustomLegend />} />
                   </PieChart>
                 </ResponsiveContainer>
               </div>
@@ -640,7 +675,8 @@ export const SessionAnalyticsTab: React.FC<SessionAnalyticsTabProps> = ({
               </div>
             )}
           </CardContent>
-        </Card> */}
-      </div>
+        </Card>
+      </div> */}
+    </div>
   );
 };
