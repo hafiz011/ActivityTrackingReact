@@ -480,10 +480,10 @@ export const SessionAnalyticsTab: React.FC<SessionAnalyticsTabProps> = ({
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Clock className="h-5 w-5 text-purple-600" />
-              Session Duration Distribution
+              Duration Distribution
             </CardTitle>
             <CardDescription>
-              Distribution of user sessions by duration categories
+              User sessions by duration categories
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -498,7 +498,7 @@ export const SessionAnalyticsTab: React.FC<SessionAnalyticsTabProps> = ({
                     <Pie
                       data={sessionTimeDistribution}
                       cx="50%"
-                      cy="50%"
+                      cy="40%"
                       labelLine={false}
                       label={renderCustomizedLabel}
                       outerRadius={80}
