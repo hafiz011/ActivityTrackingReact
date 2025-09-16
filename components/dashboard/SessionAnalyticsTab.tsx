@@ -611,8 +611,8 @@ export const SessionAnalyticsTab: React.FC<SessionAnalyticsTabProps> = ({
                       fill="#8884d8"
                       dataKey="value"
                     >
-                      <Cell fill="#ef4444" />
-                      <Cell fill="#10b981" />
+                      <Cell fill="#f15540e7" />
+                      <Cell fill="#2ed49df1" />
                     </Pie>
                     <Tooltip formatter={(value: number) => `${value.toFixed(0)}%`} />
                     <Legend />
