@@ -279,6 +279,171 @@ export const SessionAnalyticsTab: React.FC<SessionAnalyticsTabProps> = ({
         </Card>
       </div>
 
+      <div className="grid gap-6 md:grid-cols-2">
+        {/* Geographic Distribution */}
+        <Card>
+          <CardHeader>
+            <CardTitle>Geographic Distribution</CardTitle>
+            <CardDescription>Sessions by user Country</CardDescription>
+          </CardHeader>
+          <CardContent>
+            {loading.countryDistribution ? (
+              <div className="flex items-center justify-center h-[300px]">
+                <Loader2 className="h-8 w-8 animate-spin" />
+              </div>
+            ) : countryDistribution?.length ? (
+              <div className="h-[300px] w-full flex gap-4">
+                {/* Donut Chart */}
+                <div className="flex-1">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <PieChart>
+                      <Pie
+                        data={countryDistribution
+                          .slice(0, 10) // top 6 countries
+                          .concat({
+                            country: "Others",
+                            sessions: countryDistribution
+                              .slice(10)
+                              .reduce((sum, c) => sum + c.sessions, 0),
+                            percentage: countryDistribution
+                              .slice(10)
+                              .reduce((sum, c) => sum + c.percentage, 0),
+                          })}
+                        cx="50%"
+                        cy="50%"
+                        innerRadius={50}
+                        outerRadius={80}
+                        paddingAngle={3}
+                        dataKey="sessions"
+                      >
+                        {countryDistribution.slice(0, 10).map((entry, index) => (
+                          <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                        ))}
+                        <Cell fill="#d1d5db" /> {/* Others */}
+                      </Pie>
+                      <Tooltip content={<CustomTooltip />} />
+                    </PieChart>
+                  </ResponsiveContainer>
+                </div>
+
+                {/* Top Countries List */}
+                <div className="w-1/3 overflow-y-auto">
+                  <ul className="space-y-2 text-sm">
+                    {countryDistribution.slice(0, 10).map((item, i) => (
+                      <li key={i} className="flex justify-between">
+                        <span>{item.country}</span>
+                        <span className="font-medium">Sessions: {item.sessions}</span>
+                        <span className="font-medium">({item.percentage.toFixed(1)}%)</span>
+                      </li>
+                    ))}
+                    {countryDistribution.length > 10 && (
+                      <li className="flex justify-between text-gray-500">
+                        <span>Others</span>
+                        <span>
+                          {countryDistribution
+                            .slice(6)
+                            .reduce((sum, c) => sum + c.sessions, 0)} (
+                          {countryDistribution
+                            .slice(6)
+                            .reduce((sum, c) => sum + c.percentage, 0)
+                            .toFixed(1)}
+                          %)
+                        </span>
+                      </li>
+                    )}
+                  </ul>
+                </div>
+              </div>
+            ) : (
+              <div className="flex items-center justify-center h-[300px] text-gray-500">
+                No data available
+              </div>
+            )}
+          </CardContent>
+        </Card>
+
+        {/* Traffic Sources */}
+        <Card>
+          <CardHeader>
+            <CardTitle>Traffic Sources</CardTitle>
+            <CardDescription>Session origins and referrers</CardDescription>
+          </CardHeader>
+          <CardContent>
+            {loading.trafficSource ? (
+              <div className="flex items-center justify-center h-[300px]">
+                <Loader2 className="h-8 w-8 animate-spin" />
+              </div>
+            ) : trafficSource?.length ? (
+              <div className="h-[300px] w-full flex gap-4">
+                {/* Donut Chart */}
+                <div className="flex-1">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <PieChart>
+                      <Pie
+                        data={trafficSource
+                          .slice(0, 10) // top 4 sources
+                          .concat({
+                            source: "Others",
+                            sessions: trafficSource
+                              .slice(10)
+                              .reduce((sum, t) => sum + t.sessions, 0),
+                            percentage: trafficSource
+                              .slice(10)
+                              .reduce((sum, t) => sum + t.percentage, 0),
+                          })}
+                        cx="50%"
+                        cy="50%"
+                        innerRadius={50}
+                        outerRadius={80}
+                        paddingAngle={3}
+                        dataKey="sessions"
+                      >
+                        {trafficSource.slice(0, 10).map((entry, index) => (
+                          <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                        ))}
+                        <Cell fill="#d1d5db" /> {/* Others */}
+                      </Pie>
+                      <Tooltip content={<CustomTooltip />} />
+                    </PieChart>
+                  </ResponsiveContainer>
+                </div>
+
+                {/* Top Sources List */}
+                <div className="w-1/3 overflow-y-auto">
+                  <ul className="space-y-2 text-sm">
+                    {trafficSource.slice(0, 10).map((item, i) => (
+                      <li key={i} className="flex justify-between">
+                        <span>{item.source}</span>
+                        <span className="font-medium">{item.sessions} ({item.percentage.toFixed(1)}%)</span>
+                      </li>
+                    ))}
+                    {trafficSource.length > 10 && (
+                      <li className="flex justify-between text-gray-500">
+                        <span>Others</span>
+                        <span>
+                          {trafficSource
+                            .slice(4)
+                            .reduce((sum, t) => sum + t.sessions, 0)} (
+                          {trafficSource
+                            .slice(4)
+                            .reduce((sum, t) => sum + t.percentage, 0)
+                            .toFixed(1)}
+                          %)
+                        </span>
+                      </li>
+                    )}
+                  </ul>
+                </div>
+              </div>
+            ) : (
+              <div className="flex items-center justify-center h-[300px] text-gray-500">
+                No data available
+              </div>
+            )}
+          </CardContent>
+        </Card>
+      </div>
+
       <div className="grid gap-6 md:grid-cols-3">
         <Card>
           <CardHeader>
@@ -421,168 +586,7 @@ export const SessionAnalyticsTab: React.FC<SessionAnalyticsTabProps> = ({
         </Card>
       </div>
 
-      <div className="grid gap-6 md:grid-cols-2">
-        {/* Geographic Distribution */}
-        <Card>
-          <CardHeader>
-            <CardTitle>Geographic Distribution</CardTitle>
-            <CardDescription>Sessions by user Country</CardDescription>
-          </CardHeader>
-          <CardContent>
-            {loading.countryDistribution ? (
-              <div className="flex items-center justify-center h-[300px]">
-                <Loader2 className="h-8 w-8 animate-spin" />
-              </div>
-            ) : countryDistribution?.length ? (
-              <div className="h-[300px] w-full flex gap-4">
-                {/* Donut Chart */}
-                <div className="flex-1">
-                  <ResponsiveContainer width="100%" height="100%">
-                    <PieChart>
-                      <Pie
-                        data={countryDistribution
-                          .slice(0, 10) // top 6 countries
-                          .concat({
-                            country: "Others",
-                            sessions: countryDistribution
-                              .slice(10)
-                              .reduce((sum, c) => sum + c.sessions, 0),
-                            percentage: countryDistribution
-                              .slice(10)
-                              .reduce((sum, c) => sum + c.percentage, 0),
-                          })}
-                        cx="50%"
-                        cy="50%"
-                        innerRadius={50}
-                        outerRadius={80}
-                        paddingAngle={3}
-                        dataKey="sessions"
-                      >
-                        {countryDistribution.slice(0, 10).map((entry, index) => (
-                          <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                        ))}
-                        <Cell fill="#d1d5db" /> {/* Others */}
-                      </Pie>
-                      <Tooltip content={<CustomTooltip />} />
-                    </PieChart>
-                  </ResponsiveContainer>
-                </div>
-
-                {/* Top Countries List */}
-                <div className="w-1/3 overflow-y-auto">
-                  <ul className="space-y-2 text-sm">
-                    {countryDistribution.slice(0, 10).map((item, i) => (
-                      <li key={i} className="flex justify-between">
-                        <span>{item.country}</span>
-                        <span className="font-medium">{item.sessions} ({item.percentage.toFixed(1)}%)</span>
-                      </li>
-                    ))}
-                    {countryDistribution.length > 10 && (
-                      <li className="flex justify-between text-gray-500">
-                        <span>Others</span>
-                        <span>
-                          {countryDistribution
-                            .slice(6)
-                            .reduce((sum, c) => sum + c.sessions, 0)} (
-                          {countryDistribution
-                            .slice(6)
-                            .reduce((sum, c) => sum + c.percentage, 0)
-                            .toFixed(1)}
-                          %)
-                        </span>
-                      </li>
-                    )}
-                  </ul>
-                </div>
-              </div>
-            ) : (
-              <div className="flex items-center justify-center h-[300px] text-gray-500">
-                No data available
-              </div>
-            )}
-          </CardContent>
-        </Card>
-
-        {/* Traffic Sources */}
-        <Card>
-          <CardHeader>
-            <CardTitle>Traffic Sources</CardTitle>
-            <CardDescription>Session origins and referrers</CardDescription>
-          </CardHeader>
-          <CardContent>
-            {loading.trafficSource ? (
-              <div className="flex items-center justify-center h-[300px]">
-                <Loader2 className="h-8 w-8 animate-spin" />
-              </div>
-            ) : trafficSource?.length ? (
-              <div className="h-[300px] w-full flex gap-4">
-                {/* Donut Chart */}
-                <div className="flex-1">
-                  <ResponsiveContainer width="100%" height="100%">
-                    <PieChart>
-                      <Pie
-                        data={trafficSource
-                          .slice(0, 10) // top 4 sources
-                          .concat({
-                            source: "Others",
-                            sessions: trafficSource
-                              .slice(10)
-                              .reduce((sum, t) => sum + t.sessions, 0),
-                            percentage: trafficSource
-                              .slice(10)
-                              .reduce((sum, t) => sum + t.percentage, 0),
-                          })}
-                        cx="50%"
-                        cy="50%"
-                        innerRadius={50}
-                        outerRadius={80}
-                        paddingAngle={3}
-                        dataKey="sessions"
-                      >
-                        {trafficSource.slice(0, 10).map((entry, index) => (
-                          <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                        ))}
-                        <Cell fill="#d1d5db" /> {/* Others */}
-                      </Pie>
-                      <Tooltip content={<CustomTooltip />} />
-                    </PieChart>
-                  </ResponsiveContainer>
-                </div>
-
-                {/* Top Sources List */}
-                <div className="w-1/3 overflow-y-auto">
-                  <ul className="space-y-2 text-sm">
-                    {trafficSource.slice(0, 10).map((item, i) => (
-                      <li key={i} className="flex justify-between">
-                        <span>{item.source}</span>
-                        <span className="font-medium">{item.sessions} ({item.percentage.toFixed(1)}%)</span>
-                      </li>
-                    ))}
-                    {trafficSource.length > 10 && (
-                      <li className="flex justify-between text-gray-500">
-                        <span>Others</span>
-                        <span>
-                          {trafficSource
-                            .slice(4)
-                            .reduce((sum, t) => sum + t.sessions, 0)} (
-                          {trafficSource
-                            .slice(4)
-                            .reduce((sum, t) => sum + t.percentage, 0)
-                            .toFixed(1)}
-                          %)
-                        </span>
-                      </li>
-                    )}
-                  </ul>
-                </div>
-              </div>
-            ) : (
-              <div className="flex items-center justify-center h-[300px] text-gray-500">
-                No data available
-              </div>
-            )}
-          </CardContent>
-        </Card>
+      
 
 
 
@@ -638,6 +642,5 @@ export const SessionAnalyticsTab: React.FC<SessionAnalyticsTabProps> = ({
           </CardContent>
         </Card> */}
       </div>
-    </div>
   );
 };
