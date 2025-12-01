@@ -23,6 +23,7 @@ Body: JSON`
   "Screen": "1920x1080"
 }`
 
+
   const eventPayload = `{
   "sessionId": "SESSION_ID_HERE",
   "event": "page_view",
@@ -70,7 +71,7 @@ Body: JSON`
             Include Trackly SDK
           </h2>
           <pre className="bg-black/60 p-4 rounded-lg text-sm text-white/70 overflow-x-auto mt-3">
-{`<script async src="https://apibizagent.techciph.com/trackly.js?key=YOUR_API_KEY"></script>`}
+            {`<script async src="https://apibizagent.techciph.com/trackly.js?key=YOUR_API_KEY"></script>`}
           </pre>
         </div>
 
