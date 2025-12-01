@@ -3,118 +3,142 @@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { Rocket, Search, CheckCircle, Shield, Copy } from "lucide-react"
+import { Rocket, Search, Shield, Copy } from "lucide-react"
 import { useState } from "react"
 
 export default function TracklyApiDocs() {
   const [copiedRequest, setCopiedRequest] = useState(false)
   const [copiedPayload, setCopiedPayload] = useState(false)
 
-  const apiRequest = `POST /api/session/create
+  const apiRequest = `POST https://apibizagent.techciph.com/Session/create
 Headers:
   X-API-KEY: YOUR_API_KEY
-  X-Session-Id: SESSION_ID_HERE`
+Body: JSON`
 
   const jsonPayload = `{
-  "user_Id": "465456465",
-  "name": "username",
-  "email": "example@gmail.com",
-  "ip_Address": "202.125.30.60",
-  "device": {
-    "fingerprint": "fhiuhu7346385641646retertre5rvhroiv64156417rfuhi1564851ehuihvn",
-    "browser": "chrome",
-    "device_Type": "desktop",
-    "os": "windows",
-    "language": "en",
-    "screen_Resolution": "1920*1280"
-  },
-  "localTime": "2025-07-29T11:57:57.484Z"
+  "Ip": "202.134.12.4",
+  "ReferrerUrl": "https://example.com/login",
+  "UserAgent": "Mozilla/5.0",
+  "Language": "en-US",
+  "Screen": "1920x1080"
+}`
+
+  const eventPayload = `{
+  "sessionId": "SESSION_ID_HERE",
+  "event": "page_view",
+  "data": {
+    "url": "/products/123",
+    "productId": "123"
+  }
 }`
 
   const fieldData = [
-    { field: "user_Id", description: "Unique user identifier from your system" },
-    { field: "username", description: "User's name" },
-    { field: "email", description: "User's email address" },
-    { field: "ip_Address", description: "User's public IP address" },
-    { field: "device.fingerprint", description: "Unique device/browser fingerprint" },
-    { field: "device.browser", description: "Browser name (e.g., Chrome)" },
-    { field: "device.os", description: "Operating system (e.g., Windows)" },
-    { field: "device_Type", description: "Device type (desktop, mobile)" },
-    { field: "screen_Resolution", description: "User's screen resolution" },
-    { field: "language", description: "Browser language" },
-    { field: "localTime", description: "Client's local timestamp (ISO 8601)" },
+    { field: "Ip", description: "User public IP address (auto detected if empty)" },
+    { field: "ReferrerUrl", description: "Previous page user came from" },
+    { field: "UserAgent", description: "Browser + OS info" },
+    { field: "Language", description: "Browser language" },
+    { field: "Screen", description: "Screen resolution in width x height" },
+    { field: "sessionId", description: "Unique session identifier returned after creation" },
+    { field: "event", description: "Event name (page_view, add_to_cart, login, etc.)" },
+    { field: "data", description: "Custom event metadata" }
   ]
 
   const benefits = [
-    "Detect suspicious logins",
-    "Track session behavior",
-    "Build secure analytics",
-    "Improve user experience with device-specific insights",
+    "Real-time session creation",
+    "Automatic device & geolocation detection",
+    "Lightweight and fast event tracker",
+    "AI-powered suspicious login detection"
   ]
 
   return (
     <div className="min-h-screen mt-20">
       <div className="max-w-4xl mx-auto p-6 space-y-6">
+
         {/* Header */}
         <div className="text-center space-y-2">
           <div className="flex items-center justify-center gap-2">
-            <Rocket className="h-6 w-6 text-blue-600" />
-            <h1 className="text-3xl font-bold text-white">BizAgent API Documentation</h1>
+            <Rocket className="h-6 w-6 text-cyan-400" />
+            <h1 className="text-3xl font-bold text-white">Trackly API Documentation</h1>
           </div>
-          <p className="text-white/70">Structured user session data tracking for enhanced security and analytics</p>
+          <p className="text-white/70">Session creation, event tracking & intelligent analytics SDK</p>
         </div>
 
-        {/* Example API Request */}
-        <div className="relative bg-gradient-to-br from-blue-900/40 via-slate-900/60 to-cyan-900/30 via-transparent rounded-3xl p-12 border border-cyan-500/20 shadow-2xl mb-16 backdrop-blur-sm hover:border-cyan-400/40 transition-all duration-500 group overflow-hidden">
-          <div className="space-y-2">
-            <h2 className="text-xl font-semibold flex items-center gap-2 text-white">
-              <Rocket className="h-5 w-5 text-gray-300" />
-              Example API Request
-            </h2>
-            <p className="text-white/70">
-              BizAgent API receives structured user session data from your frontend or backend. Here's how a sample
-              request looks:
-            </p>
-          </div>
-          <div className="space-y-4">
-            <div className="relative">
-              <pre className="bg-black/60 p-4 rounded-lg text-sm text-white/70 overflow-x-auto">
-                <code>{apiRequest}</code>
-              </pre>
-            </div>
-            <div className="relative">
-              <pre className="bg-black/60 p-4 rounded-lg text-sm text-white/70 overflow-x-auto">
-                <code>{jsonPayload}</code>
-              </pre>
-            </div>
-          </div>
+        {/* Install SDK */}
+        <div className="bg-black/40 backdrop-blur p-6 rounded-xl border border-cyan-500/20">
+          <h2 className="text-xl font-semibold text-white flex items-center gap-2">
+            <Shield className="h-5 w-5" />
+            Include Trackly SDK
+          </h2>
+          <pre className="bg-black/60 p-4 rounded-lg text-sm text-white/70 overflow-x-auto mt-3">
+{`<script async src="https://apibizagent.techciph.com/trackly.js?key=YOUR_API_KEY"></script>`}
+          </pre>
         </div>
 
-        {/* Data Captured */}
-        <div className="relative bg-gradient-to-br from-blue-900/40 via-slate-900/60 to-cyan-900/30 via-transparent rounded-3xl p-12 border border-cyan-500/20 shadow-2xl mb-16 backdrop-blur-sm hover:border-cyan-400/40 transition-all duration-500 group overflow-hidden">
-          <div className="space-y-2">
-            <h2 className="text-xl font-semibold flex items-center gap-2 text-white">
-              <Search className="h-5 w-5" />
-              Data Captured
-            </h2>
-            <p className="text-white/70">Comprehensive session data fields and their descriptions</p>
+        {/* Session Create API */}
+        <div className="bg-black/40 backdrop-blur p-6 rounded-xl border border-cyan-500/20">
+          <h2 className="text-xl font-semibold text-white">1. Create Session</h2>
+
+          <div className="flex justify-between mt-4">
+            <h3 className="text-white/80">Request Example</h3>
+            <Button 
+              size="sm" 
+              variant="outline"
+              onClick={() => { navigator.clipboard.writeText(apiRequest); setCopiedRequest(true); setTimeout(()=>setCopiedRequest(false),1000); }}
+            >
+              <Copy className="h-4 w-4 mr-1" />
+              {copiedRequest ? "Copied!" : "Copy"}
+            </Button>
           </div>
+
+          <pre className="bg-black/60 p-4 rounded-lg text-sm text-white/70 overflow-x-auto mt-3">
+            <code>{apiRequest}</code>
+          </pre>
+
+          <div className="flex justify-between mt-4">
+            <h3 className="text-white/80">JSON Payload</h3>
+            <Button 
+              size="sm" 
+              variant="outline"
+              onClick={() => { navigator.clipboard.writeText(jsonPayload); setCopiedPayload(true); setTimeout(()=>setCopiedPayload(false),1000); }}
+            >
+              <Copy className="h-4 w-4 mr-1" />
+              {copiedPayload ? "Copied!" : "Copy"}
+            </Button>
+          </div>
+
+          <pre className="bg-black/60 p-4 rounded-lg text-sm text-white/70 overflow-x-auto mt-3">
+            <code>{jsonPayload}</code>
+          </pre>
+        </div>
+
+        {/* Event Track API */}
+        <div className="bg-black/40 backdrop-blur p-6 rounded-xl border border-cyan-500/20">
+          <h2 className="text-xl font-semibold text-white">2. Track Event</h2>
+
+          <pre className="bg-black/60 p-4 rounded-lg text-sm text-white/70 overflow-x-auto mt-3">
+            <code>{eventPayload}</code>
+          </pre>
+        </div>
+
+        {/* Data Captured Table */}
+        <div className="bg-black/40 backdrop-blur p-6 rounded-xl border border-cyan-500/20">
+          <h2 className="text-xl font-semibold text-white flex items-center gap-2">
+            <Search className="h-5 w-5" />
+            Data Captured
+          </h2>
+
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead className="font-semibold text-white">Field</TableHead>
-                <TableHead className="font-semibold text-white">Description</TableHead>
+                <TableHead className="text-white">Field</TableHead>
+                <TableHead className="text-white">Description</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              {fieldData.map((item, index) => (
-                <TableRow key={index}>
-                  <TableCell>
-                    <Badge className="font-mono text-xs bg-green-400 text-black">
-                      {item.field}
-                    </Badge>
-                  </TableCell>
-                  <TableCell className="text-white">{item.description}</TableCell>
+              {fieldData.map((f, i) => (
+                <TableRow key={i}>
+                  <TableCell className="text-white/80">{f.field}</TableCell>
+                  <TableCell className="text-white/60">{f.description}</TableCell>
                 </TableRow>
               ))}
             </TableBody>
@@ -122,34 +146,14 @@ Headers:
         </div>
 
         {/* Benefits */}
-        <div className="relative bg-gradient-to-br from-blue-900/40 via-slate-900/60 to-cyan-900/30 via-transparent rounded-3xl p-12 border border-cyan-500/20 shadow-2xl mb-16 backdrop-blur-sm hover:border-cyan-400/40 transition-all duration-500 group overflow-hidden">
-          <h2 className="text-xl font-semibold flex items-center gap-2 text-white">
-            <CheckCircle className="h-5 w-5 text-green-600" />
-            This data helps you:
-          </h2>
-          <ul className="space-y-2">
-            {benefits.map((benefit, index) => (
-              <li key={index} className="flex items-center gap-2">
-                <CheckCircle className="h-4 w-4 text-green-600" />
-                <span className="text-white">{benefit}</span>
-              </li>
+        <div className="bg-black/40 backdrop-blur p-6 rounded-xl border border-cyan-500/20">
+          <h2 className="text-xl font-semibold text-white">Why Trackly?</h2>
+          <div className="flex flex-wrap gap-2 mt-3">
+            {benefits.map((b, i) => (
+              <Badge key={i} className="bg-cyan-700/40 text-white border border-cyan-500/40">
+                {b}
+              </Badge>
             ))}
-          </ul>
-        </div>
-
-        {/* Call to Action */}
-        <div className="border-2 border-white/20 bg-white/10 backdrop-blur-sm rounded-lg p-6">
-          <div className="text-center space-y-4">
-            <div className="flex items-center justify-center gap-2">
-              <Shield className="h-6 w-6 text-blue-600" />
-              <h3 className="text-xl font-semibold text-white">
-                Built for developers who care about security, clarity, and control.
-              </h3>
-            </div>
-            <p className="text-white/70">Want full documentation or SDK?</p>
-            <Button size="lg" className="bg-blue-600 hover:bg-blue-700">
-              Request Access →
-            </Button>
           </div>
         </div>
       </div>
